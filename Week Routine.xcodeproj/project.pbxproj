@@ -15,9 +15,10 @@
 		707168C428EE0C7B008B1D69 /* Week_Routine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */; };
 		707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 707168C528EE0C7E008B1D69 /* Assets.xcassets */; };
 		707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */; };
-		707168D828EE0E47008B1D69 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168D728EE0E47008B1D69 /* SettingsViewController.swift */; };
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
+		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
+		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +32,10 @@
 		707168C528EE0C7E008B1D69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		707168C828EE0C7E008B1D69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		707168CA28EE0C7E008B1D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		707168D728EE0E47008B1D69 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				707168BD28EE0C7B008B1D69 /* ViewController.swift */,
-				707168D728EE0E47008B1D69 /* SettingsViewController.swift */,
 				702BA40428EE105800BB7EDB /* AddViewController.swift */,
+				70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -118,6 +120,7 @@
 			children = (
 				70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */,
 				70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */,
+				70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -195,12 +198,13 @@
 			files = (
 				707168BE28EE0C7B008B1D69 /* ViewController.swift in Sources */,
 				707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */,
+				70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */,
 				70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */,
 				707168C428EE0C7B008B1D69 /* Week_Routine.xcdatamodeld in Sources */,
 				707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */,
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
-				707168D828EE0E47008B1D69 /* SettingsViewController.swift in Sources */,
+				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,10 +14,18 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
+    @IBAction func settingButtonPressed(_ sender: UIBarButtonItem) {
+        let vc = SettingsViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         let vc = AddViewController()
         vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
+        self.present(vc, animated: true)
     }
     
 }
