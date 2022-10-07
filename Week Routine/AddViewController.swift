@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol UpdateDelegate {
+    func updateTableView()
+}
+
 class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let stackView = UIStackView()
@@ -14,6 +18,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let dateTextField = UITextField()
     let saveButton = UIButton()
     let pickerView = UIPickerView()
+    
+    var delegate: UpdateDelegate?
     
     var day = "Every day"
     var hour = "00"
@@ -155,6 +161,7 @@ extension AddViewController {
         guard let titleText = titleTextField.text else{return}
         
         RoutineBrain.shareInstance.addRoutine(title: titleText, day: day, hour: Int16(hour)!, minute: Int16(minute)!)
+        delegate?.updateTableView()
         
         self.dismiss(animated: true, completion: nil)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UpdateDelegate {
     
     var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         title = "Week Routine"
         configureBarButton()
         configureSettingsButton()
-        RoutineBrain.shareInstance.loadRoutineArray()
+        updateTableView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -44,8 +44,14 @@ class ViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = .black
     }
     
+    func updateTableView() {
+        RoutineBrain.shareInstance.loadRoutineArray()
+        self.tableView.reloadData()
+    }
+    
     @objc func addButtonPressed() {
         let vc = AddViewController()
+        vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
@@ -123,6 +129,7 @@ extension ViewController {
 //MARK: - Show Routine
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routineArray.count
     }
@@ -132,5 +139,4 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(title: routineArray[indexPath.row].title!, content: "r")
         return cell
     }
-
 }
