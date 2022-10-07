@@ -140,3 +140,26 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
+
+//MARK: - Swipe Cell
+
+extension ViewController {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            let alert = UIAlertController(title: "Routine will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+            let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                RoutineBrain.shareInstance.removeRoutine(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+            }
+            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(actionDelete)
+            alert.addAction(actionCancel)
+            self.present(alert, animated: true, completion: nil)
+            success(true)
+        })
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
