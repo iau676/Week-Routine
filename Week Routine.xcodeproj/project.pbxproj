@@ -19,6 +19,7 @@
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
 		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
 		70AF374B28EF6F6400703260 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF374A28EF6F6400703260 /* CustomTableViewCell.swift */; };
+		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		70AF374A28EF6F6400703260 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		707168D228EE0DA5008B1D69 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				70ECB52028F03465002B2483 /* RoutineBrain.swift */,
 				707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */,
 			);
 			name = Model;
@@ -202,6 +205,7 @@
 				707168C428EE0C7B008B1D69 /* Week_Routine.xcdatamodeld in Sources */,
 				707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */,
 				70AF374B28EF6F6400703260 /* CustomTableViewCell.swift in Sources */,
+				70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */,
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,

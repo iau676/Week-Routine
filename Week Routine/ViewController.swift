@@ -11,6 +11,8 @@ class ViewController: UIViewController {
     
     var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
+    var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
+    
     let stackView = UIStackView()
     let label = UILabel()
     
@@ -24,6 +26,7 @@ class ViewController: UIViewController {
         title = "Week Routine"
         configureBarButton()
         configureSettingsButton()
+        RoutineBrain.shareInstance.loadRoutineArray()
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,14 +120,16 @@ extension ViewController {
     }
 }
 
+//MARK: - Show Routine
+
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return days.count
+        return routineArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        cell.configure(title: days[indexPath.row], content: "r")
+        cell.configure(title: routineArray[indexPath.row].title!, content: "r")
         return cell
     }
 
