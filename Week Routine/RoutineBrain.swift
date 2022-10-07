@@ -16,7 +16,7 @@ struct RoutineBrain {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    mutating func addRoutine(title: String, day: String, hour: Int16, minute: Int16){
+    mutating func addRoutine(title: String, day: Int16, hour: Int16, minute: Int16){
         let newRoutine = Routine(context: self.context)
         newRoutine.title = title
         newRoutine.day = day

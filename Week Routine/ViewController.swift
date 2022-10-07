@@ -14,8 +14,6 @@ class ViewController: UIViewController, UpdateDelegate {
     var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
     
     let stackView = UIStackView()
-    let label = UILabel()
-    
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
     
@@ -84,19 +82,12 @@ extension ViewController {
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.distribution = .fill
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
-        label.text = "Date Format"
-        label.numberOfLines = 1
-        
-        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
+
+        tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier:CustomCell.identifier)
         tableView.backgroundColor = .darkGray
         tableView.layer.cornerRadius = 8
         tableView.dataSource = self
         tableView.delegate = self
-
-        tableView.reloadData()
         
         daySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         daySegmentedControl.replaceSegments(segments: days)
@@ -122,7 +113,6 @@ extension ViewController {
         NSLayoutConstraint.activate([
             daySegmentedControl.heightAnchor.constraint(equalTo: tableView.heightAnchor, multiplier: 0.08)
         ])
-
     }
 }
 
@@ -130,13 +120,56 @@ extension ViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routineArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        cell.configure(title: routineArray[indexPath.row].title!, content: "r")
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomCell.identifier, for: indexPath) as! CustomCell
+        
+        let item = RoutineBrain.shareInstance.routineArray[indexPath.row]
+        
+        var day = ""
+        
+        switch item.day {
+            case 0:
+            day = "Every day"
+                break
+            case 1:
+            day = "Sunday"
+                break
+            case 2:
+            day = "Monday"
+                break
+            case 3:
+            day = "Tuesday"
+                break
+            case 4:
+            day = "Wednesday"
+                break
+            case 5:
+            day = "Thursday"
+                break
+            case 6:
+            day = "Friday"
+                break
+            case 7:
+            day = "Saturday"
+                break
+            default:
+                break
+        }
+        
+        let hour = item.hour < 10 ? "0\(item.hour)" : "\(item.hour)"
+        let minute = item.minute < 10 ? "0\(item.minute)" : "\(item.minute)"
+
+        cell.titleLabel.text = item.title
+        cell.dateLabel.text = "\(day), \(hour):\(minute)"
+    
         return cell
     }
 }
