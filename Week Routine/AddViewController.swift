@@ -40,6 +40,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         pickerView.delegate = self
         pickerView.dataSource = self
         titleTextField.becomeFirstResponder()
+        
+        hideKeyboardWhenTappedAround()
     }
     
     //MARK: - GestureRecognizer
@@ -167,3 +169,15 @@ extension AddViewController {
     }
 }
 
+//dismiss keyboard when user tap around
+extension AddViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
