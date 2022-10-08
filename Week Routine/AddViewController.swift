@@ -34,6 +34,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "New Routine"
         style()
         layout()
         addGestureRecognizer()

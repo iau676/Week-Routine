@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UpdateDelegate {
+class ViewController: UIViewController, UpdateDelegate, UINavigationControllerDelegate {
     
     var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
@@ -48,15 +48,15 @@ class ViewController: UIViewController, UpdateDelegate {
     }
     
     @objc func addButtonPressed() {
-        let vc = AddViewController()
+        let vc = UINavigationController(rootViewController: AddViewController())
         vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
     
     @objc func settingsButtonPressed() {
-        let vc = SettingsViewController()
-        vc.modalPresentationStyle = .overCurrentContext
+        let vc = UINavigationController(rootViewController: SettingsViewController())
+        vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
     
