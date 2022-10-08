@@ -29,6 +29,7 @@ class ViewController: UIViewController, UpdateDelegate {
         configureSettingsButton()
         updateTableView()
         
+        getWeekday()
         findWhichRoutinesShouldShow()
     }
     
@@ -50,6 +51,13 @@ class ViewController: UIViewController, UpdateDelegate {
     func updateTableView() {
         RoutineBrain.shareInstance.loadRoutineArray()
         findWhichRoutinesShouldShow()
+    }
+    
+    func getWeekday() {
+        var weekday = Calendar.current.component(.weekday, from: Date())
+        weekday = (weekday-2 < 0) ? 6 : weekday-2
+        selectedSegmentIndex = weekday
+        daySegmentedControl.selectedSegmentIndex = weekday
     }
     
     func findWhichRoutinesShouldShow(){
