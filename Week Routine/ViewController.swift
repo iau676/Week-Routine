@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UpdateDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UpdateDelegate {
+    
+    var tempArray = [Int]()
+    var selectedSegmentIndex = 0
     
     var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
@@ -48,14 +51,14 @@ class ViewController: UIViewController, UpdateDelegate, UINavigationControllerDe
     }
     
     @objc func addButtonPressed() {
-        let vc = UINavigationController(rootViewController: AddViewController())
+        let vc = AddViewController()
         vc.delegate = self
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
     
     @objc func settingsButtonPressed() {
-        let vc = UINavigationController(rootViewController: SettingsViewController())
+        let vc = SettingsViewController()
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }

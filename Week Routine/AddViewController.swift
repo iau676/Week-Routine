@@ -13,6 +13,8 @@ protocol UpdateDelegate {
 
 class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    let titleLabel = UILabel()
+    
     let stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
@@ -34,7 +36,6 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "New Routine"
         style()
         layout()
         addGestureRecognizer()
@@ -66,6 +67,11 @@ extension AddViewController {
     func style() {
         
         view.backgroundColor = Colors.backgroundColor
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = Colors.labelColor
+        titleLabel.text = "New Routine"
+        titleLabel.numberOfLines = 1
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -104,9 +110,13 @@ extension AddViewController {
         stackView.addArrangedSubview(dateTextField)
         stackView.addArrangedSubview(saveButton)
         
+        view.addSubview(titleLabel)
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
             stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),

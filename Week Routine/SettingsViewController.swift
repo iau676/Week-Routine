@@ -8,6 +8,8 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
+        
+    let titleLabel = UILabel()
     
     let scrollView = UIScrollView()
     let stackView = UIStackView()
@@ -21,7 +23,6 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Settings"
         style()
         layout()
         addGestureRecognizer()
@@ -58,6 +59,11 @@ extension SettingsViewController {
     func style() {
         view.backgroundColor = Colors.backgroundColor
         
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = Colors.labelColor
+        titleLabel.text = "Settings"
+        titleLabel.numberOfLines = 1
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,9 +99,13 @@ extension SettingsViewController {
         
         scrollView.addSubview(stackView)
         
+        view.addSubview(titleLabel)
         view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
+           titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
+           titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
            scrollView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
