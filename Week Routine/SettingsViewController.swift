@@ -9,8 +9,10 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    let scrollView = UIScrollView()
     let stackView = UIStackView()
     
+    let dayFormatStackView = UIStackView()
     let dayFormatLabel = UILabel()
     let dayFormatSegmentedControl = UISegmentedControl()
     let dayFormatItems = ["Sun", "7", "VII"]
@@ -55,9 +57,11 @@ extension SettingsViewController {
     func style() {
         view.backgroundColor = Colors.backgroundColor
         
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 16
         
         dayFormatLabel.translatesAutoresizingMaskIntoConstraints = false
         dayFormatLabel.textColor = Colors.labelColor
@@ -69,19 +73,43 @@ extension SettingsViewController {
         dayFormatSegmentedControl.selectedSegmentIndex = 0
         dayFormatSegmentedControl.tintColor = .black
         dayFormatSegmentedControl.addTarget(self, action: #selector(self.dayFormatSegmentedControlChanged), for: UIControl.Event.valueChanged)
+        
+        dayFormatStackView.translatesAutoresizingMaskIntoConstraints = false
+        dayFormatStackView.backgroundColor = Colors.viewColor
+        dayFormatStackView.layer.cornerRadius = 8
+        dayFormatStackView.axis = .vertical
+        dayFormatStackView.spacing = 8
+        dayFormatStackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        dayFormatStackView.isLayoutMarginsRelativeArrangement = true
     }
     
     func layout() {
         
-        stackView.addArrangedSubview(dayFormatLabel)
-        stackView.addArrangedSubview(dayFormatSegmentedControl)
+        dayFormatStackView.addArrangedSubview(dayFormatLabel)
+        dayFormatStackView.addArrangedSubview(dayFormatSegmentedControl)
+     
+        stackView.addArrangedSubview(dayFormatStackView)
         
-        view.addSubview(stackView)
+        scrollView.addSubview(stackView)
+        
+        view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
+           scrollView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+           view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+           scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+               
+           stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+           stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+           stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+           stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+           
+           stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            dayFormatStackView.heightAnchor.constraint(equalToConstant: 90),
         ])
     }
 }
