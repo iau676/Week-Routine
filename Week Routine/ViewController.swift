@@ -22,12 +22,14 @@ class ViewController: UIViewController, UpdateDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Week Routine"
         style()
         layout()
-        title = "Week Routine"
         configureBarButton()
         configureSettingsButton()
         updateTableView()
+        
+        findWhichRoutinesShouldShow()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +49,42 @@ class ViewController: UIViewController, UpdateDelegate {
     
     func updateTableView() {
         RoutineBrain.shareInstance.loadRoutineArray()
+        findWhichRoutinesShouldShow()
+    }
+    
+    func findWhichRoutinesShouldShow(){
+        
+        tempArray.removeAll()
+        
+        let array = RoutineBrain.shareInstance.routineArray
+        
+        for i in 0..<array.count {
+            switch selectedSegmentIndex {
+            case 0:
+                if array[i].day == 1 || array[i].day == 0  { tempArray.append(i) }
+                break
+            case 1:
+                if array[i].day == 2 || array[i].day == 0 { tempArray.append(i) }
+                break
+            case 2:
+                if array[i].day == 3 || array[i].day == 0 { tempArray.append(i) }
+                break
+            case 3:
+                if array[i].day == 4 || array[i].day == 0 { tempArray.append(i) }
+                break
+            case 4:
+                if array[i].day == 5 || array[i].day == 0 { tempArray.append(i) }
+                break
+            case 5:
+                if array[i].day == 6 || array[i].day == 0 { tempArray.append(i) }
+                break
+            case 6:
+                if array[i].day == 7 || array[i].day == 0 { tempArray.append(i) }
+                break
+            default:
+                break
+            }
+        }
         self.tableView.reloadData()
     }
     
@@ -64,12 +102,8 @@ class ViewController: UIViewController, UpdateDelegate {
     }
     
     @objc private func daySegmentedControlChanged(segment: UISegmentedControl) -> Void {
-        switch segment.selectedSegmentIndex {
-        case 1:
-            print("1")
-        default:
-            print("d")
-        }
+        selectedSegmentIndex = segment.selectedSegmentIndex
+        findWhichRoutinesShouldShow()
     }
 }
 
@@ -78,7 +112,6 @@ class ViewController: UIViewController, UpdateDelegate {
 extension ViewController {
     
     func style() {
-        
         view.backgroundColor = Colors.backgroundColor
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +130,6 @@ extension ViewController {
         daySegmentedControl.selectedSegmentIndex = 0
         daySegmentedControl.tintColor = .black
         daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: UIControl.Event.valueChanged)
-       
     }
     
     func layout() {
@@ -129,13 +161,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routineArray.count
+        return tempArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomCell.identifier, for: indexPath) as! CustomCell
         
-        let item = RoutineBrain.shareInstance.routineArray[indexPath.row]
+        let item = RoutineBrain.shareInstance.routineArray[tempArray[indexPath.row]]
         
         var day = ""
         
@@ -144,25 +176,25 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             day = "Every day"
                 break
             case 1:
-            day = "Sunday"
-                break
-            case 2:
             day = "Monday"
                 break
-            case 3:
+            case 2:
             day = "Tuesday"
                 break
-            case 4:
+            case 3:
             day = "Wednesday"
                 break
-            case 5:
+            case 4:
             day = "Thursday"
                 break
-            case 6:
+            case 5:
             day = "Friday"
                 break
-            case 7:
+            case 6:
             day = "Saturday"
+                break
+            case 7:
+            day = "Sunday"
                 break
             default:
                 break
@@ -174,7 +206,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = item.title
         cell.dateLabel.text = "\(day), \(hour):\(minute)"
         cell.titleLabel.textColor = Colors.labelColor
-    
+        
         return cell
     }
 }
@@ -187,8 +219,8 @@ extension ViewController {
         let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             let alert = UIAlertController(title: "Routine will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-                RoutineBrain.shareInstance.removeRoutine(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                RoutineBrain.shareInstance.removeRoutine(at: self.tempArray[indexPath.row])
+                self.findWhichRoutinesShouldShow()
             }
             let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
                 alert.dismiss(animated: true, completion: nil)
