@@ -43,7 +43,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.86666667460000002" green="0.86666667460000002" blue="0.86666667460000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="viewColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="6CS-Od-Ese" secondAttribute="trailing" constant="16" id="Hte-xk-kCM"/>
                                     <constraint firstAttribute="trailing" secondItem="UfI-P4-kax" secondAttribute="trailing" constant="16" id="UtB-wc-7cS"/>
@@ -75,6 +75,9 @@
     <resources>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="viewColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

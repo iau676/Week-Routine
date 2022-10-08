@@ -64,7 +64,7 @@ extension AddViewController {
     
     func style() {
         
-        view.backgroundColor = UIColor(hex: "#d6d6d6")
+        view.backgroundColor = Colors.backgroundColor
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -75,7 +75,7 @@ extension AddViewController {
         titleTextField.placeholder = "Title"
         //textField.delegate = self
         //textField.keyboardType = .asciiCapable
-        titleTextField.backgroundColor = UIColor(hex: "#f6f6f6")
+        titleTextField.backgroundColor = Colors.viewColor
         titleTextField.addConstraint(titleTextField.heightAnchor.constraint(equalToConstant: 45))
         titleTextField.layer.cornerRadius = 8
         titleTextField.setLeftPaddingPoints(10)
@@ -84,7 +84,7 @@ extension AddViewController {
         dateTextField.translatesAutoresizingMaskIntoConstraints = false
         dateTextField.isSecureTextEntry = false // true
         dateTextField.placeholder = "Date"
-        dateTextField.backgroundColor = UIColor(hex: "#f6f6f6")
+        dateTextField.backgroundColor = Colors.viewColor
         dateTextField.addConstraint(dateTextField.heightAnchor.constraint(equalToConstant: 45))
         dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear

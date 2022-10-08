@@ -34,12 +34,12 @@ class ViewController: UIViewController, UpdateDelegate {
     
     func configureBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
     }
     
     func configureSettingsButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsButtonPressed))
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
     }
     
     func updateTableView() {
@@ -76,7 +76,7 @@ extension ViewController {
     
     func style() {
         
-        view.backgroundColor = UIColor(hex: "#d6d6d6")
+        view.backgroundColor = Colors.backgroundColor
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -84,7 +84,7 @@ extension ViewController {
         stackView.distribution = .fill
 
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier:CustomCell.identifier)
-        tableView.backgroundColor = .darkGray
+        tableView.backgroundColor = Colors.viewColor
         tableView.layer.cornerRadius = 8
         tableView.dataSource = self
         tableView.delegate = self
@@ -94,6 +94,7 @@ extension ViewController {
         daySegmentedControl.selectedSegmentIndex = 0
         daySegmentedControl.tintColor = .black
         daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: UIControl.Event.valueChanged)
+       
     }
     
     func layout() {
@@ -169,6 +170,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
         cell.titleLabel.text = item.title
         cell.dateLabel.text = "\(day), \(hour):\(minute)"
+        cell.titleLabel.textColor = Colors.labelColor
     
         return cell
     }

@@ -53,14 +53,14 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController {
     
     func style() {
-        view.backgroundColor = UIColor(hex: "#d6d6d6")
+        view.backgroundColor = Colors.backgroundColor
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
         
         dayFormatLabel.translatesAutoresizingMaskIntoConstraints = false
-        dayFormatLabel.textColor = .black
+        dayFormatLabel.textColor = Colors.labelColor
         dayFormatLabel.text = "Date Format"
         dayFormatLabel.numberOfLines = 1
         

@@ -18,6 +18,7 @@
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
 		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
+		70D5560428F1652600FE9C83 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5560328F1652600FE9C83 /* Constants.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
 		70F06B6128F0C82000CCBB8A /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70F06B6028F0C82000CCBB8A /* CustomCell.xib */; };
 		70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F06B6228F0C89700CCBB8A /* CustomCell.swift */; };
@@ -37,6 +38,7 @@
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
+		70D5560328F1652600FE9C83 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
 		70F06B6028F0C82000CCBB8A /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		70F06B6228F0C89700CCBB8A /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				707168D128EE0D90008B1D69 /* Files */,
 				70A92CC728EEE38A004D5419 /* Extensions */,
+				70D5560328F1652600FE9C83 /* Constants.swift */,
 				707168D228EE0DA5008B1D69 /* Model */,
 				707168D328EE0DAA008B1D69 /* View */,
 				707168D428EE0DAE008B1D69 /* Controller */,
@@ -213,6 +216,7 @@
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
 				70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
+				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
