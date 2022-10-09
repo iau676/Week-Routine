@@ -31,6 +31,7 @@ class ViewController: UIViewController, UpdateDelegate {
         
         getWeekday()
         findWhichRoutinesShouldShow()
+        askNotificationPermission()
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,6 +95,15 @@ class ViewController: UIViewController, UpdateDelegate {
             }
         }
         self.tableView.reloadData()
+    }
+    
+    func askNotificationPermission(){
+        RoutineBrain.shareInstance.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+            (permissionGranted, error) in
+            if(!permissionGranted){
+                print("Permission Denied")
+            }
+        }
     }
     
     @objc func addButtonPressed() {

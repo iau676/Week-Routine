@@ -130,6 +130,7 @@ extension AddViewController {
 extension AddViewController {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        dateTextField.text = "\(day), \(hour):\(minute)"
         return 3
     }
     
