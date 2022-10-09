@@ -14,6 +14,8 @@ class SettingsViewController: UIViewController {
     let scrollView = UIScrollView()
     let stackView = UIStackView()
     
+    let allowNotificationButton = UIButton()
+    
     let dayFormatStackView = UIStackView()
     let dayFormatLabel = UILabel()
     let dayFormatSegmentedControl = UISegmentedControl()
@@ -26,6 +28,7 @@ class SettingsViewController: UIViewController {
         style()
         layout()
         addGestureRecognizer()
+        checkNotificationAllowed()
     }
     
     //MARK: - Helpers
@@ -36,10 +39,30 @@ class SettingsViewController: UIViewController {
         view.addGestureRecognizer(swipeDown)
     }
     
+    func checkNotificationAllowed() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus == .authorized {
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = true
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = false
+                }
+            }
+        }
+    }
+    
     //MARK: - Selectors
     
     @objc func respondToSwipeGesture(gesture: UISwipeGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func allowNotificationButtonPressed(gesture: UISwipeGestureRecognizer) {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @objc private func dayFormatSegmentedControlChanged(segment: UISegmentedControl) -> Void {
@@ -70,6 +93,12 @@ extension SettingsViewController {
         stackView.axis = .vertical
         stackView.spacing = 16
         
+        allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
+        allowNotificationButton.setTitle("Allow Notification", for: [])
+        allowNotificationButton.backgroundColor = .darkGray
+        allowNotificationButton.layer.cornerRadius = 10
+        allowNotificationButton.addTarget(self, action: #selector(allowNotificationButtonPressed), for: .primaryActionTriggered)
+        
         dayFormatLabel.translatesAutoresizingMaskIntoConstraints = false
         dayFormatLabel.textColor = Colors.labelColor
         dayFormatLabel.text = "Date Format"
@@ -95,6 +124,7 @@ extension SettingsViewController {
         dayFormatStackView.addArrangedSubview(dayFormatLabel)
         dayFormatStackView.addArrangedSubview(dayFormatSegmentedControl)
      
+        stackView.addArrangedSubview(allowNotificationButton)
         stackView.addArrangedSubview(dayFormatStackView)
         
         scrollView.addSubview(stackView)
@@ -121,6 +151,7 @@ extension SettingsViewController {
         
         NSLayoutConstraint.activate([
             dayFormatStackView.heightAnchor.constraint(equalToConstant: 90),
+            allowNotificationButton.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
 }
