@@ -227,6 +227,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        UIView.animate(withDuration: 0.9, delay: 0.09 * Double(indexPath.row), animations: {
+            cell.alpha = 1
+        })
+    }
 }
 
 //MARK: - Swipe Cell
