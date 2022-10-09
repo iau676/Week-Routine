@@ -11,14 +11,14 @@ class ViewController: UIViewController, UpdateDelegate {
     
     var tempArray = [Int]()
     var selectedSegmentIndex = 0
-    
     var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    
     var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
     
     let stackView = UIStackView()
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
+    
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +32,25 @@ class ViewController: UIViewController, UpdateDelegate {
         getWeekday()
         findWhichRoutinesShouldShow()
         askNotificationPermission()
+        addGestureRecognizer()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+    }
+    
+    //MARK: - Helpers
+    
+    func addGestureRecognizer(){
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftGesture))
+        swipeLeft.direction = .left
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightGesture))
+        swipeRight.direction = .right
+        
+        view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeRight)
     }
     
     func configureBarButton() {
@@ -104,6 +118,20 @@ class ViewController: UIViewController, UpdateDelegate {
                 print("Permission Denied")
             }
         }
+    }
+    
+    //MARK: - Selectors
+    
+    @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
+        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
+        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
+        findWhichRoutinesShouldShow()
+    }
+    
+    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
+        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
+        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
+        findWhichRoutinesShouldShow()
     }
     
     @objc func addButtonPressed() {
@@ -230,7 +258,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.alpha = 0
-        UIView.animate(withDuration: 0.9, delay: 0.09 * Double(indexPath.row), animations: {
+        UIView.animate(withDuration: 0.6, delay: 0.06 * Double(indexPath.row), animations: {
             cell.alpha = 1
         })
     }
