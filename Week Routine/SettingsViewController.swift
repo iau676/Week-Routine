@@ -21,6 +21,8 @@ class SettingsViewController: UIViewController {
     let dayFormatSegmentedControl = UISegmentedControl()
     let dayFormatItems = ["Sun", "7", "VII"]
     
+    let buttonImageSize = 18
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -29,6 +31,9 @@ class SettingsViewController: UIViewController {
         layout()
         addGestureRecognizer()
         checkNotificationAllowed()
+        
+        updateIcon(allowNotificationButton, "next")
+        allowNotificationButton.moveImageRightTextCenter()
     }
     
     //MARK: - Helpers
@@ -52,6 +57,14 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    
+    func updateIcon(_ button: UIButton, _ imageName: String) {
+        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(UIColor.white)
+        button.setImage(UIGraphicsImageRenderer(size: CGSize(width: buttonImageSize, height: buttonImageSize)).image { _ in
+            image?.draw(in: CGRect(x: 0, y: 0, width: buttonImageSize, height: buttonImageSize)) }, for: .normal)
+        
+    }
+    
     
     //MARK: - Selectors
     
@@ -151,7 +164,7 @@ extension SettingsViewController {
         
         NSLayoutConstraint.activate([
             dayFormatStackView.heightAnchor.constraint(equalToConstant: 90),
-            allowNotificationButton.heightAnchor.constraint(equalToConstant: 45)
+            allowNotificationButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
