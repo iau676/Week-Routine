@@ -13,6 +13,10 @@ struct RoutineBrain {
     var routineArray = [Routine]()
     static var shareInstance = RoutineBrain()
     
+    var days = [["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                ["I", "II", "III", "IV", "V", "VI", "VII"],
+                ["1", "2", "3", "4", "5", "6", "7"]]
+    
     let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     

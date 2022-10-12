@@ -7,16 +7,17 @@
 
 import UIKit
 
-class ViewController: UIViewController, UpdateDelegate {
+class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
+        
     
     var tempArray = [Int]()
     var selectedSegmentIndex = 0
-    var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
     
     let stackView = UIStackView()
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
+    let selectedDayType = UserDefaults.standard.integer(forKey: "selectedDayType")
     
     //MARK: - Life Cycle
     
@@ -66,6 +67,11 @@ class ViewController: UIViewController, UpdateDelegate {
     func updateTableView() {
         RoutineBrain.shareInstance.loadRoutineArray()
         findWhichRoutinesShouldShow()
+    }
+    
+    func updateSettings() {
+        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefaults.standard.integer(forKey: "selectedDayType")])
+        getWeekday()
     }
     
     func getWeekday() {
@@ -143,6 +149,7 @@ class ViewController: UIViewController, UpdateDelegate {
     
     @objc func settingsButtonPressed() {
         let vc = SettingsViewController()
+        vc.delegate = self
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
@@ -172,7 +179,7 @@ extension ViewController {
         tableView.delegate = self
         
         daySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        daySegmentedControl.replaceSegments(segments: days)
+        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[selectedDayType])
         daySegmentedControl.selectedSegmentIndex = 0
         daySegmentedControl.tintColor = .black
         daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: UIControl.Event.valueChanged)
