@@ -21,7 +21,6 @@ class SettingsViewController: UIViewController {
     let dayFormatLabel = UILabel()
     let dayFormatSegmentedControl = UISegmentedControl()
     let dayFormatItems = ["Sun", "VII", "7"]
-    let selectedDayType = UserDefaults.standard.integer(forKey: "selectedDayType")
     let buttonImageSize = 18
     
     var delegate: SettingsDelegate?
@@ -84,11 +83,11 @@ class SettingsViewController: UIViewController {
     @objc private func dayFormatSegmentedControlChanged(segment: UISegmentedControl) -> Void {
         switch segment.selectedSegmentIndex {
         case 0:
-            UserDefaults.standard.set(0, forKey: "selectedDayType")
+            UserDefault.selectedDayType.set(0)
         case 1:
-            UserDefaults.standard.set(1, forKey: "selectedDayType")
+            UserDefault.selectedDayType.set(1)
         case 2:
-            UserDefaults.standard.set(2, forKey: "selectedDayType")
+            UserDefault.selectedDayType.set(2)
         default:
             break
         }
@@ -130,7 +129,7 @@ extension SettingsViewController {
         dayFormatSegmentedControl.selectedSegmentIndex = 0
         dayFormatSegmentedControl.tintColor = .black
         dayFormatSegmentedControl.addTarget(self, action: #selector(self.dayFormatSegmentedControlChanged), for: UIControl.Event.valueChanged)
-        dayFormatSegmentedControl.selectedSegmentIndex = selectedDayType
+        dayFormatSegmentedControl.selectedSegmentIndex = UserDefault.selectedDayType.getInt()
         
         dayFormatStackView.translatesAutoresizingMaskIntoConstraints = false
         dayFormatStackView.backgroundColor = Colors.viewColor

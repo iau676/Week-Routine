@@ -20,6 +20,7 @@
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
 		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
 		70D5560428F1652600FE9C83 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5560328F1652600FE9C83 /* Constants.swift */; };
+		70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB70E428F746D000710325 /* UserDefaultsManager.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
 		70F06B6128F0C82000CCBB8A /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70F06B6028F0C82000CCBB8A /* CustomCell.xib */; };
 		70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F06B6228F0C89700CCBB8A /* CustomCell.swift */; };
@@ -41,6 +42,7 @@
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		70D5560328F1652600FE9C83 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		70DB70E428F746D000710325 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
 		70F06B6028F0C82000CCBB8A /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		70F06B6228F0C89700CCBB8A /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				70ECB52028F03465002B2483 /* RoutineBrain.swift */,
 				707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */,
+				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
 				70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */,
+				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
 				70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */,

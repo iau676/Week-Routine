@@ -12,3 +12,7 @@ enum Colors {
     static let viewColor                 = UIColor(named: "viewColor")
     static let labelColor                = UIColor(named: "labelColor")
 }
+
+enum UserDefault {
+    static var selectedDayType                 = UserDefaultsManager(key: "selectedDayType")
+}

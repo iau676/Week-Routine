@@ -17,7 +17,6 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     let stackView = UIStackView()
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
-    let selectedDayType = UserDefaults.standard.integer(forKey: "selectedDayType")
     
     //MARK: - Life Cycle
     
@@ -70,7 +69,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     }
     
     func updateSettings() {
-        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefaults.standard.integer(forKey: "selectedDayType")])
+        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefault.selectedDayType.getInt()])
         getWeekday()
     }
     
@@ -179,7 +178,7 @@ extension ViewController {
         tableView.delegate = self
         
         daySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[selectedDayType])
+        daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefault.selectedDayType.getInt()])
         daySegmentedControl.selectedSegmentIndex = 0
         daySegmentedControl.tintColor = .black
         daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: UIControl.Event.valueChanged)
