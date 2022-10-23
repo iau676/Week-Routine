@@ -115,7 +115,7 @@ extension SettingsViewController {
         
         allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
         allowNotificationButton.setTitle("Allow Notification", for: [])
-        allowNotificationButton.backgroundColor = .darkGray
+        allowNotificationButton.backgroundColor = Colors.blackColor
         allowNotificationButton.layer.cornerRadius = 10
         allowNotificationButton.addTarget(self, action: #selector(allowNotificationButtonPressed), for: .primaryActionTriggered)
         

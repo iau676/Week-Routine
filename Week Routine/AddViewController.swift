@@ -97,7 +97,7 @@ extension AddViewController {
         dateTextField.tintColor = .clear
         dateTextField.setLeftPaddingPoints(10)
         
-        saveButton.backgroundColor = .darkGray
+        saveButton.backgroundColor = Colors.blackColor
         saveButton.addConstraint(saveButton.heightAnchor.constraint(equalToConstant: 45))
         saveButton.layer.cornerRadius = 8
         saveButton.setTitle("Save", for: .normal)
@@ -117,8 +117,8 @@ extension AddViewController {
             titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.centerYAnchor)
         ])
