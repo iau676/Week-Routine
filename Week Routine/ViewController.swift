@@ -9,7 +9,6 @@ import UIKit
 
 class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         
-    
     var tempArray = [Int]()
     var selectedSegmentIndex = 0
     var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
@@ -142,14 +141,14 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     @objc func addButtonPressed() {
         let vc = AddViewController()
         vc.delegate = self
-        vc.modalPresentationStyle = .popover
+        vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
         self.present(vc, animated: true)
     }
     
     @objc func settingsButtonPressed() {
         let vc = SettingsViewController()
         vc.delegate = self
-        vc.modalPresentationStyle = .popover
+        vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
         self.present(vc, animated: true)
     }
     
@@ -185,7 +184,6 @@ extension ViewController {
     }
     
     func layout() {
-        
         stackView.addArrangedSubview(tableView)
         stackView.addArrangedSubview(daySegmentedControl)
         
