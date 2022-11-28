@@ -254,7 +254,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let minute = item.minute < 10 ? "0\(item.minute)" : "\(item.minute)"
 
         cell.titleLabel.text = item.title
-        cell.dateLabel.text = "\(day), \(hour):\(minute)"
+        cell.dayLabel.text = "\(day)"
+        cell.hourLabel.text = "\(hour):\(minute)"
         cell.titleLabel.textColor = Colors.labelColor
         
         return cell

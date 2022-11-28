@@ -12,7 +12,8 @@ class CustomCell: UITableViewCell {
     static let identifier = "ReusableCell"
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet var sView: UIStackView!
     @IBOutlet weak var titleView: UIView!
     
