@@ -121,7 +121,7 @@ extension SettingsViewController {
         
         dayFormatLabel.translatesAutoresizingMaskIntoConstraints = false
         dayFormatLabel.textColor = Colors.labelColor
-        dayFormatLabel.text = "Date Format"
+        dayFormatLabel.text = "Day Format"
         dayFormatLabel.numberOfLines = 1
         
         dayFormatSegmentedControl.translatesAutoresizingMaskIntoConstraints = false

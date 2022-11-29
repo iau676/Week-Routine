@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,7 +41,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="viewColor"/>
                                 <constraints>
                                     <constraint firstItem="xTC-QR-I3y" firstAttribute="centerX" secondItem="XpX-EZ-mdP" secondAttribute="centerX" id="FcW-XO-cAj"/>
                                     <constraint firstItem="xTC-QR-I3y" firstAttribute="centerY" secondItem="XpX-EZ-mdP" secondAttribute="centerY" id="JFy-hL-iC0"/>
@@ -103,8 +102,5 @@
         <namedColor name="viewColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
