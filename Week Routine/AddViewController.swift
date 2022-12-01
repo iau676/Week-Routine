@@ -18,9 +18,19 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
-    let selectColorButton = UIButton()
+    let colorButton = UIButton()
     let saveButton = UIButton()
     let pickerView = UIPickerView()
+    
+    let colorPaletteView = UIView()
+    let colorPaletteStackView = UIStackView()
+    let redButton = UIButton()
+    let orangeButton = UIButton()
+    let yellowButton = UIButton()
+    let greenButton = UIButton()
+    let lightBlueButton = UIButton()
+    let darkBlueButton = UIButton()
+    let purpleButton = UIButton()
     
     var delegate: UpdateDelegate?
     
@@ -36,6 +46,9 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let minutes = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
     
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    var isGradientChanged = false
+    
+    let gradientLayer = CAGradientLayer()
     
     //MARK: - Life Cycle
     
@@ -48,6 +61,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         pickerView.delegate = self
         pickerView.dataSource = self
         titleTextField.becomeFirstResponder()
+        colorPaletteView.isHidden = true
         
         hideKeyboardWhenTappedAround()
     }
@@ -62,15 +76,21 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         let topGradientColor = UIColor(hex: "#645CAA") ?? .darkGray
         let bottomGradientColor = UIColor(hex: "#F07DEA") ?? .white
 
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = selectColorButton.bounds
-        gradientLayer.colors = [topGradientColor.cgColor, bottomGradientColor.cgColor]
+        gradientLayer.frame = colorButton.bounds
+        if isGradientChanged == false {
+            gradientLayer.colors = [topGradientColor.cgColor, bottomGradientColor.cgColor]
+        }
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
         gradientLayer.cornerRadius = 8
         gradientLayer.locations = [0.0, 1.0]
 
-        selectColorButton.layer.insertSublayer(gradientLayer, at: 0)
+        colorButton.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func updateGradientLayerColors(_ topGradientColor: UIColor?, _ bottomGradientColor: UIColor?){
+        isGradientChanged = true
+        gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
     }
     
     //MARK: - GestureRecognizer
@@ -103,9 +123,14 @@ extension AddViewController {
         stackView.axis = .vertical
         stackView.spacing = 20
         
+        colorPaletteStackView.translatesAutoresizingMaskIntoConstraints = false
+        colorPaletteStackView.axis = .horizontal
+        colorPaletteStackView.distribution = .fillEqually
+        colorPaletteStackView.spacing = 0
+        
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.isSecureTextEntry = false // true
-        titleTextField.placeholder = "Title"
+        titleTextField.placeholder = "Routine"
         //textField.delegate = self
         //textField.keyboardType = .asciiCapable
         titleTextField.backgroundColor = Colors.viewColor
@@ -129,18 +154,52 @@ extension AddViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         
-        selectColorButton.addConstraint(selectColorButton.heightAnchor.constraint(equalToConstant: 45))
-        selectColorButton.layer.cornerRadius = 8
-        selectColorButton.setTitle("Select a Color", for: .normal)
-        selectColorButton.setTitleColor(.white, for: .normal)
-        selectColorButton.addTarget(self, action: #selector(selectColorButtonPressed), for: .touchUpInside)
+        colorButton.addConstraint(colorButton.heightAnchor.constraint(equalToConstant: 45))
+        colorButton.layer.cornerRadius = 8
+        colorButton.setTitle("Color", for: .normal)
+        colorButton.setTitleColor(.white, for: .normal)
+        colorButton.contentHorizontalAlignment = .left
+        colorButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0);
+        colorButton.addTarget(self, action: #selector(selectColorButtonPressed), for: .touchUpInside)
+                
+        colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
+        colorPaletteView.backgroundColor = .darkGray
+        
+        redButton.translatesAutoresizingMaskIntoConstraints = false
+        redButton.backgroundColor = Colors.red
+        redButton.addTarget(self, action: #selector(redButtonPressed), for: .touchUpInside)
+        
+        orangeButton.translatesAutoresizingMaskIntoConstraints = false
+        orangeButton.backgroundColor = Colors.orange
+        orangeButton.addTarget(self, action: #selector(orangeButtonPressed), for: .touchUpInside)
+        
+        yellowButton.translatesAutoresizingMaskIntoConstraints = false
+        yellowButton.backgroundColor = Colors.yellow
+        yellowButton.addTarget(self, action: #selector(yellowButtonPressed), for: .touchUpInside)
+        
+        greenButton.translatesAutoresizingMaskIntoConstraints = false
+        greenButton.backgroundColor = Colors.green
+        greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .touchUpInside)
+        
+        lightBlueButton.translatesAutoresizingMaskIntoConstraints = false
+        lightBlueButton.backgroundColor = Colors.lightBlue
+        lightBlueButton.addTarget(self, action: #selector(lightBlueButtonPressed), for: .touchUpInside)
+        
+        darkBlueButton.translatesAutoresizingMaskIntoConstraints = false
+        darkBlueButton.backgroundColor = Colors.darkBlue
+        darkBlueButton.addTarget(self, action: #selector(darkBlueButtonPressed), for: .touchUpInside)
+        
+        purpleButton.translatesAutoresizingMaskIntoConstraints = false
+        purpleButton.backgroundColor = Colors.purple
+        purpleButton.addTarget(self, action: #selector(purpleButtonPressed), for: .touchUpInside)
+                
     }
     
     func layout() {
         
         stackView.addArrangedSubview(titleTextField)
         stackView.addArrangedSubview(dateTextField)
-        stackView.addArrangedSubview(selectColorButton)
+        stackView.addArrangedSubview(colorButton)
         stackView.addArrangedSubview(saveButton)
         
         view.addSubview(titleLabel)
@@ -154,6 +213,29 @@ extension AddViewController {
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16)
+        ])
+        
+        colorPaletteStackView.addArrangedSubview(redButton)
+        colorPaletteStackView.addArrangedSubview(orangeButton)
+        colorPaletteStackView.addArrangedSubview(yellowButton)
+        colorPaletteStackView.addArrangedSubview(greenButton)
+        colorPaletteStackView.addArrangedSubview(lightBlueButton)
+        colorPaletteStackView.addArrangedSubview(darkBlueButton)
+        colorPaletteStackView.addArrangedSubview(purpleButton)
+        
+        view.addSubview(colorPaletteView)
+        colorPaletteView.addSubview(colorPaletteStackView)
+        
+        NSLayoutConstraint.activate([
+            colorPaletteView.heightAnchor.constraint(equalToConstant: keyboardHeight),
+            colorPaletteView.widthAnchor.constraint(equalToConstant: view.bounds.width),
+            colorPaletteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            colorPaletteView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            colorPaletteStackView.topAnchor.constraint(equalTo: colorPaletteView.topAnchor, constant: 0),
+            colorPaletteStackView.leadingAnchor.constraint(equalTo: colorPaletteView.leadingAnchor, constant: 0),
+            colorPaletteStackView.trailingAnchor.constraint(equalTo: colorPaletteView.trailingAnchor, constant: 0),
+            colorPaletteStackView.bottomAnchor.constraint(equalTo: colorPaletteView.bottomAnchor, constant: 0),
         ])
     }
 }
@@ -216,8 +298,37 @@ extension AddViewController {
     }
     
     @objc func selectColorButtonPressed() {
-        
+        colorPaletteView.isHidden = false
     }
+    
+    @objc func redButtonPressed() {
+        updateGradientLayerColors(Colors.red, Colors.red)
+    }
+    
+    @objc func orangeButtonPressed() {
+        updateGradientLayerColors(Colors.orange, Colors.orange)
+    }
+    
+    @objc func yellowButtonPressed() {
+        updateGradientLayerColors(Colors.yellow, Colors.yellow)
+    }
+    
+    @objc func greenButtonPressed() {
+        updateGradientLayerColors(Colors.green, Colors.green)
+    }
+    
+    @objc func lightBlueButtonPressed() {
+        updateGradientLayerColors(Colors.lightBlue, Colors.lightBlue)
+    }
+    
+    @objc func darkBlueButtonPressed() {
+        updateGradientLayerColors(Colors.darkBlue, Colors.darkBlue)
+    }
+    
+    @objc func purpleButtonPressed() {
+        updateGradientLayerColors(Colors.purple, Colors.purple)
+    }
+
 }
 
 //dismiss keyboard when user tap around
@@ -229,6 +340,7 @@ extension AddViewController {
     }
 
     @objc func dismissKeyboard() {
+        colorPaletteView.isHidden = true
         view.endEditing(true)
     }
 }
