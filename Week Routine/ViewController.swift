@@ -30,8 +30,12 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         
         getWeekday()
         findWhichRoutinesShouldShow()
-        askNotificationPermission()
         addGestureRecognizer()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupFirstLaunch()
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,6 +117,14 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
             }
         }
         self.tableView.reloadData()
+    }
+    
+    private func setupFirstLaunch() {
+        askNotificationPermission()
+        
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            getKeyboardHeight()
+        }
     }
     
     func askNotificationPermission(){
@@ -289,5 +301,32 @@ extension ViewController {
             success(true)
         })
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+//MARK: - Keyboard Height
+
+extension ViewController {
+    func getKeyboardHeight() {
+        let textField = UITextField()
+        view.addSubview(textField)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        textField.becomeFirstResponder()
+        textField.resignFirstResponder()
+        textField.removeFromSuperview()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                let keyboardHeight = CGFloat(keyboardSize.height)
+                UserDefault.keyboardHeight.set(keyboardHeight)
+            }
+        }
     }
 }

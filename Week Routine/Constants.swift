@@ -16,4 +16,5 @@ enum Colors {
 
 enum UserDefault {
     static var selectedDayType           = UserDefaultsManager(key: "selectedDayType")
+    static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
 }
