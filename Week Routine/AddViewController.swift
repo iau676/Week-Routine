@@ -18,6 +18,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
+    let selectColorButton = UIButton()
     let saveButton = UIButton()
     let pickerView = UIPickerView()
     
@@ -34,6 +35,10 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     let minutes = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
     
+    var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
@@ -45,6 +50,27 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         titleTextField.becomeFirstResponder()
         
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        setGradientSelectColorButton()
+    }
+    
+    //MARK: - Helpers
+    
+    private func setGradientSelectColorButton(){
+        let topGradientColor = UIColor(hex: "#645CAA") ?? .darkGray
+        let bottomGradientColor = UIColor(hex: "#F07DEA") ?? .white
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = selectColorButton.bounds
+        gradientLayer.colors = [topGradientColor.cgColor, bottomGradientColor.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientLayer.cornerRadius = 8
+        gradientLayer.locations = [0.0, 1.0]
+
+        selectColorButton.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     //MARK: - GestureRecognizer
@@ -102,12 +128,19 @@ extension AddViewController {
         saveButton.layer.cornerRadius = 8
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        
+        selectColorButton.addConstraint(selectColorButton.heightAnchor.constraint(equalToConstant: 45))
+        selectColorButton.layer.cornerRadius = 8
+        selectColorButton.setTitle("Select a Color", for: .normal)
+        selectColorButton.setTitleColor(.white, for: .normal)
+        selectColorButton.addTarget(self, action: #selector(selectColorButtonPressed), for: .touchUpInside)
     }
     
     func layout() {
         
         stackView.addArrangedSubview(titleTextField)
         stackView.addArrangedSubview(dateTextField)
+        stackView.addArrangedSubview(selectColorButton)
         stackView.addArrangedSubview(saveButton)
         
         view.addSubview(titleLabel)
@@ -120,7 +153,7 @@ extension AddViewController {
             stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16)
         ])
     }
 }
@@ -180,6 +213,10 @@ extension AddViewController {
         delegate?.updateTableView()
         
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func selectColorButtonPressed() {
+        
     }
 }
 
