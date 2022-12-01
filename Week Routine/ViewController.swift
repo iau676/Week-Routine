@@ -230,67 +230,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomCell.identifier, for: indexPath) as! CustomCell
         
         let item = RoutineBrain.shareInstance.routineArray[tempArray[indexPath.row]]
-        
-        var day = ""
-        var color = Colors.viewColor
-        
-        switch item.day {
-            case 0:
-            day = "Every day"
-                break
-            case 1:
-            day = "Monday"
-                break
-            case 2:
-            day = "Tuesday"
-                break
-            case 3:
-            day = "Wednesday"
-                break
-            case 4:
-            day = "Thursday"
-                break
-            case 5:
-            day = "Friday"
-                break
-            case 6:
-            day = "Saturday"
-                break
-            case 7:
-            day = "Sunday"
-                break
-            default:
-                break
-        }
-        
-        switch item.color {
-        case ColorName.red:
-            color = Colors.red
-                break
-        case ColorName.orange:
-            color = Colors.orange
-                break
-        case ColorName.yellow:
-            color = Colors.yellow
-                break
-        case ColorName.green:
-            color = Colors.green
-                break
-        case ColorName.lightBlue:
-            color = Colors.lightBlue
-                break
-        case ColorName.darkBlue:
-            color = Colors.darkBlue
-                break
-        case ColorName.purple:
-            color = Colors.purple
-                break
-            default:
-                break
-        }
-        
+        let day = RoutineBrain.shareInstance.getDayName(item.day)
         let hour = item.hour < 10 ? "0\(item.hour)" : "\(item.hour)"
         let minute = item.minute < 10 ? "0\(item.minute)" : "\(item.minute)"
+        let color = RoutineBrain.shareInstance.getColor(item.color ?? ColorName.defaultt)
 
         cell.titleLabel.text = item.title
         cell.dayLabel.text = "\(day)"
@@ -313,7 +256,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.alpha = 0
-        UIView.animate(withDuration: 0.6, delay: 0.06 * Double(indexPath.row), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.03 * Double(indexPath.row), animations: {
             cell.alpha = 1
         })
     }
@@ -338,7 +281,25 @@ extension ViewController {
             self.present(alert, animated: true, completion: nil)
             success(true)
         })
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        
+        let editAction = UIContextualAction(style: .normal, title:  "Edit", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            let vc = AddViewController()
+            let item = RoutineBrain.shareInstance.routineArray[self.tempArray[indexPath.row]]
+            vc.delegate = self
+            vc.isEditMode = true
+            vc.routineTitle = item.title ?? ""
+            vc.dayInt = Int(item.day)
+            vc.hour = "\(item.hour)"
+            vc.minute = "\(item.minute)"
+            vc.color = item.color ?? ""
+            vc.routineArrayIndex = self.tempArray[indexPath.row]
+            vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.present(vc, animated: true)
+            success(true)
+        })
+        editAction.backgroundColor = Colors.lightBlue
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
 }
 

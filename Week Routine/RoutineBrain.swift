@@ -37,10 +37,20 @@ struct RoutineBrain {
     }
     
     mutating func removeRoutine(at index: Int){
-        removeNotification(id: self.routineArray[index].uuid!)
+        guard let uuid = routineArray[index].uuid else{return}
+        removeNotification(id: uuid)
         context.delete(routineArray[index])
         routineArray.remove(at: index)
         saveContext()
+    }
+    
+    func updateRoutineNotification(_ index: Int){
+        let item = routineArray[index]
+        guard let title = item.title else{return}
+        guard let uuid = item.uuid else{return}
+        
+        removeNotification(id: uuid)
+        addNotification(title: title, day: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), id: uuid)
     }
     
     mutating func loadRoutineArray(with request: NSFetchRequest<Routine> = Routine.fetchRequest()){
@@ -84,6 +94,50 @@ struct RoutineBrain {
     
     func removeNotification(id: String){
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
+    func getDayName(_ dayInt: Int16) -> String {
+        switch dayInt {
+            case 0:
+                return "Every day"
+            case 1:
+                return "Monday"
+            case 2:
+                return "Tuesday"
+            case 3:
+                return "Wednesday"
+            case 4:
+                return "Thursday"
+            case 5:
+                return "Friday"
+            case 6:
+                return "Saturday"
+            case 7:
+                return "Sunday"
+            default:
+                return ""
+        }
+    }
+    
+    func getColor(_ colorName: String) -> UIColor {
+        switch colorName {
+        case ColorName.red:
+            return Colors.red
+        case ColorName.orange:
+            return Colors.orange
+        case ColorName.yellow:
+            return Colors.yellow
+        case ColorName.green:
+            return Colors.green
+        case ColorName.lightBlue:
+            return Colors.lightBlue
+        case ColorName.darkBlue:
+            return Colors.darkBlue
+        case ColorName.purple:
+            return Colors.purple
+        default:
+            return Colors.viewColor ?? .darkGray
+        }
     }
     
     func saveContext() {

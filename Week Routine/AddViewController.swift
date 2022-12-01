@@ -33,12 +33,15 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let purpleButton = UIButton()
     
     var delegate: UpdateDelegate?
+    var isEditMode = false
     
+    var routineTitle = ""
     var day = "Every day"
     var dayInt = 0
     var hour = "00"
     var minute = "00"
     var color = ColorName.defaultt
+    var routineArrayIndex = 0
     
     let days = ["Every day", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     
@@ -117,8 +120,19 @@ extension AddViewController {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = Colors.labelColor
-        titleLabel.text = "New Routine"
         titleLabel.numberOfLines = 1
+        if isEditMode == true {
+            titleLabel.text = "Edit Routine"
+            let day = RoutineBrain.shareInstance.getDayName(Int16(dayInt))
+            let color = RoutineBrain.shareInstance.getColor(color)
+            let hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
+            let minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
+            titleTextField.text = routineTitle
+            dateTextField.text = "\(day), \(hour):\(minute)"
+            updateGradientLayerColors(color, color)
+        } else {
+            titleLabel.text = "New Routine"
+        }
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -293,7 +307,18 @@ extension AddViewController {
         guard let titleText = titleTextField.text else{return}
         
         if titleText.count > 0 && dateText.count > 0 {
-            RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
+            if isEditMode == true {
+                let item =  RoutineBrain.shareInstance.routineArray[routineArrayIndex]
+                item.title = titleText
+                item.day = Int16(dayInt)
+                item.hour = Int16(hour) ?? 00
+                item.minute = Int16(minute) ?? 00
+                item.color = color
+                RoutineBrain.shareInstance.updateRoutineNotification(routineArrayIndex)
+                RoutineBrain.shareInstance.saveContext()
+            } else {
+                RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
+            }
             delegate?.updateTableView()
             self.dismiss(animated: true, completion: nil)
         }
