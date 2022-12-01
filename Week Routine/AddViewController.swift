@@ -38,6 +38,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     var dayInt = 0
     var hour = "00"
     var minute = "00"
+    var color = ColorName.defaultt
     
     let days = ["Every day", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     
@@ -291,7 +292,7 @@ extension AddViewController {
         guard let _ = dateTextField.text else{return}
         guard let titleText = titleTextField.text else{return}
         
-        RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!)
+        RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
         delegate?.updateTableView()
         
         self.dismiss(animated: true, completion: nil)
@@ -302,30 +303,37 @@ extension AddViewController {
     }
     
     @objc func redButtonPressed() {
+        color = ColorName.red
         updateGradientLayerColors(Colors.red, Colors.red)
     }
     
     @objc func orangeButtonPressed() {
+        color = ColorName.orange
         updateGradientLayerColors(Colors.orange, Colors.orange)
     }
     
     @objc func yellowButtonPressed() {
+        color = ColorName.yellow
         updateGradientLayerColors(Colors.yellow, Colors.yellow)
     }
     
     @objc func greenButtonPressed() {
+        color = ColorName.green
         updateGradientLayerColors(Colors.green, Colors.green)
     }
     
     @objc func lightBlueButtonPressed() {
+        color = ColorName.lightBlue
         updateGradientLayerColors(Colors.lightBlue, Colors.lightBlue)
     }
     
     @objc func darkBlueButtonPressed() {
+        color = ColorName.darkBlue
         updateGradientLayerColors(Colors.darkBlue, Colors.darkBlue)
     }
     
     @objc func purpleButtonPressed() {
+        color = ColorName.purple
         updateGradientLayerColors(Colors.purple, Colors.purple)
     }
 

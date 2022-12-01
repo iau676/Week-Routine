@@ -16,6 +16,7 @@ class CustomCell: UITableViewCell {
     @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet var sView: UIStackView!
     @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var dateView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

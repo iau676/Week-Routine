@@ -13,13 +13,24 @@ enum Colors {
     static let labelColor                = UIColor(named: "labelColor")
     static let blackColor                = UIColor(hex: "#1C1C1E")
     
-    static let red                       = UIColor(hex: "#ed1c24")
-    static let orange                    = UIColor(hex: "#ff7f27")
-    static let yellow                    = UIColor(hex: "#fff200")
-    static let green                     = UIColor(hex: "#22b14c")
-    static let lightBlue                 = UIColor(hex: "#00a2e8")
-    static let darkBlue                  = UIColor(hex: "#3f48cc")
-    static let purple                    = UIColor(hex: "#a349a4")
+    static let red                       = UIColor.systemRed
+    static let orange                    = UIColor.systemOrange
+    static let yellow                    = UIColor.systemYellow
+    static let green                     = UIColor.systemGreen
+    static let lightBlue                 = UIColor.systemBlue
+    static let darkBlue                  = UIColor.systemIndigo
+    static let purple                    = UIColor.systemPurple
+}
+
+enum ColorName {
+    static let defaultt                  = "default"
+    static let red                       = "red"
+    static let orange                    = "orange"
+    static let yellow                    = "yellow"
+    static let green                     = "green"
+    static let lightBlue                 = "lightBlue"
+    static let darkBlue                  = "darkBlue"
+    static let purple                    = "purple"
 }
 
 enum UserDefault {

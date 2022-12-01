@@ -232,6 +232,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let item = RoutineBrain.shareInstance.routineArray[tempArray[indexPath.row]]
         
         var day = ""
+        var color = Colors.viewColor
         
         switch item.day {
             case 0:
@@ -262,13 +263,50 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
                 break
         }
         
+        switch item.color {
+        case ColorName.red:
+            color = Colors.red
+                break
+        case ColorName.orange:
+            color = Colors.orange
+                break
+        case ColorName.yellow:
+            color = Colors.yellow
+                break
+        case ColorName.green:
+            color = Colors.green
+                break
+        case ColorName.lightBlue:
+            color = Colors.lightBlue
+                break
+        case ColorName.darkBlue:
+            color = Colors.darkBlue
+                break
+        case ColorName.purple:
+            color = Colors.purple
+                break
+            default:
+                break
+        }
+        
         let hour = item.hour < 10 ? "0\(item.hour)" : "\(item.hour)"
         let minute = item.minute < 10 ? "0\(item.minute)" : "\(item.minute)"
 
         cell.titleLabel.text = item.title
         cell.dayLabel.text = "\(day)"
         cell.hourLabel.text = "\(hour):\(minute)"
+        cell.dayLabel.textColor = .darkGray
+        cell.hourLabel.textColor = .darkGray
         cell.titleLabel.textColor = Colors.labelColor
+        
+        cell.dateView.backgroundColor = color
+        cell.titleView.backgroundColor = color
+        
+        if color != Colors.viewColor {
+            cell.dayLabel.textColor = .white
+            cell.hourLabel.textColor = .white
+            cell.titleLabel.textColor = .white
+        }
         
         return cell
     }

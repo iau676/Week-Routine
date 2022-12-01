@@ -20,12 +20,13 @@ struct RoutineBrain {
     let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    mutating func addRoutine(title: String, day: Int16, hour: Int16, minute: Int16){
+    mutating func addRoutine(title: String, day: Int16, hour: Int16, minute: Int16, color: String){
         let newRoutine = Routine(context: self.context)
         newRoutine.title = title
         newRoutine.day = day
         newRoutine.hour = hour
         newRoutine.minute = minute
+        newRoutine.color = color
         newRoutine.ascending = hour * 66 + minute
         newRoutine.date = Date()
         let uuid = UUID().uuidString
