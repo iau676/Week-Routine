@@ -37,3 +37,7 @@ enum UserDefault {
     static var selectedDayType           = UserDefaultsManager(key: "selectedDayType")
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
 }
+
+enum Images {
+    static let cross                     = UIImage(named: "cross")
+}

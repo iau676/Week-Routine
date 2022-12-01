@@ -19,6 +19,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let titleTextField = UITextField()
     let dateTextField = UITextField()
     let colorButton = UIButton()
+    let clearColorButton = UIButton()
     let saveButton = UIButton()
     let pickerView = UIPickerView()
     
@@ -175,7 +176,14 @@ extension AddViewController {
         colorButton.setTitleColor(.white, for: .normal)
         colorButton.contentHorizontalAlignment = .left
         colorButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0);
-        colorButton.addTarget(self, action: #selector(selectColorButtonPressed), for: .touchUpInside)
+        colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
+        
+        clearColorButton.translatesAutoresizingMaskIntoConstraints = false
+        clearColorButton.addConstraint(clearColorButton.heightAnchor.constraint(equalToConstant: 45))
+        clearColorButton.addConstraint(clearColorButton.widthAnchor.constraint(equalToConstant: 45))
+        clearColorButton.layer.cornerRadius = 8
+        clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
+        clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20, color: Colors.viewColor ?? .darkGray)
                 
         colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
         colorPaletteView.backgroundColor = .darkGray
@@ -219,6 +227,7 @@ extension AddViewController {
         
         view.addSubview(titleLabel)
         view.addSubview(stackView)
+        view.addSubview(clearColorButton)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
@@ -227,7 +236,10 @@ extension AddViewController {
             stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16)
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16),
+            
+            clearColorButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            clearColorButton.topAnchor.constraint(equalTo: colorButton.topAnchor),
         ])
         
         colorPaletteStackView.addArrangedSubview(redButton)
@@ -324,8 +336,13 @@ extension AddViewController {
         }
     }
     
-    @objc func selectColorButtonPressed() {
+    @objc func colorButtonPressed() {
         colorPaletteView.isHidden = false
+    }
+    
+    @objc func clearColorButtonPressed() {
+        color = ColorName.defaultt
+        updateGradientLayerColors(Colors.viewColor, Colors.viewColor)
     }
     
     @objc func redButtonPressed() {

@@ -10,6 +10,7 @@
 		70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */; };
 		7009E519292801B400FC0509 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009E518292801B400FC0509 /* UIViewController+Extensions.swift */; };
 		702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddViewController.swift */; };
+		70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */; };
 		707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168B928EE0C7B008B1D69 /* AppDelegate.swift */; };
 		707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */; };
 		707168BE28EE0C7B008B1D69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BD28EE0C7B008B1D69 /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		7009E518292801B400FC0509 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		702BA40428EE105800BB7EDB /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		707168B628EE0C7B008B1D69 /* Week Routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Week Routine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		707168B928EE0C7B008B1D69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */,
 				70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */,
 				7009E518292801B400FC0509 /* UIViewController+Extensions.swift */,
+				70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
 				70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */,
+				70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
