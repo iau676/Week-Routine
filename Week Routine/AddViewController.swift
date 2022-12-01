@@ -289,13 +289,14 @@ extension AddViewController {
 extension AddViewController {
     
     @objc func saveButtonPressed() {
-        guard let _ = dateTextField.text else{return}
+        guard let dateText = dateTextField.text else{return}
         guard let titleText = titleTextField.text else{return}
         
-        RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
-        delegate?.updateTableView()
-        
-        self.dismiss(animated: true, completion: nil)
+        if titleText.count > 0 && dateText.count > 0 {
+            RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
+            delegate?.updateTableView()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func selectColorButtonPressed() {

@@ -139,13 +139,13 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     //MARK: - Selectors
     
     @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
-        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
+        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
     }
     
     @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
-        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
+        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
     }
