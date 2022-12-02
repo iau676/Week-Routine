@@ -29,8 +29,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let orangeButton = UIButton()
     let yellowButton = UIButton()
     let greenButton = UIButton()
-    let lightBlueButton = UIButton()
-    let darkBlueButton = UIButton()
+    let blueButton = UIButton()
     let purpleButton = UIButton()
     
     var delegate: UpdateDelegate?
@@ -207,13 +206,9 @@ extension AddViewController {
         greenButton.backgroundColor = Colors.green
         greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .touchUpInside)
         
-        lightBlueButton.translatesAutoresizingMaskIntoConstraints = false
-        lightBlueButton.backgroundColor = Colors.lightBlue
-        lightBlueButton.addTarget(self, action: #selector(lightBlueButtonPressed), for: .touchUpInside)
-        
-        darkBlueButton.translatesAutoresizingMaskIntoConstraints = false
-        darkBlueButton.backgroundColor = Colors.darkBlue
-        darkBlueButton.addTarget(self, action: #selector(darkBlueButtonPressed), for: .touchUpInside)
+        blueButton.translatesAutoresizingMaskIntoConstraints = false
+        blueButton.backgroundColor = Colors.blue
+        blueButton.addTarget(self, action: #selector(blueButtonPressed), for: .touchUpInside)
         
         purpleButton.translatesAutoresizingMaskIntoConstraints = false
         purpleButton.backgroundColor = Colors.purple
@@ -249,8 +244,7 @@ extension AddViewController {
         colorPaletteStackView.addArrangedSubview(orangeButton)
         colorPaletteStackView.addArrangedSubview(yellowButton)
         colorPaletteStackView.addArrangedSubview(greenButton)
-        colorPaletteStackView.addArrangedSubview(lightBlueButton)
-        colorPaletteStackView.addArrangedSubview(darkBlueButton)
+        colorPaletteStackView.addArrangedSubview(blueButton)
         colorPaletteStackView.addArrangedSubview(purpleButton)
         
         view.addSubview(colorPaletteView)
@@ -368,14 +362,9 @@ extension AddViewController {
         updateGradientLayerColors(Colors.green, Colors.green)
     }
     
-    @objc func lightBlueButtonPressed() {
-        color = ColorName.lightBlue
-        updateGradientLayerColors(Colors.lightBlue, Colors.lightBlue)
-    }
-    
-    @objc func darkBlueButtonPressed() {
-        color = ColorName.darkBlue
-        updateGradientLayerColors(Colors.darkBlue, Colors.darkBlue)
+    @objc func blueButtonPressed() {
+        color = ColorName.blue
+        updateGradientLayerColors(Colors.blue, Colors.blue)
     }
     
     @objc func purpleButtonPressed() {

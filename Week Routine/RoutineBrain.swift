@@ -130,10 +130,8 @@ struct RoutineBrain {
             return Colors.yellow
         case ColorName.green:
             return Colors.green
-        case ColorName.lightBlue:
-            return Colors.lightBlue
-        case ColorName.darkBlue:
-            return Colors.darkBlue
+        case ColorName.blue:
+            return Colors.blue
         case ColorName.purple:
             return Colors.purple
         default:
@@ -151,9 +149,7 @@ struct RoutineBrain {
             return "🟡 "
         case ColorName.green:
             return "🟢 "
-        case ColorName.lightBlue:
-            return "🔵 "
-        case ColorName.darkBlue:
+        case ColorName.blue:
             return "🔵 "
         case ColorName.purple:
             return "🟣 "

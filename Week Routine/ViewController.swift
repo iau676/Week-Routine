@@ -267,7 +267,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .destructive, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             let alert = UIAlertController(title: "Routine will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
                 RoutineBrain.shareInstance.removeRoutine(at: self.tempArray[indexPath.row])
@@ -281,8 +281,9 @@ extension ViewController {
             self.present(alert, animated: true, completion: nil)
             success(true)
         })
+        deleteAction.setImage(image: Images.bin, width: 21, height: 21)
         
-        let editAction = UIContextualAction(style: .normal, title:  "Edit", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             let vc = AddViewController()
             let item = RoutineBrain.shareInstance.routineArray[self.tempArray[indexPath.row]]
             vc.delegate = self
@@ -297,7 +298,8 @@ extension ViewController {
             self.present(vc, animated: true)
             success(true)
         })
-        editAction.backgroundColor = Colors.lightBlue
+        editAction.setImage(image: Images.edit, width: 21, height: 21)
+        editAction.setBackgroundColor(Colors.blue)
         
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }

@@ -17,8 +17,7 @@ enum Colors {
     static let orange                    = UIColor.systemOrange
     static let yellow                    = UIColor.systemYellow
     static let green                     = UIColor.systemGreen
-    static let lightBlue                 = UIColor.systemBlue
-    static let darkBlue                  = UIColor.systemIndigo
+    static let blue                      = UIColor.systemBlue
     static let purple                    = UIColor.systemPurple
 }
 
@@ -28,8 +27,7 @@ enum ColorName {
     static let orange                    = "orange"
     static let yellow                    = "yellow"
     static let green                     = "green"
-    static let lightBlue                 = "lightBlue"
-    static let darkBlue                  = "darkBlue"
+    static let blue                      = "blue"
     static let purple                    = "purple"
 }
 
@@ -40,4 +38,6 @@ enum UserDefault {
 
 enum Images {
     static let cross                     = UIImage(named: "cross")
+    static let bin                       = UIImage(named: "bin")
+    static let edit                      = UIImage(named: "edit")
 }
