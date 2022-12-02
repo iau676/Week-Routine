@@ -95,6 +95,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     private func updateGradientLayerColors(_ topGradientColor: UIColor?, _ bottomGradientColor: UIColor?){
         isGradientChanged = true
+        clearColorButton.isHidden = false
         gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
     }
     
@@ -131,8 +132,10 @@ extension AddViewController {
             titleTextField.text = routineTitle
             dateTextField.text = "\(day), \(hour):\(minute)"
             updateGradientLayerColors(color, color)
+            clearColorButton.isHidden = false
         } else {
             titleLabel.text = "New Routine"
+            clearColorButton.isHidden = true
         }
         
         stackView.translatesAutoresizingMaskIntoConstraints = false

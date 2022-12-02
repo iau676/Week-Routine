@@ -32,7 +32,7 @@ struct RoutineBrain {
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
         self.routineArray.append(newRoutine)
-        addNotification(title: title, day: Int(day), hour: Int(hour), minute: Int(minute), id: uuid)
+        addNotification(title: title, day: Int(day), hour: Int(hour), minute: Int(minute), color: color, id: uuid)
         saveContext()
     }
     
@@ -44,15 +44,6 @@ struct RoutineBrain {
         saveContext()
     }
     
-    func updateRoutineNotification(_ index: Int){
-        let item = routineArray[index]
-        guard let title = item.title else{return}
-        guard let uuid = item.uuid else{return}
-        
-        removeNotification(id: uuid)
-        addNotification(title: title, day: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), id: uuid)
-    }
-    
     mutating func loadRoutineArray(with request: NSFetchRequest<Routine> = Routine.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "ascending", ascending: true)]
@@ -62,12 +53,13 @@ struct RoutineBrain {
         }
     }
     
-    func addNotification(title: String, day: Int, hour: Int, minute: Int, id: String){
+    func addNotification(title: String, day: Int, hour: Int, minute: Int, color: String, id: String){
         DispatchQueue.main.async{
-            let title = title
+            let emoji = getColorEmoji(color)
+            let title = "\(emoji)\(title)"
             let message = ""
             var date = DateComponents()
-            
+
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = message
@@ -94,6 +86,15 @@ struct RoutineBrain {
     
     func removeNotification(id: String){
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
+    func updateRoutineNotification(_ index: Int){
+        let item = routineArray[index]
+        guard let title = item.title else{return}
+        guard let uuid = item.uuid else{return}
+        
+        removeNotification(id: uuid)
+        addNotification(title: title, day: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), color: item.color ?? "", id: uuid)
     }
     
     func getDayName(_ dayInt: Int16) -> String {
@@ -137,6 +138,27 @@ struct RoutineBrain {
             return Colors.purple
         default:
             return Colors.viewColor ?? .darkGray
+        }
+    }
+    
+    func getColorEmoji(_ colorName: String) -> String {
+        switch colorName {
+        case ColorName.red:
+            return "🔴 "
+        case ColorName.orange:
+            return "🟠 "
+        case ColorName.yellow:
+            return "🟡 "
+        case ColorName.green:
+            return "🟢 "
+        case ColorName.lightBlue:
+            return "🔵 "
+        case ColorName.darkBlue:
+            return "🔵 "
+        case ColorName.purple:
+            return "🟣 "
+        default:
+            return ""
         }
     }
     
