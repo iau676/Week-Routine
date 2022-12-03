@@ -12,6 +12,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     var tempArray = [Int]()
     var selectedSegmentIndex = 0
     var routineArray: [Routine] { return RoutineBrain.shareInstance.routineArray }
+    private var dayInt: Int { return RoutineBrain.shareInstance.getDayInt() }
     
     let stackView = UIStackView()
     let tableView = UITableView()
@@ -30,8 +31,6 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         configureSettingsButton()
         updateTableView()
         
-        getWeekday()
-        findWhichRoutinesShouldShow()
         addGestureRecognizer()
     }
     
@@ -59,19 +58,18 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     
     func updateTableView() {
         RoutineBrain.shareInstance.loadRoutineArray()
+        updateSegmentedControlByDay()
         findWhichRoutinesShouldShow()
     }
     
     func updateSettings() {
         daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefault.selectedDayType.getInt()])
-        getWeekday()
+        updateSegmentedControlByDay()
     }
     
-    func getWeekday() {
-        var weekday = Calendar.current.component(.weekday, from: Date())
-        weekday = (weekday-2 < 0) ? 6 : weekday-2
-        selectedSegmentIndex = weekday
-        daySegmentedControl.selectedSegmentIndex = weekday
+    func updateSegmentedControlByDay() {
+        selectedSegmentIndex = dayInt
+        daySegmentedControl.selectedSegmentIndex = dayInt
     }
     
     func findWhichRoutinesShouldShow(){
@@ -109,6 +107,15 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         }
         updatePlaceholderViewVisibility()
         self.tableView.reloadData()
+    }
+    
+    private func updateRoutineState(at index: Int) {
+        let item = RoutineBrain.shareInstance.routineArray[tempArray[index]]
+        if selectedSegmentIndex == dayInt {
+            item.isDone = (item.isDone == false) ? true : false
+            RoutineBrain.shareInstance.saveContext()
+            self.tableView.reloadData()
+        }
     }
     
     private func setupFirstLaunch() {
@@ -209,6 +216,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        updateRoutineState(at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -223,8 +231,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let hour = item.hour < 10 ? "0\(item.hour)" : "\(item.hour)"
         let minute = item.minute < 10 ? "0\(item.minute)" : "\(item.minute)"
         let color = RoutineBrain.shareInstance.getColor(item.color ?? ColorName.defaultt)
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(item.title ?? "")")
+        
+        if selectedSegmentIndex == dayInt && item.isDone == true {
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
+        } else {
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle , range: NSRange(location: 0, length: attributeString.length))
+        }
 
-        cell.titleLabel.text = item.title
+        cell.titleLabel.attributedText = attributeString
         cell.dayLabel.text = "\(day)"
         cell.hourLabel.text = "\(hour):\(minute)"
         cell.dayLabel.textColor = .darkGray

@@ -97,6 +97,12 @@ struct RoutineBrain {
         addNotification(title: title, day: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), color: item.color ?? "", id: uuid)
     }
     
+    func getDayInt() -> Int {
+        var day = Calendar.current.component(.weekday, from: Date())
+        day = (day-2 < 0) ? 6 : day-2
+        return day
+    }
+    
     func getDayName(_ dayInt: Int16) -> String {
         switch dayInt {
             case 0:
