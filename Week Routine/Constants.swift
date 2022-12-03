@@ -11,6 +11,7 @@ enum Colors {
     static let backgroundColor           = UIColor(named: "backgroundColor")
     static let viewColor                 = UIColor(named: "viewColor")
     static let labelColor                = UIColor(named: "labelColor")
+    static let placeholderColor          = UIColor(named: "placeholderColor")
     static let blackColor                = UIColor(hex: "#1C1C1E")
     
     static let red                       = UIColor.systemRed
@@ -40,4 +41,5 @@ enum Images {
     static let cross                     = UIImage(named: "cross")
     static let bin                       = UIImage(named: "bin")
     static let edit                      = UIImage(named: "edit")
+    static let routine                   = UIImage(named: "routine")
 }

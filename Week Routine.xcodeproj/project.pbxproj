@@ -18,6 +18,7 @@
 		707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 707168C528EE0C7E008B1D69 /* Assets.xcassets */; };
 		707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */; };
 		707A5D1F293A6B0D00D7D19A /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */; };
+		707A5D21293A862500D7D19A /* TableViewPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */; };
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
@@ -43,6 +44,7 @@
 		707168C828EE0C7E008B1D69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		707168CA28EE0C7E008B1D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
+		707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPlaceholderView.swift; sourceTree = "<group>"; };
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				70F06B6028F0C82000CCBB8A /* CustomCell.xib */,
 				70F06B6228F0C89700CCBB8A /* CustomCell.swift */,
+				707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
 				70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */,
 				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
+				707A5D21293A862500D7D19A /* TableViewPlaceholderView.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
 				707A5D1F293A6B0D00D7D19A /* UIContextualAction+Extensions.swift in Sources */,

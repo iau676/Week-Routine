@@ -17,6 +17,8 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
     
+    let placeholderView = TableViewPlaceholderView()
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -116,6 +118,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
                 break
             }
         }
+        updatePlaceholderViewVisibility()
         self.tableView.reloadData()
     }
     
@@ -185,6 +188,7 @@ extension ViewController {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier:CustomCell.identifier)
         tableView.backgroundColor = Colors.viewColor
         tableView.layer.cornerRadius = 8
+        tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -259,6 +263,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         UIView.animate(withDuration: 0.3, delay: 0.03 * Double(indexPath.row), animations: {
             cell.alpha = 1
         })
+    }
+    
+    private func updatePlaceholderViewVisibility(){
+        placeholderView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(placeholderView)
+        
+        NSLayoutConstraint.activate([
+            placeholderView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            placeholderView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+        ])
+        
+        placeholderView.isHidden = (tempArray.count == 0) ? false : true
     }
 }
 
