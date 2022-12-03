@@ -15,6 +15,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     let titleLabel = UILabel()
     
+    let contentView = UIView()
     let stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
@@ -68,6 +69,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         colorPaletteView.isHidden = true
         
         hideKeyboardWhenTappedAround()
+        updateScreenWhenKeyboardWillShow()
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,7 +119,11 @@ extension AddViewController {
     
     func style() {
         
-        view.backgroundColor = Colors.backgroundColor
+        view.backgroundColor = UIColor(white: 0.1, alpha: 0.4)
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = Colors.backgroundColor
+        contentView.layer.cornerRadius = 16
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = Colors.labelColor
@@ -218,28 +224,7 @@ extension AddViewController {
     
     func layout() {
         
-        stackView.addArrangedSubview(titleTextField)
-        stackView.addArrangedSubview(dateTextField)
-        stackView.addArrangedSubview(colorButton)
-        stackView.addArrangedSubview(saveButton)
-        
-        view.addSubview(titleLabel)
-        view.addSubview(stackView)
-        view.addSubview(clearColorButton)
-        
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16),
-            
-            clearColorButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            clearColorButton.topAnchor.constraint(equalTo: colorButton.topAnchor),
-        ])
-        
+        //color palette
         colorPaletteStackView.addArrangedSubview(redButton)
         colorPaletteStackView.addArrangedSubview(orangeButton)
         colorPaletteStackView.addArrangedSubview(yellowButton)
@@ -250,16 +235,46 @@ extension AddViewController {
         view.addSubview(colorPaletteView)
         colorPaletteView.addSubview(colorPaletteStackView)
         
+        //content view
+        view.addSubview(contentView)
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(stackView)
+        contentView.addSubview(clearColorButton)
+        
+        stackView.addArrangedSubview(titleTextField)
+        stackView.addArrangedSubview(dateTextField)
+        stackView.addArrangedSubview(colorButton)
+        stackView.addArrangedSubview(saveButton)
+        
         NSLayoutConstraint.activate([
-            colorPaletteView.heightAnchor.constraint(equalToConstant: keyboardHeight),
-            colorPaletteView.widthAnchor.constraint(equalToConstant: view.bounds.width),
+            contentView.heightAnchor.constraint(equalToConstant: 5*65-8),
+            contentView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: contentView.trailingAnchor, multiplier: 2),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 2),
+            contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            clearColorButton.trailingAnchor.constraint(equalTo: colorButton.trailingAnchor, constant: -8),
+            clearColorButton.topAnchor.constraint(equalTo: colorButton.topAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            colorPaletteView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
+            colorPaletteView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: colorPaletteView.trailingAnchor, multiplier: 2),
             colorPaletteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            colorPaletteView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             colorPaletteStackView.topAnchor.constraint(equalTo: colorPaletteView.topAnchor, constant: 0),
             colorPaletteStackView.leadingAnchor.constraint(equalTo: colorPaletteView.leadingAnchor, constant: 0),
             colorPaletteStackView.trailingAnchor.constraint(equalTo: colorPaletteView.trailingAnchor, constant: 0),
-            colorPaletteStackView.bottomAnchor.constraint(equalTo: colorPaletteView.bottomAnchor, constant: 0),
+            colorPaletteStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
         ])
     }
 }
@@ -373,6 +388,27 @@ extension AddViewController {
     }
 
 }
+
+//MARK: - Keyboard Will Show
+
+ extension AddViewController {
+     private func updateScreenWhenKeyboardWillShow(){
+         NotificationCenter.default.addObserver(
+             self,
+             selector: #selector(keyboardWillShow),
+             name: UIResponder.keyboardWillShowNotification,
+             object: nil
+         )
+     }
+     @objc func keyboardWillShow(notification: NSNotification) {
+         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+             let keyboardHeight = CGFloat(keyboardSize.height)
+             NSLayoutConstraint.activate([
+                 contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight),
+             ])
+         }
+     }
+ }
 
 //dismiss keyboard when user tap around
 extension AddViewController {

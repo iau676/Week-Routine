@@ -138,7 +138,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     private func goAddPage() {
         let vc = AddViewController()
         vc.delegate = self
-        vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
     
@@ -311,7 +311,7 @@ extension ViewController {
             vc.minute = "\(item.minute)"
             vc.color = item.color ?? ""
             vc.routineArrayIndex = self.tempArray[indexPath.row]
-            vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            vc.modalPresentationStyle = .overCurrentContext
             self.present(vc, animated: true)
             success(true)
         })
