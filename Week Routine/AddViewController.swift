@@ -14,7 +14,6 @@ protocol UpdateDelegate {
 class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let titleLabel = UILabel()
-    
     let contentView = UIView()
     let stackView = UIStackView()
     let titleTextField = UITextField()
@@ -50,10 +49,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     let minutes = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
     
-    var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
-    var isGradientChanged = false
-    
     let gradientLayer = CAGradientLayer()
+    var isGradientChanged = false
     
     //MARK: - Life Cycle
     
@@ -61,13 +58,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         super.viewDidLoad()
         style()
         layout()
+        
         addGestureRecognizer()
-        
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        titleTextField.becomeFirstResponder()
-        colorPaletteView.isHidden = true
-        
         hideKeyboardWhenTappedAround()
         updateScreenWhenKeyboardWillShow()
     }
@@ -99,18 +91,6 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         clearColorButton.isHidden = false
         gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
     }
-    
-    //MARK: - GestureRecognizer
-    
-    func addGestureRecognizer(){
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = .down
-        view.addGestureRecognizer(swipeDown)
-    }
-    
-    @objc func respondToSwipeGesture(gesture: UISwipeGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
-    }
 }
 
 //MARK: - Layout
@@ -119,7 +99,7 @@ extension AddViewController {
     
     func style() {
         
-        view.backgroundColor = UIColor(white: 0.1, alpha: 0.4)
+        view.backgroundColor = Colors.darkBackground
 
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.backgroundColor = Colors.backgroundColor
@@ -155,13 +135,14 @@ extension AddViewController {
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.isSecureTextEntry = false // true
         titleTextField.placeholder = "Routine"
-        //textField.delegate = self
-        //textField.keyboardType = .asciiCapable
         titleTextField.backgroundColor = Colors.viewColor
         titleTextField.addConstraint(titleTextField.heightAnchor.constraint(equalToConstant: 45))
         titleTextField.layer.cornerRadius = 8
         titleTextField.setLeftPaddingPoints(10)
+        titleTextField.becomeFirstResponder()
         
+        pickerView.delegate = self
+        pickerView.dataSource = self
         dateTextField.inputView = pickerView
         dateTextField.translatesAutoresizingMaskIntoConstraints = false
         dateTextField.isSecureTextEntry = false // true
@@ -195,6 +176,7 @@ extension AddViewController {
                 
         colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
         colorPaletteView.backgroundColor = .darkGray
+        colorPaletteView.isHidden = true
         
         redButton.translatesAutoresizingMaskIntoConstraints = false
         redButton.backgroundColor = Colors.red
@@ -219,7 +201,6 @@ extension AddViewController {
         purpleButton.translatesAutoresizingMaskIntoConstraints = false
         purpleButton.backgroundColor = Colors.purple
         purpleButton.addTarget(self, action: #selector(purpleButtonPressed), for: .touchUpInside)
-                
     }
     
     func layout() {
@@ -251,7 +232,7 @@ extension AddViewController {
             contentView.heightAnchor.constraint(equalToConstant: 5*65-8),
             contentView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: contentView.trailingAnchor, multiplier: 2),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -269,12 +250,12 @@ extension AddViewController {
             colorPaletteView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
             colorPaletteView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: colorPaletteView.trailingAnchor, multiplier: 2),
-            colorPaletteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            
-            colorPaletteStackView.topAnchor.constraint(equalTo: colorPaletteView.topAnchor, constant: 0),
-            colorPaletteStackView.leadingAnchor.constraint(equalTo: colorPaletteView.leadingAnchor, constant: 0),
-            colorPaletteStackView.trailingAnchor.constraint(equalTo: colorPaletteView.trailingAnchor, constant: 0),
-            colorPaletteStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            view.bottomAnchor.constraint(equalToSystemSpacingBelow: colorPaletteView.bottomAnchor, multiplier: 2),
+
+            colorPaletteStackView.topAnchor.constraint(equalTo: colorPaletteView.topAnchor),
+            colorPaletteStackView.leadingAnchor.constraint(equalTo: colorPaletteView.leadingAnchor),
+            colorPaletteStackView.trailingAnchor.constraint(equalTo: colorPaletteView.trailingAnchor),
+            colorPaletteStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
@@ -322,7 +303,7 @@ extension AddViewController {
 }
 
 
-//MARK: - Actions
+//MARK: - Selectors
 
 extension AddViewController {
     
@@ -389,6 +370,20 @@ extension AddViewController {
 
 }
 
+//MARK: - Swipe Gesture
+
+extension AddViewController {
+    func addGestureRecognizer(){
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+    }
+
+    @objc func respondToSwipeGesture(gesture: UISwipeGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
 //MARK: - Keyboard Will Show
 
  extension AddViewController {
@@ -406,6 +401,7 @@ extension AddViewController {
              NSLayoutConstraint.activate([
                  contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight),
              ])
+             colorPaletteView.isHidden = true
          }
      }
  }

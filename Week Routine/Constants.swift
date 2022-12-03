@@ -8,6 +8,7 @@
 import UIKit
 
 enum Colors {
+    static let darkBackground            = UIColor(white: 0.1, alpha: 0.7)
     static let backgroundColor           = UIColor(named: "backgroundColor")
     static let viewColor                 = UIColor(named: "viewColor")
     static let labelColor                = UIColor(named: "labelColor")
@@ -34,7 +35,6 @@ enum ColorName {
 
 enum UserDefault {
     static var selectedDayType           = UserDefaultsManager(key: "selectedDayType")
-    static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
 }
 
 enum Images {

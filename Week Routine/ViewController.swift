@@ -120,10 +120,6 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     
     private func setupFirstLaunch() {
         askNotificationPermission()
-        
-        if UserDefault.keyboardHeight.getCGFloat() == 0 {
-            getKeyboardHeight()
-        }
     }
     
     func askNotificationPermission(){
@@ -174,7 +170,7 @@ extension ViewController {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 16
         stackView.distribution = .fill
 
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier:CustomCell.identifier)
@@ -198,10 +194,10 @@ extension ViewController {
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
             stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight+40),
-            view.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3)
+            view.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 2)
         ])
         
         NSLayoutConstraint.activate([
@@ -362,32 +358,5 @@ extension ViewController {
     
     @objc private func respondToSwipeRightView(gesture: UISwipeGestureRecognizer) {
         goSettingsPage()
-    }
-}
-
-//MARK: - Keyboard Height
-
-extension ViewController {
-    func getKeyboardHeight() {
-        let textField = UITextField()
-        view.addSubview(textField)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        textField.becomeFirstResponder()
-        textField.resignFirstResponder()
-        textField.removeFromSuperview()
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if UserDefault.keyboardHeight.getCGFloat() == 0 {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                let keyboardHeight = CGFloat(keyboardSize.height)
-                UserDefault.keyboardHeight.set(keyboardHeight)
-            }
-        }
     }
 }
