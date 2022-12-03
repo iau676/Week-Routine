@@ -46,18 +46,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     }
     
     //MARK: - Helpers
-    
-    func addGestureRecognizer(){
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftGesture))
-        swipeLeft.direction = .left
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightGesture))
-        swipeRight.direction = .right
-        
-        view.addGestureRecognizer(swipeLeft)
-        view.addGestureRecognizer(swipeRight)
-    }
-    
     func configureBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
@@ -139,32 +128,28 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         }
     }
     
-    //MARK: - Selectors
-    
-    @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
-        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
-        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
-        findWhichRoutinesShouldShow()
-    }
-    
-    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
-        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
-        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
-        findWhichRoutinesShouldShow()
-    }
-    
-    @objc func addButtonPressed() {
+    private func goAddPage() {
         let vc = AddViewController()
         vc.delegate = self
         vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
         self.present(vc, animated: true)
     }
     
-    @objc func settingsButtonPressed() {
+    private func goSettingsPage() {
         let vc = SettingsViewController()
         vc.delegate = self
         vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
         self.present(vc, animated: true)
+    }
+    
+    //MARK: - Selectors
+    
+    @objc private func addButtonPressed() {
+        goAddPage()
+    }
+    
+    @objc private func settingsButtonPressed() {
+        goSettingsPage()
     }
     
     @objc private func daySegmentedControlChanged(segment: UISegmentedControl) -> Void {
@@ -319,6 +304,49 @@ extension ViewController {
         editAction.setBackgroundColor(Colors.blue)
         
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension ViewController {
+    private func addGestureRecognizer(){
+        let swipeLeftTableView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftTableView))
+        swipeLeftTableView.direction = .left
+        
+        let swipeRightTableView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightTableView))
+        swipeRightTableView.direction = .right
+        
+        let swipeLeftView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftView))
+        swipeLeftView.direction = .left
+        
+        let swipeRightView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightView))
+        swipeRightView.direction = .right
+        
+        tableView.addGestureRecognizer(swipeLeftTableView)
+        tableView.addGestureRecognizer(swipeRightTableView)
+        view.addGestureRecognizer(swipeLeftView)
+        view.addGestureRecognizer(swipeRightView)
+    }
+    
+    @objc private func respondToSwipeLeftTableView(gesture: UISwipeGestureRecognizer) {
+        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
+        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
+        findWhichRoutinesShouldShow()
+    }
+        
+    @objc private func respondToSwipeRightTableView(gesture: UISwipeGestureRecognizer) {
+        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
+        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
+        findWhichRoutinesShouldShow()
+    }
+    
+    @objc private func respondToSwipeLeftView(gesture: UISwipeGestureRecognizer) {
+        goAddPage()
+    }
+    
+    @objc private func respondToSwipeRightView(gesture: UISwipeGestureRecognizer) {
+        goSettingsPage()
     }
 }
 
