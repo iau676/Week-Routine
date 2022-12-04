@@ -27,10 +27,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         title = "Week Routine"
         style()
         layout()
-        configureBarButton()
-        configureSettingsButton()
         updateTableView()
-        
         addGestureRecognizer()
     }
     
@@ -166,6 +163,10 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
 extension ViewController {
     
     func style() {
+        
+        configureBarButton()
+        configureSettingsButton()
+        
         view.backgroundColor = Colors.backgroundColor
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
