@@ -355,6 +355,15 @@ extension AddViewController {
             }
             delegate?.updateTableView()
             self.dismiss(animated: true, completion: nil)
+        } else {
+            if titleText.count == 0 && dateText.count == 0 {
+                titleTextField.flash()
+                dateTextField.flash()
+            } else if titleText.count == 0 {
+                titleTextField.flash()
+            } else {
+                dateTextField.flash()
+            }
         }
     }
     
