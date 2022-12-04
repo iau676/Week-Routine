@@ -231,8 +231,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         if selectedSegmentIndex == dayInt && item.isDone == true {
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
+            cell.dateView.alpha = 0.5
+            cell.titleView.alpha = 0.5
         } else {
             attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle , range: NSRange(location: 0, length: attributeString.length))
+            cell.dateView.alpha = 1
+            cell.titleView.alpha = 1
         }
 
         cell.titleLabel.attributedText = attributeString
