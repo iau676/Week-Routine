@@ -81,7 +81,7 @@ struct RoutineBrain {
             content.body = message
             
             switch dayInt {
-                case 0:
+                case 7:
                     date = DateComponents(hour: hour, minute: minute)
                     addNotificationCenter(date: date, content: content, id: id)
                 break
@@ -98,7 +98,7 @@ struct RoutineBrain {
                     addNotificationCenter(date: date, content: content, id: "\(id)wr1")
                 break
                 default:
-                    let weekday = (dayInt+1 > 7) ? 1 : dayInt+1
+                    let weekday = (dayInt+2 > 7) ? 1 : dayInt+2
                     date = DateComponents(hour: hour, minute: minute, weekday: weekday)
                     addNotificationCenter(date: date, content: content, id: id)
                 break
@@ -138,24 +138,34 @@ struct RoutineBrain {
         return day
     }
     
+    func getHour() -> Int {
+        let hour = Calendar.current.component(.hour, from: Date())
+        return hour
+    }
+    
+    func getMinute() -> Int {
+        let minute = Calendar.current.component(.minute, from: Date())
+        return minute
+    }
+    
     func getDayName(_ dayInt: Int16) -> String {
         switch dayInt {
             case 0:
-                return "Every day"
-            case 1:
                 return "Monday"
-            case 2:
+            case 1:
                 return "Tuesday"
-            case 3:
+            case 2:
                 return "Wednesday"
-            case 4:
+            case 3:
                 return "Thursday"
-            case 5:
+            case 4:
                 return "Friday"
-            case 6:
+            case 5:
                 return "Saturday"
-            case 7:
+            case 6:
                 return "Sunday"
+            case 7:
+                return "Every day"
             case 8:
                 return "Weekday"
             case 9:

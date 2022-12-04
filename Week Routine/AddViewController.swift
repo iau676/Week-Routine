@@ -37,13 +37,13 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     var routineTitle = ""
     var day = "Every day"
-    var dayInt = 0
-    var hour = "00"
-    var minute = "00"
+    var dayInt = RoutineBrain.shareInstance.getDayInt()
+    var hour = "\(RoutineBrain.shareInstance.getHour())"
+    var minute = "\(RoutineBrain.shareInstance.getMinute())"
     var color = ColorName.defaultt
     var routineArrayIndex = 0
     
-    let days = ["Every day", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Weekday", "Weekend"]
+    let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Every day", "Weekday", "Weekend"]
     
     let hours = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
     
@@ -58,7 +58,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         super.viewDidLoad()
         style()
         layout()
-        
+        updatePickerView()
         addGestureRecognizer()
         hideKeyboardWhenTappedAround()
         updateScreenWhenKeyboardWillShow()
@@ -91,6 +91,38 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         clearColorButton.isHidden = false
         gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
     }
+    
+    private func updateScreenByMode() {
+        day = RoutineBrain.shareInstance.getDayName(Int16(dayInt))
+        hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
+        minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
+        if isEditMode == true {
+            titleLabel.text = "Edit Routine"
+            let color = RoutineBrain.shareInstance.getColor(color)
+            titleTextField.text = routineTitle
+            dateTextField.text = "\(day), \(hour):\(minute)"
+            updateGradientLayerColors(color, color)
+            clearColorButton.isHidden = false
+        } else {
+            titleLabel.text = "New Routine"
+            clearColorButton.isHidden = true
+        }
+    }
+    
+    private func updatePickerView() {
+        let hour = Int(hour) ?? 0
+        let minute = Int(minute) ?? 0
+        if isEditMode == true {
+            pickerView.selectRow(dayInt, inComponent: 0, animated: true)
+            pickerView.selectRow(hour, inComponent: 1, animated: true)
+            pickerView.selectRow(minute, inComponent: 2, animated: true)
+        } else {
+            pickerView.selectRow(dayInt, inComponent: 0, animated: true)
+            pickerView.selectRow(hour, inComponent: 1, animated: true)
+            pickerView.selectRow(minute, inComponent: 2, animated: true)
+            dateTextField.text = ""
+        }
+    }
 }
 
 //MARK: - Layout
@@ -98,6 +130,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 extension AddViewController {
     
     func style() {
+        
+        updateScreenByMode()
         
         view.backgroundColor = Colors.darkBackground
 
@@ -108,20 +142,6 @@ extension AddViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = Colors.labelColor
         titleLabel.numberOfLines = 1
-        if isEditMode == true {
-            titleLabel.text = "Edit Routine"
-            let day = RoutineBrain.shareInstance.getDayName(Int16(dayInt))
-            let color = RoutineBrain.shareInstance.getColor(color)
-            let hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
-            let minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
-            titleTextField.text = routineTitle
-            dateTextField.text = "\(day), \(hour):\(minute)"
-            updateGradientLayerColors(color, color)
-            clearColorButton.isHidden = false
-        } else {
-            titleLabel.text = "New Routine"
-            clearColorButton.isHidden = true
-        }
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
