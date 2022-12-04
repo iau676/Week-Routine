@@ -310,7 +310,7 @@ extension ViewController {
             vc.dayInt = Int(item.day)
             vc.hour = "\(item.hour)"
             vc.minute = "\(item.minute)"
-            vc.color = item.color ?? ""
+            vc.colorName = item.color ?? ""
             vc.routineArrayIndex = self.tempArray[indexPath.row]
             vc.modalPresentationStyle = .overCurrentContext
             self.present(vc, animated: true)

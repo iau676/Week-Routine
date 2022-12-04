@@ -40,7 +40,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     var dayInt = RoutineBrain.shareInstance.getDayInt()
     var hour = "\(RoutineBrain.shareInstance.getHour())"
     var minute = "\(RoutineBrain.shareInstance.getMinute())"
-    var color = ColorName.defaultt
+    var colorName = ColorName.defaultt
     var routineArrayIndex = 0
     
     let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Every day", "Weekday", "Weekend"]
@@ -90,6 +90,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         isGradientChanged = true
         clearColorButton.isHidden = false
         gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
+        colorButtonBackgroundChanged()
     }
     
     private func updateScreenByMode() {
@@ -98,7 +99,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
         if isEditMode == true {
             titleLabel.text = "Edit Routine"
-            let color = RoutineBrain.shareInstance.getColor(color)
+            let color = RoutineBrain.shareInstance.getColor(colorName)
             titleTextField.text = routineTitle
             dateTextField.text = "\(day), \(hour):\(minute)"
             updateGradientLayerColors(color, color)
@@ -123,6 +124,14 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
             dateTextField.text = ""
         }
     }
+    
+    private func colorButtonBackgroundChanged(){
+        if colorName == ColorName.defaultt {
+            colorButton.setTitleColor(Colors.labelColor, for: .normal)
+        } else {
+            colorButton.setTitleColor(.white, for: .normal)
+        }
+    }
 }
 
 //MARK: - Layout
@@ -130,8 +139,6 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 extension AddViewController {
     
     func style() {
-        
-        updateScreenByMode()
         
         view.backgroundColor = Colors.darkBackground
 
@@ -221,6 +228,8 @@ extension AddViewController {
         purpleButton.translatesAutoresizingMaskIntoConstraints = false
         purpleButton.backgroundColor = Colors.purple
         purpleButton.addTarget(self, action: #selector(purpleButtonPressed), for: .touchUpInside)
+        
+        updateScreenByMode()
     }
     
     func layout() {
@@ -338,11 +347,11 @@ extension AddViewController {
                 item.day = Int16(dayInt)
                 item.hour = Int16(hour) ?? 00
                 item.minute = Int16(minute) ?? 00
-                item.color = color
+                item.color = colorName
                 RoutineBrain.shareInstance.updateRoutineNotification(routineArrayIndex)
                 RoutineBrain.shareInstance.saveContext()
             } else {
-                RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: color)
+                RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: colorName)
             }
             delegate?.updateTableView()
             self.dismiss(animated: true, completion: nil)
@@ -354,37 +363,37 @@ extension AddViewController {
     }
     
     @objc func clearColorButtonPressed() {
-        color = ColorName.defaultt
+        colorName = ColorName.defaultt
         updateGradientLayerColors(Colors.viewColor, Colors.viewColor)
     }
     
     @objc func redButtonPressed() {
-        color = ColorName.red
+        colorName = ColorName.red
         updateGradientLayerColors(Colors.red, Colors.red)
     }
     
     @objc func orangeButtonPressed() {
-        color = ColorName.orange
+        colorName = ColorName.orange
         updateGradientLayerColors(Colors.orange, Colors.orange)
     }
     
     @objc func yellowButtonPressed() {
-        color = ColorName.yellow
+        colorName = ColorName.yellow
         updateGradientLayerColors(Colors.yellow, Colors.yellow)
     }
     
     @objc func greenButtonPressed() {
-        color = ColorName.green
+        colorName = ColorName.green
         updateGradientLayerColors(Colors.green, Colors.green)
     }
     
     @objc func blueButtonPressed() {
-        color = ColorName.blue
+        colorName = ColorName.blue
         updateGradientLayerColors(Colors.blue, Colors.blue)
     }
     
     @objc func purpleButtonPressed() {
-        color = ColorName.purple
+        colorName = ColorName.purple
         updateGradientLayerColors(Colors.purple, Colors.purple)
     }
 
