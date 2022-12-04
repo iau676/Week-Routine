@@ -81,25 +81,25 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
         for i in 0..<array.count {
             switch selectedSegmentIndex {
             case 0:
-                if array[i].day == 1 || array[i].day == 0  { tempArray.append(i) }
+                if array[i].day == 1 || array[i].day == 0 || array[i].day == 8 { tempArray.append(i) }
                 break
             case 1:
-                if array[i].day == 2 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 2 || array[i].day == 0 || array[i].day == 8 { tempArray.append(i) }
                 break
             case 2:
-                if array[i].day == 3 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 3 || array[i].day == 0 || array[i].day == 8 { tempArray.append(i) }
                 break
             case 3:
-                if array[i].day == 4 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 4 || array[i].day == 0 || array[i].day == 8 { tempArray.append(i) }
                 break
             case 4:
-                if array[i].day == 5 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 5 || array[i].day == 0 || array[i].day == 8 { tempArray.append(i) }
                 break
             case 5:
-                if array[i].day == 6 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 6 || array[i].day == 0 || array[i].day == 9 { tempArray.append(i) }
                 break
             case 6:
-                if array[i].day == 7 || array[i].day == 0 { tempArray.append(i) }
+                if array[i].day == 7 || array[i].day == 0 || array[i].day == 9 { tempArray.append(i) }
                 break
             default:
                 break

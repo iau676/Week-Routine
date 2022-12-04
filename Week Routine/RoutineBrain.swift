@@ -32,13 +32,29 @@ struct RoutineBrain {
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
         self.routineArray.append(newRoutine)
-        addNotification(title: title, day: Int(day), hour: Int(hour), minute: Int(minute), color: color, id: uuid)
+        addNotification(title: title, dayInt: Int(day), hour: Int(hour), minute: Int(minute), color: color, id: uuid)
         saveContext()
     }
     
     mutating func removeRoutine(at index: Int){
         guard let uuid = routineArray[index].uuid else{return}
-        removeNotification(id: uuid)
+        let dayInt = routineArray[index].day
+        switch dayInt {
+            case 8:
+                removeNotification(id: "\(uuid)wr2")
+                removeNotification(id: "\(uuid)wr3")
+                removeNotification(id: "\(uuid)wr4")
+                removeNotification(id: "\(uuid)wr5")
+                removeNotification(id: "\(uuid)wr6")
+            break
+            case 9:
+                removeNotification(id: "\(uuid)wr7")
+                removeNotification(id: "\(uuid)wr1")
+            break
+            default:
+                removeNotification(id: uuid)
+            break
+        }
         context.delete(routineArray[index])
         routineArray.remove(at: index)
         saveContext()
@@ -53,7 +69,7 @@ struct RoutineBrain {
         }
     }
     
-    func addNotification(title: String, day: Int, hour: Int, minute: Int, color: String, id: String){
+    func addNotification(title: String, dayInt: Int, hour: Int, minute: Int, color: String, id: String){
         DispatchQueue.main.async{
             let emoji = getColorEmoji(color)
             let title = "\(emoji)\(title)"
@@ -63,23 +79,42 @@ struct RoutineBrain {
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = message
-                
-            if day == 0 {
-                date = DateComponents(hour: hour, minute: minute)
-            } else {
-                let weekday = (day+1 > 7) ? 1 : day+1
-                date = DateComponents(hour: hour, minute: minute, weekday: weekday)
+            
+            switch dayInt {
+                case 0:
+                    date = DateComponents(hour: hour, minute: minute)
+                    addNotificationCenter(date: date, content: content, id: id)
+                break
+                case 8:
+                    for i in 2...6 {
+                        date = DateComponents(hour: hour, minute: minute, weekday: i)
+                        addNotificationCenter(date: date, content: content, id: "\(id)wr\(i)")
+                    }
+                break
+                case 9:
+                    date = DateComponents(hour: hour, minute: minute, weekday: 7)
+                    addNotificationCenter(date: date, content: content, id: "\(id)wr7")
+                    date = DateComponents(hour: hour, minute: minute, weekday: 1)
+                    addNotificationCenter(date: date, content: content, id: "\(id)wr1")
+                break
+                default:
+                    let weekday = (dayInt+1 > 7) ? 1 : dayInt+1
+                    date = DateComponents(hour: hour, minute: minute, weekday: weekday)
+                    addNotificationCenter(date: date, content: content, id: id)
+                break
             }
-                
-            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-            let id = id
-            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                        
-            self.notificationCenter.add(request) { (error) in
-                if(error != nil){
-                    print("Error " + error.debugDescription)
-                    return
-                }
+        }
+    }
+    
+    func addNotificationCenter(date: DateComponents, content: UNMutableNotificationContent, id: String){
+        let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+        let id = id
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                    
+        self.notificationCenter.add(request) { (error) in
+            if(error != nil){
+                print("Error " + error.debugDescription)
+                return
             }
         }
     }
@@ -94,7 +129,7 @@ struct RoutineBrain {
         guard let uuid = item.uuid else{return}
         
         removeNotification(id: uuid)
-        addNotification(title: title, day: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), color: item.color ?? "", id: uuid)
+        addNotification(title: title, dayInt: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), color: item.color ?? "", id: uuid)
     }
     
     func getDayInt() -> Int {
@@ -121,6 +156,10 @@ struct RoutineBrain {
                 return "Saturday"
             case 7:
                 return "Sunday"
+            case 8:
+                return "Weekday"
+            case 9:
+                return "Weekend"
             default:
                 return ""
         }
