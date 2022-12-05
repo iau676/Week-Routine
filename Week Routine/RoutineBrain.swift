@@ -79,6 +79,7 @@ struct RoutineBrain {
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = message
+            content.sound = UNNotificationSound.default
             
             switch dayInt {
                 case 7:
