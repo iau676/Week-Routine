@@ -71,8 +71,8 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     //MARK: - Helpers
     
     private func setGradientSelectColorButton(){
-        let topGradientColor = UIColor(hex: "#645CAA") ?? .darkGray
-        let bottomGradientColor = UIColor(hex: "#F07DEA") ?? .white
+        let topGradientColor = Colors.blue
+        let bottomGradientColor = Colors.purple
 
         gradientLayer.frame = colorButton.bounds
         if isGradientChanged == false {
