@@ -17,6 +17,7 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     let stackView = UIStackView()
     let tableView = UITableView()
     let daySegmentedControl = UISegmentedControl()
+    private let todayDate = RoutineBrain.shareInstance.getTodayDate()
     
     let placeholderView = TableViewPlaceholderView()
     
@@ -109,7 +110,13 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     private func updateRoutineState(at index: Int) {
         let item = RoutineBrain.shareInstance.routineArray[tempArray[index]]
         if selectedSegmentIndex == dayInt {
-            item.isDone = (item.isDone == false) ? true : false
+            if item.isDone {
+                item.isDone = false
+                item.doneDate = ""
+            } else {
+                item.isDone = true
+                item.doneDate = todayDate
+            }
             RoutineBrain.shareInstance.saveContext()
             self.tableView.reloadData()
         }
@@ -230,7 +237,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let color = RoutineBrain.shareInstance.getColor(item.color ?? ColorName.defaultt)
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(item.title ?? "")")
         
-        if selectedSegmentIndex == dayInt && item.isDone == true {
+        if selectedSegmentIndex == dayInt && item.isDone == true && item.doneDate == todayDate {
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
             cell.dateView.alpha = 0.5
             cell.titleView.alpha = 0.5
@@ -258,13 +265,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.alpha = 0
-        UIView.animate(withDuration: 0.3, delay: 0.03 * Double(indexPath.row), animations: {
-            cell.alpha = 1
-        })
-    }
+
     
     private func updatePlaceholderViewVisibility(){
         placeholderView.translatesAutoresizingMaskIntoConstraints = false

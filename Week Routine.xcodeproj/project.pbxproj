@@ -22,6 +22,7 @@
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
 		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
+		70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C38BF3294A120100961BBB /* Date+Extensions.swift */; };
 		70D5560428F1652600FE9C83 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5560328F1652600FE9C83 /* Constants.swift */; };
 		70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB70E428F746D000710325 /* UserDefaultsManager.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
@@ -47,6 +48,7 @@
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
+		70C38BF3294A120100961BBB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		70D5560328F1652600FE9C83 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70DB70E428F746D000710325 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */,
 				70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */,
 				707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */,
+				70C38BF3294A120100961BBB /* Date+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
 				70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */,
 				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
+				70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */,
 				707A5D21293A862500D7D19A /* TableViewPlaceholderView.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
