@@ -328,41 +328,25 @@ extension ViewController {
 
 extension ViewController {
     private func addGestureRecognizer(){
-        let swipeLeftTableView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftTableView))
-        swipeLeftTableView.direction = .left
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeft))
+        swipeLeft.direction = .left
         
-        let swipeRightTableView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightTableView))
-        swipeRightTableView.direction = .right
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRight))
+        swipeRight.direction = .right
         
-        let swipeLeftView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftView))
-        swipeLeftView.direction = .left
-        
-        let swipeRightView = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightView))
-        swipeRightView.direction = .right
-        
-        tableView.addGestureRecognizer(swipeLeftTableView)
-        tableView.addGestureRecognizer(swipeRightTableView)
-        view.addGestureRecognizer(swipeLeftView)
-        view.addGestureRecognizer(swipeRightView)
+        view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeRight)
     }
     
-    @objc private func respondToSwipeLeftTableView(gesture: UISwipeGestureRecognizer) {
+    @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
         selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
     }
         
-    @objc private func respondToSwipeRightTableView(gesture: UISwipeGestureRecognizer) {
+    @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
         selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
-    }
-    
-    @objc private func respondToSwipeLeftView(gesture: UISwipeGestureRecognizer) {
-        goAddPage()
-    }
-    
-    @objc private func respondToSwipeRightView(gesture: UISwipeGestureRecognizer) {
-        goSettingsPage()
     }
 }

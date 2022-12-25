@@ -412,13 +412,30 @@ extension AddViewController {
 
 extension AddViewController {
     func addGestureRecognizer(){
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeDownGesture))
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
     }
 
-    @objc func respondToSwipeGesture(gesture: UISwipeGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
+    @objc func respondToSwipeDownGesture(gesture: UISwipeGestureRecognizer) {
+        if titleTextField.text!.count > 0 || dateTextField.text!.count > 0 {
+            let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
+
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(action)
+            alert.addAction(actionCancel)
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
 
