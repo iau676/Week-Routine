@@ -21,20 +21,12 @@ class TableViewPlaceholderView: UIView {
         
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "No Routines"
-        label.font = UIFont(name: "AvenirNext-Medium", size: 17)
+        label.text = "No Routine"
+        label.font = UIFont(name: Fonts.AvenirNextMedium, size: 17)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = Colors.placeholderColor
         return label
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -47,14 +39,13 @@ class TableViewPlaceholderView: UIView {
     }
     
     private func setupViews() {
-        addSubview(stackView)
-        NSLayoutConstraint.activate([
+        let stack = UIStackView(arrangedSubviews: [imageView, titleLabel])
+        stack.axis = .vertical
+        stack.spacing = 8
         
-            stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 88)
-        ])
+        addSubview(stack)
+        stack.setDimensions(width: 120, height: 120)
+        stack.centerX(inView: self)
+        stack.centerY(inView: self)
     }
-    
 }

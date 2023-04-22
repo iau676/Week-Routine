@@ -102,36 +102,30 @@ extension SettingsViewController {
     func style() {
         view.backgroundColor = Colors.backgroundColor
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = Colors.labelColor
         titleLabel.text = "Settings"
         titleLabel.numberOfLines = 1
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 16
         
-        allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
         allowNotificationButton.setTitle("Allow Notification", for: [])
         allowNotificationButton.backgroundColor = Colors.blackColor
         allowNotificationButton.layer.cornerRadius = 10
-        allowNotificationButton.addTarget(self, action: #selector(allowNotificationButtonPressed), for: .primaryActionTriggered)
+        allowNotificationButton.addTarget(self, action: #selector(allowNotificationButtonPressed),
+                                          for: .primaryActionTriggered)
         
-        dayFormatLabel.translatesAutoresizingMaskIntoConstraints = false
         dayFormatLabel.textColor = Colors.labelColor
         dayFormatLabel.text = "Day Format"
         dayFormatLabel.numberOfLines = 1
         
-        dayFormatSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         dayFormatSegmentedControl.replaceSegments(segments: dayFormatItems)
         dayFormatSegmentedControl.selectedSegmentIndex = 0
         dayFormatSegmentedControl.tintColor = .black
-        dayFormatSegmentedControl.addTarget(self, action: #selector(self.dayFormatSegmentedControlChanged), for: UIControl.Event.valueChanged)
+        dayFormatSegmentedControl.addTarget(self, action: #selector(dayFormatSegmentedControlChanged),
+                                            for: .valueChanged)
         dayFormatSegmentedControl.selectedSegmentIndex = UserDefault.selectedDayType.getInt()
         
-        dayFormatStackView.translatesAutoresizingMaskIntoConstraints = false
         dayFormatStackView.backgroundColor = Colors.viewColor
         dayFormatStackView.layer.cornerRadius = 8
         dayFormatStackView.axis = .vertical
@@ -141,7 +135,6 @@ extension SettingsViewController {
     }
     
     func layout() {
-        
         dayFormatStackView.addArrangedSubview(dayFormatLabel)
         dayFormatStackView.addArrangedSubview(dayFormatSegmentedControl)
      
@@ -153,26 +146,18 @@ extension SettingsViewController {
         view.addSubview(titleLabel)
         view.addSubview(scrollView)
         
-        NSLayoutConstraint.activate([
-           titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
-           titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
-           scrollView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-           view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
-           scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-               
-           stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-           stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-           stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-           stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-           
-           stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
+        titleLabel.anchor(top: view.topAnchor, paddingTop: 16)
+        titleLabel.centerX(inView: view)
         
-        NSLayoutConstraint.activate([
-            dayFormatStackView.heightAnchor.constraint(equalToConstant: 90),
-            allowNotificationButton.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        scrollView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor,
+                          bottom: view.bottomAnchor, right: view.rightAnchor,
+                          paddingTop: 16, paddingLeft: 16, paddingRight: 16)
+        
+        stackView.setWidth(view.frame.width-32)
+        stackView.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor,
+                         bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor)
+        
+        dayFormatStackView.setHeight(90)
+        allowNotificationButton.setHeight(40)
     }
 }

@@ -47,11 +47,16 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
     func configureBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
-    }
-    
-    func configureSettingsButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsButtonPressed))
-        navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
+        
+        let leftBarIV = UIImageView()
+        leftBarIV.setDimensions(width: 20, height: 20)
+        leftBarIV.layer.masksToBounds = true
+        leftBarIV.isUserInteractionEnabled = true
+        
+        leftBarIV.image = Images.menu?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
+        let tapLeft = UITapGestureRecognizer(target: self, action: #selector(settingsButtonPressed))
+        leftBarIV.addGestureRecognizer(tapLeft)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
     }
     
     func updateTableView() {
@@ -170,16 +175,8 @@ class ViewController: UIViewController, UpdateDelegate, SettingsDelegate {
 extension ViewController {
     
     func style() {
-        
         configureBarButton()
-        configureSettingsButton()
-        
         view.backgroundColor = Colors.backgroundColor
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.distribution = .fill
 
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier:CustomCell.identifier)
         tableView.backgroundColor = Colors.viewColor
@@ -188,29 +185,24 @@ extension ViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        daySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         daySegmentedControl.replaceSegments(segments: RoutineBrain.shareInstance.days[UserDefault.selectedDayType.getInt()])
         daySegmentedControl.selectedSegmentIndex = 0
         daySegmentedControl.tintColor = .black
-        daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: UIControl.Event.valueChanged)
+        daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: .valueChanged)
     }
     
     func layout() {
-        stackView.addArrangedSubview(tableView)
-        stackView.addArrangedSubview(daySegmentedControl)
+        let stack = UIStackView(arrangedSubviews: [tableView, daySegmentedControl])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .fill
         
-        view.addSubview(stackView)
+        view.addSubview(stack)
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
-            view.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 2)
-        ])
-        
-        NSLayoutConstraint.activate([
-            daySegmentedControl.heightAnchor.constraint(equalTo: tableView.heightAnchor, multiplier: 0.08)
-        ])
+        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        daySegmentedControl.setHeight(50)
     }
 }
 
@@ -268,14 +260,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
     
     private func updatePlaceholderViewVisibility(){
-        placeholderView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(placeholderView)
-        
-        NSLayoutConstraint.activate([
-            placeholderView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            placeholderView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-        ])
+        placeholderView.centerX(inView: tableView)
+        placeholderView.centerY(inView: tableView)
         
         placeholderView.isHidden = (tempArray.count == 0) ? false : true
     }

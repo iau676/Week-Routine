@@ -42,5 +42,12 @@ enum Images {
     static let cross                     = UIImage(named: "cross")
     static let bin                       = UIImage(named: "bin")
     static let edit                      = UIImage(named: "edit")
+    static let menu                      = UIImage(named: "menu")
     static let routine                   = UIImage(named: "routine")
+}
+
+enum Fonts {
+    static let AvenirNextRegular         = "AvenirNext-Regular"
+    static var AvenirNextDemiBold        = "AvenirNext-DemiBold"
+    static var AvenirNextMedium          = "AvenirNext-Medium"
 }

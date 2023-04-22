@@ -15,7 +15,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     let titleLabel = UILabel()
     let contentView = UIView()
-    let stackView = UIStackView()
+    var stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
     let colorButton = UIButton()
@@ -24,7 +24,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     let pickerView = UIPickerView()
     
     let colorPaletteView = UIView()
-    let colorPaletteStackView = UIStackView()
+    var colorPaletteStackView = UIStackView()
     let redButton = UIButton()
     let orangeButton = UIButton()
     let yellowButton = UIButton()
@@ -139,28 +139,21 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 extension AddViewController {
     
     func style() {
-        
         view.backgroundColor = Colors.darkBackground
 
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.backgroundColor = Colors.backgroundColor
         contentView.layer.cornerRadius = 16
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = Colors.labelColor
         titleLabel.numberOfLines = 1
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
         
-        colorPaletteStackView.translatesAutoresizingMaskIntoConstraints = false
         colorPaletteStackView.axis = .horizontal
         colorPaletteStackView.distribution = .fillEqually
         colorPaletteStackView.spacing = 0
         
-        titleTextField.translatesAutoresizingMaskIntoConstraints = false
-        titleTextField.isSecureTextEntry = false // true
         titleTextField.placeholder = "Routine"
         titleTextField.backgroundColor = Colors.viewColor
         titleTextField.addConstraint(titleTextField.heightAnchor.constraint(equalToConstant: 45))
@@ -171,8 +164,6 @@ extension AddViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         dateTextField.inputView = pickerView
-        dateTextField.translatesAutoresizingMaskIntoConstraints = false
-        dateTextField.isSecureTextEntry = false // true
         dateTextField.placeholder = "Date"
         dateTextField.backgroundColor = Colors.viewColor
         dateTextField.addConstraint(dateTextField.heightAnchor.constraint(equalToConstant: 45))
@@ -194,38 +185,31 @@ extension AddViewController {
         colorButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0);
         colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
         
-        clearColorButton.translatesAutoresizingMaskIntoConstraints = false
         clearColorButton.addConstraint(clearColorButton.heightAnchor.constraint(equalToConstant: 45))
         clearColorButton.addConstraint(clearColorButton.widthAnchor.constraint(equalToConstant: 45))
         clearColorButton.layer.cornerRadius = 8
         clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
-        clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20, color: Colors.viewColor ?? .darkGray)
+        clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20,
+                                                   color: Colors.viewColor ?? .darkGray)
                 
-        colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
         colorPaletteView.backgroundColor = .darkGray
         colorPaletteView.isHidden = true
         
-        redButton.translatesAutoresizingMaskIntoConstraints = false
         redButton.backgroundColor = Colors.red
         redButton.addTarget(self, action: #selector(redButtonPressed), for: .touchUpInside)
         
-        orangeButton.translatesAutoresizingMaskIntoConstraints = false
         orangeButton.backgroundColor = Colors.orange
         orangeButton.addTarget(self, action: #selector(orangeButtonPressed), for: .touchUpInside)
         
-        yellowButton.translatesAutoresizingMaskIntoConstraints = false
         yellowButton.backgroundColor = Colors.yellow
         yellowButton.addTarget(self, action: #selector(yellowButtonPressed), for: .touchUpInside)
         
-        greenButton.translatesAutoresizingMaskIntoConstraints = false
         greenButton.backgroundColor = Colors.green
         greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .touchUpInside)
         
-        blueButton.translatesAutoresizingMaskIntoConstraints = false
         blueButton.backgroundColor = Colors.blue
         blueButton.addTarget(self, action: #selector(blueButtonPressed), for: .touchUpInside)
         
-        purpleButton.translatesAutoresizingMaskIntoConstraints = false
         purpleButton.backgroundColor = Colors.purple
         purpleButton.addTarget(self, action: #selector(purpleButtonPressed), for: .touchUpInside)
         
@@ -234,7 +218,31 @@ extension AddViewController {
     
     func layout() {
         
-        //color palette
+        view.addSubview(colorPaletteView)
+        colorPaletteView.addSubview(colorPaletteStackView)
+        
+        view.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(stackView)
+        contentView.addSubview(clearColorButton)
+        
+        contentView.setHeight(5*65-8)
+        contentView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor,
+                           paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        
+        titleLabel.anchor(top: contentView.topAnchor, paddingTop: 16)
+        titleLabel.centerX(inView: view)
+        
+        stackView.addArrangedSubview(titleTextField)
+        stackView.addArrangedSubview(dateTextField)
+        stackView.addArrangedSubview(colorButton)
+        stackView.addArrangedSubview(saveButton)
+        stackView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                         paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        
+        clearColorButton.anchor(top: colorButton.topAnchor, right: colorButton.rightAnchor, paddingRight: 8)
+      
+        
         colorPaletteStackView.addArrangedSubview(redButton)
         colorPaletteStackView.addArrangedSubview(orangeButton)
         colorPaletteStackView.addArrangedSubview(yellowButton)
@@ -242,50 +250,13 @@ extension AddViewController {
         colorPaletteStackView.addArrangedSubview(blueButton)
         colorPaletteStackView.addArrangedSubview(purpleButton)
         
-        view.addSubview(colorPaletteView)
-        colorPaletteView.addSubview(colorPaletteStackView)
+        colorPaletteView.anchor(top: contentView.bottomAnchor, left: view.leftAnchor,
+                                bottom: view.bottomAnchor, right: view.rightAnchor,
+                                paddingTop: -32, paddingLeft: 16,
+                                paddingBottom: 16, paddingRight: 16)
         
-        //content view
-        view.addSubview(contentView)
-        
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(clearColorButton)
-        
-        stackView.addArrangedSubview(titleTextField)
-        stackView.addArrangedSubview(dateTextField)
-        stackView.addArrangedSubview(colorButton)
-        stackView.addArrangedSubview(saveButton)
-        
-        NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 5*65-8),
-            contentView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: contentView.trailingAnchor, multiplier: 2),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 2),
-            contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
-            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            clearColorButton.trailingAnchor.constraint(equalTo: colorButton.trailingAnchor, constant: -8),
-            clearColorButton.topAnchor.constraint(equalTo: colorButton.topAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            colorPaletteView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
-            colorPaletteView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: colorPaletteView.trailingAnchor, multiplier: 2),
-            view.bottomAnchor.constraint(equalToSystemSpacingBelow: colorPaletteView.bottomAnchor, multiplier: 2),
-
-            colorPaletteStackView.topAnchor.constraint(equalTo: colorPaletteView.topAnchor),
-            colorPaletteStackView.leadingAnchor.constraint(equalTo: colorPaletteView.leadingAnchor),
-            colorPaletteStackView.trailingAnchor.constraint(equalTo: colorPaletteView.trailingAnchor),
-            colorPaletteStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+        colorPaletteStackView.anchor(top: colorPaletteView.topAnchor, left: colorPaletteView.leftAnchor,
+                                     bottom: view.bottomAnchor, right: colorPaletteView.rightAnchor)
     }
 }
 
@@ -453,9 +424,7 @@ extension AddViewController {
      @objc func keyboardWillShow(notification: NSNotification) {
          if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
              let keyboardHeight = CGFloat(keyboardSize.height)
-             NSLayoutConstraint.activate([
-                 contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight),
-             ])
+             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight).isActive = true
              colorPaletteView.isHidden = true
          }
      }
