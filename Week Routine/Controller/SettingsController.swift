@@ -11,7 +11,7 @@ protocol SettingsDelegate {
     func updateSettings()
 }
 
-class SettingsViewController: UIViewController {
+final class SettingsController: UIViewController {
         
     let titleLabel = UILabel()
     let scrollView = UIScrollView()
@@ -81,23 +81,14 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func dayFormatSegmentedControlChanged(segment: UISegmentedControl) -> Void {
-        switch segment.selectedSegmentIndex {
-        case 0:
-            UserDefault.selectedDayType.set(0)
-        case 1:
-            UserDefault.selectedDayType.set(1)
-        case 2:
-            UserDefault.selectedDayType.set(2)
-        default:
-            break
-        }
+        UDM.selectedDayType.set(segment.selectedSegmentIndex)
         delegate?.updateSettings()
     }
 }
 
 //MARK: - Layout
 
-extension SettingsViewController {
+extension SettingsController {
     
     func style() {
         view.backgroundColor = Colors.backgroundColor
@@ -124,7 +115,7 @@ extension SettingsViewController {
         dayFormatSegmentedControl.tintColor = .black
         dayFormatSegmentedControl.addTarget(self, action: #selector(dayFormatSegmentedControlChanged),
                                             for: .valueChanged)
-        dayFormatSegmentedControl.selectedSegmentIndex = UserDefault.selectedDayType.getInt()
+        dayFormatSegmentedControl.selectedSegmentIndex = UDM.selectedDayType.getInt()
         
         dayFormatStackView.backgroundColor = Colors.viewColor
         dayFormatStackView.layer.cornerRadius = 8

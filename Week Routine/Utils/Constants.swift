@@ -36,7 +36,7 @@ enum ColorName {
     static let purple                    = "purple"
 }
 
-enum UserDefault {
+enum UDM {
     static var selectedDayType           = UserDefaultsManager(key: "selectedDayType")
 }
 

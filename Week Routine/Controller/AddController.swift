@@ -11,7 +11,7 @@ protocol UpdateDelegate {
     func updateCV()
 }
 
-class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+final class AddController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let titleLabel = UILabel()
     let contentView = UIView()
@@ -136,7 +136,7 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 
 //MARK: - Layout
 
-extension AddViewController {
+extension AddController {
     
     func style() {
         view.backgroundColor = Colors.darkBackground
@@ -262,7 +262,7 @@ extension AddViewController {
 
 //MARK: - pickerView
 
-extension AddViewController {
+extension AddController {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         dateTextField.text = "\(day), \(hour):\(minute)"
@@ -305,7 +305,7 @@ extension AddViewController {
 
 //MARK: - Selectors
 
-extension AddViewController {
+extension AddController {
     
     @objc func saveButtonPressed() {
         guard let dateText = dateTextField.text else{return}
@@ -381,7 +381,7 @@ extension AddViewController {
 
 //MARK: - Swipe Gesture
 
-extension AddViewController {
+extension AddController {
     func addGestureRecognizer(){
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeDownGesture))
         swipeDown.direction = .down
@@ -412,7 +412,7 @@ extension AddViewController {
 
 //MARK: - Keyboard Will Show
 
- extension AddViewController {
+ extension AddController {
      private func updateScreenWhenKeyboardWillShow(){
          NotificationCenter.default.addObserver(
              self,
@@ -429,17 +429,3 @@ extension AddViewController {
          }
      }
  }
-
-//dismiss keyboard when user tap around
-extension AddViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        colorPaletteView.isHidden = true
-        view.endEditing(true)
-    }
-}

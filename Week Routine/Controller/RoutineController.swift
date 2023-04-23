@@ -9,19 +9,12 @@ import UIKit
 
 private let reuseIdentifier = "RoutineCell"
 
-class ViewController: UIViewController, SettingsDelegate {
-        
-    var tempArray = [Int]()
-    var selectedSegmentIndex = 0
-    var routineArray: [Routine] { return brain.routineArray }
-    private var dayInt: Int { return brain.getDayInt() }
+final class RoutineController: UIViewController {
 
     private let routineCV = makeCollectionView()
-    
-    let daySegmentedControl = UISegmentedControl()
-    private let todayDate = brain.getTodayDate()
-    
     private let placeholderView = PlaceholderView()
+    private let daySegmentedControl = UISegmentedControl()
+    private var tempArray = [Int]() { didSet { routineCV.reloadData() } }
         
     //MARK: - Life Cycle
     
@@ -35,30 +28,73 @@ class ViewController: UIViewController, SettingsDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupFirstLaunch()
+        brain.askNotificationPermission()
     }
     
     //MARK: - Selectors
     
     @objc private func addButtonPressed() {
-        goAddPage()
+        let vc = AddController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
     }
     
     @objc private func settingsButtonPressed() {
-        goSettingsPage()
+        let vc = SettingsController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .formSheet
+        self.present(vc, animated: true)
     }
     
     @objc private func daySegmentedControlChanged(segment: UISegmentedControl) -> Void {
-        selectedSegmentIndex = segment.selectedSegmentIndex
         findWhichRoutinesShouldShow()
     }
     
     //MARK: - Helpers
+    
+    private func style() {
+        configureBarButton()
+        view.backgroundColor = Colors.backgroundColor
         
-    func configureBarButton() {
+        routineCV.delegate = self
+        routineCV.dataSource = self
+        routineCV.layer.cornerRadius = 8
+        routineCV.backgroundColor = Colors.viewColor
+        routineCV.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
+        daySegmentedControl.selectedSegmentIndex = brain.getDayInt()
+        daySegmentedControl.tintColor = .black
+        daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: .valueChanged)
+    }
+    
+    private func layout() {
+        let stack = UIStackView(arrangedSubviews: [routineCV, daySegmentedControl])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .fill
+        
+        view.addSubview(stack)
+        daySegmentedControl.setHeight(50)
+        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+    }
+    
+    private func updatePlaceholderViewVisibility(){
+        view.addSubview(placeholderView)
+        placeholderView.centerX(inView: routineCV)
+        placeholderView.centerY(inView: routineCV)
+        placeholderView.isHidden = tempArray.count != 0
+    }
+        
+    private func configureBarButton() {
         title = "Week Routine"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(addButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
         
         let leftBarIV = UIImageView()
@@ -72,141 +108,16 @@ class ViewController: UIViewController, SettingsDelegate {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
     }
     
-    func updateSettings() {
-        daySegmentedControl.replaceSegments(segments: brain.days[UserDefault.selectedDayType.getInt()])
-        updateSegmentedControlByDay()
-    }
-    
-    func updateSegmentedControlByDay() {
-        selectedSegmentIndex = dayInt
-        daySegmentedControl.selectedSegmentIndex = dayInt
-    }
-    
-    func findWhichRoutinesShouldShow(){
-        
+    private func findWhichRoutinesShouldShow(){
         tempArray.removeAll()
-        
-        let array = brain.routineArray
-        
-        for i in 0..<array.count {
-            switch selectedSegmentIndex {
-            case 0:
-                if array[i].day == 0 || array[i].day == 7 || array[i].day == 8 { tempArray.append(i) }
-                break
-            case 1:
-                if array[i].day == 1 || array[i].day == 7 || array[i].day == 8 { tempArray.append(i) }
-                break
-            case 2:
-                if array[i].day == 2 || array[i].day == 7 || array[i].day == 8 { tempArray.append(i) }
-                break
-            case 3:
-                if array[i].day == 3 || array[i].day == 7 || array[i].day == 8 { tempArray.append(i) }
-                break
-            case 4:
-                if array[i].day == 4 || array[i].day == 7 || array[i].day == 8 { tempArray.append(i) }
-                break
-            case 5:
-                if array[i].day == 5 || array[i].day == 7 || array[i].day == 9 { tempArray.append(i) }
-                break
-            case 6:
-                if array[i].day == 6 || array[i].day == 7 || array[i].day == 9 { tempArray.append(i) }
-                break
-            default:
-                break
-            }
-        }
+        tempArray = brain.findRoutines(for: daySegmentedControl.selectedSegmentIndex)
         updatePlaceholderViewVisibility()
-        routineCV.reloadData()
-    }
-    
-    private func updateRoutineState(at index: Int) {
-        let item = brain.routineArray[tempArray[index]]
-        if selectedSegmentIndex == dayInt {
-            if item.isDone {
-                item.isDone = false
-                item.doneDate = ""
-            } else {
-                item.isDone = true
-                item.doneDate = todayDate
-            }
-            brain.saveContext()
-            routineCV.reloadData()
-        }
-    }
-    
-    private func setupFirstLaunch() {
-        askNotificationPermission()
-    }
-    
-    func askNotificationPermission(){
-        brain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted){
-                print("Permission Denied")
-            }
-        }
-    }
-    
-    private func goAddPage() {
-        let vc = AddViewController()
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    private func goSettingsPage() {
-        let vc = SettingsViewController()
-        vc.delegate = self
-        vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
-        self.present(vc, animated: true)
-    }
-}
-
-//MARK: - Layout
-
-extension ViewController {
-    
-    func style() {
-        configureBarButton()
-        view.backgroundColor = Colors.backgroundColor
-        
-        routineCV.delegate = self
-        routineCV.dataSource = self
-        routineCV.layer.cornerRadius = 8
-        routineCV.backgroundColor = Colors.viewColor
-        routineCV.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        daySegmentedControl.replaceSegments(segments: brain.days[UserDefault.selectedDayType.getInt()])
-        daySegmentedControl.selectedSegmentIndex = 0
-        daySegmentedControl.tintColor = .black
-        daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: .valueChanged)
-    }
-    
-    func layout() {
-        let stack = UIStackView(arrangedSubviews: [routineCV, daySegmentedControl])
-        stack.axis = .vertical
-        stack.spacing = 16
-        stack.distribution = .fill
-        
-        view.addSubview(stack)
-        
-        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                     paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
-        daySegmentedControl.setHeight(50)
-    }
-    
-    private func updatePlaceholderViewVisibility(){
-        view.addSubview(placeholderView)
-        placeholderView.centerX(inView: routineCV)
-        placeholderView.centerY(inView: routineCV)
-        placeholderView.isHidden = tempArray.count != 0
     }
 }
 
 //MARK: - UICollectionViewDelegate/DataSource
 
-extension ViewController: UICollectionViewDataSource {
+extension RoutineController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tempArray.count
@@ -219,13 +130,14 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        brain.updateRoutineState(routine: brain.routineArray[tempArray[indexPath.row]])
+        routineCV.reloadData()
     }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension RoutineController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: ((view.bounds.width)-32), height: 100)
     }
@@ -277,7 +189,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - Swipe Gesture
 
-extension ViewController {
+extension RoutineController {
     private func addGestureRecognizer(){
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeft))
         swipeLeft.direction = .left
@@ -290,12 +202,14 @@ extension ViewController {
     }
     
     @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
+        var selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
         selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
     }
         
     @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
+        var selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
         selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
         daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
         findWhichRoutinesShouldShow()
@@ -304,10 +218,17 @@ extension ViewController {
 
 //MARK: - UpdateDelegate
 
-extension ViewController: UpdateDelegate {
+extension RoutineController: UpdateDelegate {
     func updateCV() {
         brain.loadRoutineArray()
-        updateSegmentedControlByDay()
         findWhichRoutinesShouldShow()
+    }
+}
+
+//MARK: - SettingsDelegate
+
+extension RoutineController: SettingsDelegate {
+    func updateSettings() {
+        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
     }
 }
