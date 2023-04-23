@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UpdateDelegate {
-    func updateTableView()
+    func updateCV()
 }
 
 class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -37,9 +37,9 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     var routineTitle = ""
     var day = "Every day"
-    var dayInt = RoutineBrain.shareInstance.getDayInt()
-    var hour = "\(RoutineBrain.shareInstance.getHour())"
-    var minute = "\(RoutineBrain.shareInstance.getMinute())"
+    var dayInt = brain.getDayInt()
+    var hour = "\(brain.getHour())"
+    var minute = "\(brain.getMinute())"
     var colorName = ColorName.defaultt
     var routineArrayIndex = 0
     
@@ -94,12 +94,12 @@ class AddViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     private func updateScreenByMode() {
-        day = RoutineBrain.shareInstance.getDayName(Int16(dayInt))
+        day = brain.getDayName(Int16(dayInt))
         hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
         minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
         if isEditMode == true {
             titleLabel.text = "Edit Routine"
-            let color = RoutineBrain.shareInstance.getColor(colorName)
+            let color = brain.getColor(colorName)
             titleTextField.text = routineTitle
             dateTextField.text = "\(day), \(hour):\(minute)"
             updateGradientLayerColors(color, color)
@@ -313,18 +313,18 @@ extension AddViewController {
         
         if titleText.count > 0 && dateText.count > 0 {
             if isEditMode == true {
-                let item =  RoutineBrain.shareInstance.routineArray[routineArrayIndex]
+                let item =  brain.routineArray[routineArrayIndex]
                 item.title = titleText
                 item.day = Int16(dayInt)
                 item.hour = Int16(hour) ?? 00
                 item.minute = Int16(minute) ?? 00
                 item.color = colorName
-                RoutineBrain.shareInstance.updateRoutineNotification(routineArrayIndex)
-                RoutineBrain.shareInstance.saveContext()
+                brain.updateRoutineNotification(routineArrayIndex)
+                brain.saveContext()
             } else {
-                RoutineBrain.shareInstance.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: colorName)
+                brain.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: colorName)
             }
-            delegate?.updateTableView()
+            delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)
         } else {
             if titleText.count == 0 && dateText.count == 0 {

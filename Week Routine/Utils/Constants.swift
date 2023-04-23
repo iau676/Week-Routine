@@ -7,6 +7,8 @@
 
 import UIKit
 
+var brain = RoutineBrain.shareInstance
+
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.7)
     static let backgroundColor           = UIColor(named: "backgroundColor")

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewPlaceholderView: UIView {
+class PlaceholderView: UIView {
     
     private let imageView: UIImageView = {
         let image = Images.routine

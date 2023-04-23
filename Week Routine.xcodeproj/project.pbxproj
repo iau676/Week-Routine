@@ -10,6 +10,8 @@
 		70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */; };
 		702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddViewController.swift */; };
 		70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */; };
+		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
+		705221A129F561930010D327 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A029F561930010D327 /* Factories.swift */; };
 		707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168B928EE0C7B008B1D69 /* AppDelegate.swift */; };
 		707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */; };
 		707168BE28EE0C7B008B1D69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BD28EE0C7B008B1D69 /* ViewController.swift */; };
@@ -17,7 +19,7 @@
 		707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 707168C528EE0C7E008B1D69 /* Assets.xcassets */; };
 		707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */; };
 		707A5D1F293A6B0D00D7D19A /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */; };
-		707A5D21293A862500D7D19A /* TableViewPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */; };
+		707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D20293A862500D7D19A /* PlaceholderView.swift */; };
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */; };
@@ -27,14 +29,14 @@
 		70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DAB4B629F1A71500957643 /* UIView+Extensions.swift */; };
 		70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB70E428F746D000710325 /* UserDefaultsManager.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
-		70F06B6128F0C82000CCBB8A /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70F06B6028F0C82000CCBB8A /* CustomCell.xib */; };
-		70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F06B6228F0C89700CCBB8A /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		702BA40428EE105800BB7EDB /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
+		705221A029F561930010D327 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		707168B628EE0C7B008B1D69 /* Week Routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Week Routine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		707168B928EE0C7B008B1D69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,7 +46,7 @@
 		707168C828EE0C7E008B1D69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		707168CA28EE0C7E008B1D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
-		707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPlaceholderView.swift; sourceTree = "<group>"; };
+		707A5D20293A862500D7D19A /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -54,8 +56,6 @@
 		70DAB4B629F1A71500957643 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		70DB70E428F746D000710325 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
-		70F06B6028F0C82000CCBB8A /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
-		70F06B6228F0C89700CCBB8A /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +69,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7052219729F55F720010D327 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				70ECB52028F03465002B2483 /* RoutineBrain.swift */,
+				707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */,
+				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7052219829F55F770010D327 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7052219E29F55FE90010D327 /* RoutineCell.swift */,
+				707A5D20293A862500D7D19A /* PlaceholderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7052219929F55F7E0010D327 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				707168BD28EE0C7B008B1D69 /* ViewController.swift */,
+				702BA40428EE105800BB7EDB /* AddViewController.swift */,
+				70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7052219A29F55F850010D327 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */,
+				70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */,
+				70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */,
+				70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */,
+				70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */,
+				70DAB4B629F1A71500957643 /* UIView+Extensions.swift */,
+				707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */,
+				70C38BF3294A120100961BBB /* Date+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7052219C29F55F940010D327 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				707168B928EE0C7B008B1D69 /* AppDelegate.swift */,
+				707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */,
+				707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */,
+				707168CA28EE0C7E008B1D69 /* Info.plist */,
+				707168C528EE0C7E008B1D69 /* Assets.xcassets */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
+		7052219D29F55FD60010D327 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				70D5560328F1652600FE9C83 /* Constants.swift */,
+				705221A029F561930010D327 /* Factories.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		707168AD28EE0C7B008B1D69 = {
 			isa = PBXGroup;
 			children = (
@@ -88,71 +153,14 @@
 		707168B828EE0C7B008B1D69 /* Week Routine */ = {
 			isa = PBXGroup;
 			children = (
-				707168D128EE0D90008B1D69 /* Files */,
-				70A92CC728EEE38A004D5419 /* Extensions */,
-				70D5560328F1652600FE9C83 /* Constants.swift */,
-				707168D228EE0DA5008B1D69 /* Model */,
-				707168D328EE0DAA008B1D69 /* View */,
-				707168D428EE0DAE008B1D69 /* Controller */,
+				7052219D29F55FD60010D327 /* Utils */,
+				7052219729F55F720010D327 /* Model */,
+				7052219829F55F770010D327 /* View */,
+				7052219929F55F7E0010D327 /* Controller */,
+				7052219A29F55F850010D327 /* Extensions */,
+				7052219C29F55F940010D327 /* Files */,
 			);
 			path = "Week Routine";
-			sourceTree = "<group>";
-		};
-		707168D128EE0D90008B1D69 /* Files */ = {
-			isa = PBXGroup;
-			children = (
-				707168B928EE0C7B008B1D69 /* AppDelegate.swift */,
-				707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */,
-				707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */,
-				707168CA28EE0C7E008B1D69 /* Info.plist */,
-				707168C528EE0C7E008B1D69 /* Assets.xcassets */,
-			);
-			name = Files;
-			sourceTree = "<group>";
-		};
-		707168D228EE0DA5008B1D69 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				70ECB52028F03465002B2483 /* RoutineBrain.swift */,
-				707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */,
-				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		707168D328EE0DAA008B1D69 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				70F06B6028F0C82000CCBB8A /* CustomCell.xib */,
-				70F06B6228F0C89700CCBB8A /* CustomCell.swift */,
-				707A5D20293A862500D7D19A /* TableViewPlaceholderView.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		707168D428EE0DAE008B1D69 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				707168BD28EE0C7B008B1D69 /* ViewController.swift */,
-				702BA40428EE105800BB7EDB /* AddViewController.swift */,
-				70A92CCC28EF09AE004D5419 /* SettingsViewController.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		70A92CC728EEE38A004D5419 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */,
-				70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */,
-				70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */,
-				70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */,
-				70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */,
-				70DAB4B629F1A71500957643 /* UIView+Extensions.swift */,
-				707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */,
-				70C38BF3294A120100961BBB /* Date+Extensions.swift */,
-			);
-			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +221,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F06B6128F0C82000CCBB8A /* CustomCell.xib in Resources */,
 				707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */,
 				707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */,
 			);
@@ -226,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705221A129F561930010D327 /* Factories.swift in Sources */,
 				707168BE28EE0C7B008B1D69 /* ViewController.swift in Sources */,
 				707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */,
 				70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */,
@@ -235,11 +243,11 @@
 				70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */,
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddViewController.swift in Sources */,
-				70F06B6328F0C89700CCBB8A /* CustomCell.swift in Sources */,
 				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
 				70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */,
 				70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */,
-				707A5D21293A862500D7D19A /* TableViewPlaceholderView.swift in Sources */,
+				707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */,
+				7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsViewController.swift in Sources */,
 				70D5560428F1652600FE9C83 /* Constants.swift in Sources */,
 				707A5D1F293A6B0D00D7D19A /* UIContextualAction+Extensions.swift in Sources */,
