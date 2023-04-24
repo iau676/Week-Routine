@@ -34,10 +34,10 @@ final class RoutineController: UIViewController {
     //MARK: - Selectors
     
     @objc private func addButtonPressed() {
-        let vc = AddController()
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+        let controller = AddController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
     }
     
     @objc private func settingsButtonPressed() {

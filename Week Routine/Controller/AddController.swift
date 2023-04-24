@@ -13,14 +13,11 @@ protocol UpdateDelegate {
 
 final class AddController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    let titleLabel = UILabel()
-    let contentView = UIView()
     var stackView = UIStackView()
     let titleTextField = UITextField()
     let dateTextField = UITextField()
     let colorButton = UIButton()
     let clearColorButton = UIButton()
-    let saveButton = UIButton()
     let pickerView = UIPickerView()
     
     let colorPaletteView = UIView()
@@ -61,7 +58,6 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
         updatePickerView()
         addGestureRecognizer()
         hideKeyboardWhenTappedAround()
-        updateScreenWhenKeyboardWillShow()
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,14 +94,14 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
         hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
         minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
         if isEditMode == true {
-            titleLabel.text = "Edit Routine"
+            title = "Edit Routine"
             let color = brain.getColor(colorName)
             titleTextField.text = routineTitle
             dateTextField.text = "\(day), \(hour):\(minute)"
             updateGradientLayerColors(color, color)
             clearColorButton.isHidden = false
         } else {
-            titleLabel.text = "New Routine"
+            title = "New Routine"
             clearColorButton.isHidden = true
         }
     }
@@ -139,13 +135,8 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
 extension AddController {
     
     func style() {
-        view.backgroundColor = Colors.darkBackground
-
-        contentView.backgroundColor = Colors.backgroundColor
-        contentView.layer.cornerRadius = 16
-        
-        titleLabel.textColor = Colors.labelColor
-        titleLabel.numberOfLines = 1
+        configureBarButton()
+        view.backgroundColor = Colors.backgroundColor
         
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -170,12 +161,6 @@ extension AddController {
         dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear
         dateTextField.setLeftPaddingPoints(10)
-        
-        saveButton.backgroundColor = Colors.blackColor
-        saveButton.addConstraint(saveButton.heightAnchor.constraint(equalToConstant: 45))
-        saveButton.layer.cornerRadius = 8
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         
         colorButton.addConstraint(colorButton.heightAnchor.constraint(equalToConstant: 45))
         colorButton.layer.cornerRadius = 8
@@ -217,28 +202,18 @@ extension AddController {
     }
     
     func layout() {
-        
         view.addSubview(colorPaletteView)
         colorPaletteView.addSubview(colorPaletteStackView)
         
-        view.addSubview(contentView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(clearColorButton)
-        
-        contentView.setHeight(5*65-8)
-        contentView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor,
-                           paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
-        
-        titleLabel.anchor(top: contentView.topAnchor, paddingTop: 16)
-        titleLabel.centerX(inView: view)
+        view.addSubview(stackView)
+        view.addSubview(clearColorButton)
         
         stackView.addArrangedSubview(titleTextField)
         stackView.addArrangedSubview(dateTextField)
         stackView.addArrangedSubview(colorButton)
-        stackView.addArrangedSubview(saveButton)
-        stackView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                         paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                         right: view.rightAnchor, paddingTop: 32,
+                         paddingLeft: 32, paddingRight: 32)
         
         clearColorButton.anchor(top: colorButton.topAnchor, right: colorButton.rightAnchor, paddingRight: 8)
       
@@ -250,13 +225,25 @@ extension AddController {
         colorPaletteStackView.addArrangedSubview(blueButton)
         colorPaletteStackView.addArrangedSubview(purpleButton)
         
-        colorPaletteView.anchor(top: contentView.bottomAnchor, left: view.leftAnchor,
+        colorPaletteView.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
                                 bottom: view.bottomAnchor, right: view.rightAnchor,
-                                paddingTop: -32, paddingLeft: 16,
-                                paddingBottom: 16, paddingRight: 16)
+                                paddingTop: -32, paddingLeft: 32,
+                                paddingBottom: 16, paddingRight: 32)
         
         colorPaletteStackView.anchor(top: colorPaletteView.topAnchor, left: colorPaletteView.leftAnchor,
                                      bottom: view.bottomAnchor, right: colorPaletteView.rightAnchor)
+    }
+    
+    private func configureBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
+                                                            target: self,
+                                                            action: #selector(saveButtonPressed))
+        navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+                                                            target: self,
+                                                            action: #selector(dismissView))
+        navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
     }
 }
 
@@ -338,6 +325,10 @@ extension AddController {
         }
     }
     
+    @objc private func dismissView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @objc func colorButtonPressed() {
         colorPaletteView.isHidden = false
     }
@@ -350,31 +341,37 @@ extension AddController {
     @objc func redButtonPressed() {
         colorName = ColorName.red
         updateGradientLayerColors(Colors.red, Colors.red)
+        colorPaletteView.isHidden = true
     }
     
     @objc func orangeButtonPressed() {
         colorName = ColorName.orange
         updateGradientLayerColors(Colors.orange, Colors.orange)
+        colorPaletteView.isHidden = true
     }
     
     @objc func yellowButtonPressed() {
         colorName = ColorName.yellow
         updateGradientLayerColors(Colors.yellow, Colors.yellow)
+        colorPaletteView.isHidden = true
     }
     
     @objc func greenButtonPressed() {
         colorName = ColorName.green
         updateGradientLayerColors(Colors.green, Colors.green)
+        colorPaletteView.isHidden = true
     }
     
     @objc func blueButtonPressed() {
         colorName = ColorName.blue
         updateGradientLayerColors(Colors.blue, Colors.blue)
+        colorPaletteView.isHidden = true
     }
     
     @objc func purpleButtonPressed() {
         colorName = ColorName.purple
         updateGradientLayerColors(Colors.purple, Colors.purple)
+        colorPaletteView.isHidden = true
     }
 
 }
@@ -409,23 +406,3 @@ extension AddController {
         }
     }
 }
-
-//MARK: - Keyboard Will Show
-
- extension AddController {
-     private func updateScreenWhenKeyboardWillShow(){
-         NotificationCenter.default.addObserver(
-             self,
-             selector: #selector(keyboardWillShow),
-             name: UIResponder.keyboardWillShowNotification,
-             object: nil
-         )
-     }
-     @objc func keyboardWillShow(notification: NSNotification) {
-         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-             let keyboardHeight = CGFloat(keyboardSize.height)
-             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight).isActive = true
-             colorPaletteView.isHidden = true
-         }
-     }
- }
