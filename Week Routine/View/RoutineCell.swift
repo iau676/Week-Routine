@@ -39,6 +39,27 @@ final class RoutineCell: UICollectionViewCell {
         return view
     }()
     
+    private lazy var timerButton: UIButton = {
+       let button = UIButton()
+        button.setImageWithRenderingMode(image: Images.timer, width: 24, height: 24, color: .label)
+        button.addTarget(self, action: #selector(timerPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var logsButton: UIButton = {
+       let button = UIButton()
+        button.setImageWithRenderingMode(image: Images.logs, width: 24, height: 24, color: .label)
+        button.addTarget(self, action: #selector(logsPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var settingButton: UIButton = {
+       let button = UIButton()
+        button.setImageWithRenderingMode(image: Images.dots, width: 24, height: 24, color: .label)
+        button.addTarget(self, action: #selector(settingPressed), for: .touchUpInside)
+        return button
+    }()
+    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -51,18 +72,42 @@ final class RoutineCell: UICollectionViewCell {
                           paddingTop: 8, paddingLeft: 8,
                           paddingBottom: 8, paddingRight: 8)
         
-        let stack = UIStackView(arrangedSubviews: [dateLabel, routineLabel])
-        stack.axis = .vertical
-        stack.spacing = 0
+        timerButton.setDimensions(width: 24, height: 24)
+        let buttonStack = UIStackView(arrangedSubviews: [timerButton, logsButton, settingButton])
+        buttonStack.distribution = .fillEqually
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 16
+        
+        addSubview(buttonStack)
+        buttonStack.centerY(inView: borderView)
+        buttonStack.anchor(right: borderView.rightAnchor, paddingRight: 16)
+        
+        let labelStack = UIStackView(arrangedSubviews: [dateLabel, routineLabel])
+        labelStack.axis = .vertical
+        labelStack.spacing = 0
 
-        addSubview(stack)
-        stack.centerY(inView: borderView)
-        stack.anchor(left: borderView.leftAnchor, paddingLeft: 16)
-       
+        addSubview(labelStack)
+        labelStack.centerY(inView: borderView)
+        labelStack.anchor(left: borderView.leftAnchor, right: buttonStack.leftAnchor,
+                     paddingLeft: 16, paddingRight: 16)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Selectors
+    
+    @objc private func timerPressed() {
+        print("DEBUG::timerPressed")
+    }
+    
+    @objc private func logsPressed() {
+        print("DEBUG::logsPressed")
+    }
+    
+    @objc private func settingPressed() {
+        print("DEBUG::settingPressed")
     }
     
     //MARK: - Helpers
