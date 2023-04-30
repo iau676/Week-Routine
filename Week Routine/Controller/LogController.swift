@@ -7,11 +7,14 @@
 
 import UIKit
 
+private let reuseIdentifier = "LogCell"
+
 final class LogController: UIViewController {
     
     //MARK: - Properties
     
     private let routine: Routine
+    private let tableView = UITableView()
     
     //MARK: - Lifecycle
     
@@ -36,9 +39,36 @@ final class LogController: UIViewController {
         title = routine.title
         view.backgroundColor = .systemGroupedBackground
         
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .systemGroupedBackground
+        tableView.tableFooterView = UIView()
+        tableView.register(LogCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func layout() {
-        
+        view.addSubview(tableView)
+        tableView.fillSuperview()
     }
+}
+
+//MARK: - UITableViewDataSource
+
+extension LogController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return routine.logArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LogCell
+        cell.log = routine.logArray[indexPath.row]
+        return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension LogController: UITableViewDelegate {
+
 }
