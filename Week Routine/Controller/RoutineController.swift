@@ -126,6 +126,7 @@ extension RoutineController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
+        cell.delegate = self
         return cell
     }
     
@@ -230,5 +231,16 @@ extension RoutineController: UpdateDelegate {
 extension RoutineController: SettingsDelegate {
     func updateSettings() {
         daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
+    }
+}
+
+//MARK: - RoutineCellDelegate
+
+extension RoutineController: RoutineCellDelegate {
+    func goLog(routine: Routine) {
+        let controller = LogController(routine: routine)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
     }
 }

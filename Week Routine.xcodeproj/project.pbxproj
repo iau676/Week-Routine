@@ -25,6 +25,7 @@
 		70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4B29FEACF4003D72D6 /* Log+CoreDataProperties.swift */; };
 		70A76A5029FEACF4003D72D6 /* Routine+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4C29FEACF4003D72D6 /* Routine+CoreDataClass.swift */; };
 		70A76A5129FEACF4003D72D6 /* Routine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4D29FEACF4003D72D6 /* Routine+CoreDataProperties.swift */; };
+		70A76A5329FEB0C4003D72D6 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A5229FEB0C4003D72D6 /* LogController.swift */; };
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCD28EF09AE004D5419 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCC28EF09AE004D5419 /* SettingsController.swift */; };
@@ -57,6 +58,7 @@
 		70A76A4B29FEACF4003D72D6 /* Log+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Log+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		70A76A4C29FEACF4003D72D6 /* Routine+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataClass.swift"; sourceTree = "<group>"; };
 		70A76A4D29FEACF4003D72D6 /* Routine+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		70A76A5229FEB0C4003D72D6 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCC28EF09AE004D5419 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
 				702BA40428EE105800BB7EDB /* AddController.swift */,
 				70A92CCC28EF09AE004D5419 /* SettingsController.swift */,
+				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */,
 				70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */,
 				707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */,
+				70A76A5329FEB0C4003D72D6 /* LogController.swift in Sources */,
 				7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */,
 				70A76A4E29FEACF4003D72D6 /* Log+CoreDataClass.swift in Sources */,
 				70A92CCD28EF09AE004D5419 /* SettingsController.swift in Sources */,

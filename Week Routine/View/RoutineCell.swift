@@ -7,16 +7,17 @@
 
 import UIKit
 
+protocol RoutineCellDelegate: AnyObject {
+    func goLog(routine: Routine)
+}
+
 final class RoutineCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    var routine: Routine? {
-        didSet {
-            configure()
-        }
-    }
-
+    var routine: Routine? { didSet { configure() } }
+    weak var delegate: RoutineCellDelegate?
+    
     private let routineLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
@@ -103,9 +104,8 @@ final class RoutineCell: UICollectionViewCell {
     }
     
     @objc private func logsPressed() {
-        print("DEBUG::logsPressed")
         guard let routine = routine else { return }
-        brain.addLog(routine: routine, content: "::CONTENT::")
+        delegate?.goLog(routine: routine)
     }
     
     @objc private func settingPressed() {
