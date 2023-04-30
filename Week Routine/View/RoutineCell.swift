@@ -104,6 +104,8 @@ final class RoutineCell: UICollectionViewCell {
     
     @objc private func logsPressed() {
         print("DEBUG::logsPressed")
+        guard let routine = routine else { return }
+        brain.addLog(routine: routine, content: "::CONTENT::")
     }
     
     @objc private func settingPressed() {

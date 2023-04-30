@@ -38,6 +38,10 @@ struct RoutineBrain {
         saveContext()
     }
     
+    mutating func addLog(routine: Routine, content: String) {
+        print("DEBUG::\(routine.title ?? "")")
+    }
+    
     mutating func removeRoutine(at index: Int){
         guard let uuid = routineArray[index].uuid else{return}
         let dayInt = routineArray[index].day
