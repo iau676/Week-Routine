@@ -131,8 +131,13 @@ extension RoutineController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        brain.updateRoutineState(routine: brain.routineArray[tempArray[indexPath.row]])
-        routineCV.reloadData()
+//        brain.updateRoutineState(routine: brain.routineArray[tempArray[indexPath.row]])
+//        routineCV.reloadData()
+        let routine = brain.routineArray[tempArray[indexPath.row]]
+        let controller = CompleteController(routine: routine)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
     }
 }
 
