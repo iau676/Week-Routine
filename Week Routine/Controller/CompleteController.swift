@@ -33,13 +33,13 @@ final class CompleteController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func saveButtonPressed() {
-        print("DEBUG::saveButtonPressed")
+    @objc private func saveButtonPressed() {
+        guard let content = textView.text else { return }
+        brain.addLog(routine: routine, content: content)
         self.dismiss(animated: true, completion: nil)
     }
     
     @objc private func dismissView() {
-        print("DEBUG::dismissView")
         self.dismiss(animated: true, completion: nil)
     }
     

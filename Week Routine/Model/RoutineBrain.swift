@@ -39,7 +39,15 @@ struct RoutineBrain {
     }
     
     mutating func addLog(routine: Routine, content: String) {
-        print("DEBUG::\(routine.title ?? "")")
+        let newLog = Log(context: self.context)
+        newLog.date = Date()
+        newLog.uuid = UUID().uuidString
+        newLog.title = routine.title
+        newLog.content = content
+        
+        routine.addToLogs(newLog)
+        
+        saveContext()
     }
     
     mutating func removeRoutine(at index: Int){

@@ -65,6 +65,10 @@ extension LogController: UITableViewDataSource {
         cell.log = routine.logArray[indexPath.row]
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return size(forText: routine.logArray[indexPath.row].content).height + 50
+    }
 }
 
 //MARK: - UITableViewDelegate

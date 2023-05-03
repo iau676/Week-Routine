@@ -24,6 +24,7 @@ final class LogCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
         label.textColor = .label
+        label.numberOfLines = 0
         return label
     }()
     
@@ -32,9 +33,14 @@ final class LogCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(dateLabel)
-        dateLabel.anchor(top: topAnchor, left: leftAnchor,
-                         paddingTop: 4, paddingLeft: 16)
+        let stack = UIStackView(arrangedSubviews: [dateLabel, contentLabel])
+        stack.axis = .vertical
+        stack.spacing = 1
+        
+        addSubview(stack)
+        stack.centerY(inView: self)
+        stack.anchor(left: leftAnchor, right: rightAnchor,
+                     paddingLeft: 16, paddingRight: 16)
     }
     
     required init?(coder: NSCoder) {
@@ -44,6 +50,12 @@ final class LogCell: UITableViewCell {
     //MARK: - Helpers
     
     private func configure() {
-//        guard let log = log else { return }
+        guard let log = log else { return }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm E, d MMM y"
+        
+        dateLabel.text = "\(dateFormatter.string(from: log.date ?? Date()))"
+        contentLabel.text = log.content
     }
 }
