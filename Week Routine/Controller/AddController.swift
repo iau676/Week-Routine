@@ -13,41 +13,36 @@ protocol UpdateDelegate {
 
 final class AddController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    var stackView = UIStackView()
-    let titleTextField = UITextField()
-    let dateTextField = UITextField()
-    let colorButton = UIButton()
-    let clearColorButton = UIButton()
-    let pickerView = UIPickerView()
-    
-    let colorPaletteView = UIView()
-    var colorPaletteStackView = UIStackView()
-    let redButton = UIButton()
-    let orangeButton = UIButton()
-    let yellowButton = UIButton()
-    let greenButton = UIButton()
-    let blueButton = UIButton()
-    let purpleButton = UIButton()
-    
+    var routine: Routine?
     var delegate: UpdateDelegate?
     var isEditMode = false
     
-    var routineTitle = ""
-    var day = "Every day"
-    var dayInt = brain.getDayInt()
-    var hour = "\(brain.getHour())"
-    var minute = "\(brain.getMinute())"
-    var colorName = ColorName.defaultt
-    var routineArrayIndex = 0
+    private var stackView = UIStackView()
+    private let titleTextField = UITextField()
+    private let dateTextField = UITextField()
+    private let colorButton = UIButton()
+    private let clearColorButton = UIButton()
+    private let pickerView = UIPickerView()
     
-    let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Every day", "Weekday", "Weekend"]
+    private let colorPaletteView = UIView()
+    private var colorPaletteStackView = UIStackView()
+    private let redButton = UIButton()
+    private let orangeButton = UIButton()
+    private let yellowButton = UIButton()
+    private let greenButton = UIButton()
+    private let blueButton = UIButton()
+    private let purpleButton = UIButton()
     
-    let hours = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+    private var routineTitle = ""
+    private var day = "Every day"
+    private var dayInt = brain.getDayInt()
+    private var hour = "\(brain.getHour())"
+    private var minute = "\(brain.getMinute())"
+    private var colorName = ColorName.defaultt
+    private var routineArrayIndex = 0
     
-    let minutes = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
-    
-    let gradientLayer = CAGradientLayer()
-    var isGradientChanged = false
+    private let gradientLayer = CAGradientLayer()
+    private var isGradientChanged = false
     
     //MARK: - Life Cycle
     
@@ -134,7 +129,7 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
 
 extension AddController {
     
-    func style() {
+    private func style() {
         configureBarButton()
         view.backgroundColor = Colors.backgroundColor
         
@@ -147,8 +142,8 @@ extension AddController {
         
         titleTextField.placeholder = "Routine"
         titleTextField.backgroundColor = Colors.viewColor
-        titleTextField.addConstraint(titleTextField.heightAnchor.constraint(equalToConstant: 45))
         titleTextField.layer.cornerRadius = 8
+        titleTextField.setHeight(50)
         titleTextField.setLeftPaddingPoints(10)
         titleTextField.becomeFirstResponder()
         
@@ -157,12 +152,12 @@ extension AddController {
         dateTextField.inputView = pickerView
         dateTextField.placeholder = "Date"
         dateTextField.backgroundColor = Colors.viewColor
-        dateTextField.addConstraint(dateTextField.heightAnchor.constraint(equalToConstant: 45))
         dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear
+        dateTextField.setHeight(50)
         dateTextField.setLeftPaddingPoints(10)
         
-        colorButton.addConstraint(colorButton.heightAnchor.constraint(equalToConstant: 45))
+        colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
         colorButton.setTitle("Color", for: .normal)
         colorButton.setTitleColor(.white, for: .normal)
@@ -170,8 +165,7 @@ extension AddController {
         colorButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0);
         colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
         
-        clearColorButton.addConstraint(clearColorButton.heightAnchor.constraint(equalToConstant: 45))
-        clearColorButton.addConstraint(clearColorButton.widthAnchor.constraint(equalToConstant: 45))
+        clearColorButton.setDimensions(width: 45, height: 45)
         clearColorButton.layer.cornerRadius = 8
         clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
         clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20,
@@ -201,7 +195,7 @@ extension AddController {
         updateScreenByMode()
     }
     
-    func layout() {
+    private func layout() {
         view.addSubview(colorPaletteView)
         colorPaletteView.addSubview(colorPaletteStackView)
         
@@ -217,7 +211,6 @@ extension AddController {
         
         clearColorButton.anchor(top: colorButton.topAnchor, right: colorButton.rightAnchor, paddingRight: 8)
       
-        
         colorPaletteStackView.addArrangedSubview(redButton)
         colorPaletteStackView.addArrangedSubview(orangeButton)
         colorPaletteStackView.addArrangedSubview(yellowButton)
@@ -294,20 +287,16 @@ extension AddController {
 
 extension AddController {
     
-    @objc func saveButtonPressed() {
-        guard let dateText = dateTextField.text else{return}
-        guard let titleText = titleTextField.text else{return}
+    @objc private func saveButtonPressed() {
+        guard let dateText = dateTextField.text else { return }
+        guard let titleText = titleTextField.text else { return }
         
         if titleText.count > 0 && dateText.count > 0 {
             if isEditMode == true {
-                let item =  brain.routineArray[routineArrayIndex]
-                item.title = titleText
-                item.day = Int16(dayInt)
-                item.hour = Int16(hour) ?? 00
-                item.minute = Int16(minute) ?? 00
-                item.color = colorName
-                brain.updateRoutineNotification(routineArrayIndex)
-                brain.saveContext()
+                guard let routine = routine else { return }
+                let hour = Int(hour) ?? 0
+                let minute = Int(minute) ?? 0
+                brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute, color: colorName)
             } else {
                 brain.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: colorName)
             }
@@ -329,46 +318,46 @@ extension AddController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func colorButtonPressed() {
+    @objc private func colorButtonPressed() {
         colorPaletteView.isHidden = false
     }
     
-    @objc func clearColorButtonPressed() {
+    @objc private func clearColorButtonPressed() {
         colorName = ColorName.defaultt
         updateGradientLayerColors(Colors.viewColor, Colors.viewColor)
     }
     
-    @objc func redButtonPressed() {
+    @objc private func redButtonPressed() {
         colorName = ColorName.red
         updateGradientLayerColors(Colors.red, Colors.red)
         colorPaletteView.isHidden = true
     }
     
-    @objc func orangeButtonPressed() {
+    @objc private func orangeButtonPressed() {
         colorName = ColorName.orange
         updateGradientLayerColors(Colors.orange, Colors.orange)
         colorPaletteView.isHidden = true
     }
     
-    @objc func yellowButtonPressed() {
+    @objc private func yellowButtonPressed() {
         colorName = ColorName.yellow
         updateGradientLayerColors(Colors.yellow, Colors.yellow)
         colorPaletteView.isHidden = true
     }
     
-    @objc func greenButtonPressed() {
+    @objc private func greenButtonPressed() {
         colorName = ColorName.green
         updateGradientLayerColors(Colors.green, Colors.green)
         colorPaletteView.isHidden = true
     }
     
-    @objc func blueButtonPressed() {
+    @objc private func blueButtonPressed() {
         colorName = ColorName.blue
         updateGradientLayerColors(Colors.blue, Colors.blue)
         colorPaletteView.isHidden = true
     }
     
-    @objc func purpleButtonPressed() {
+    @objc private func purpleButtonPressed() {
         colorName = ColorName.purple
         updateGradientLayerColors(Colors.purple, Colors.purple)
         colorPaletteView.isHidden = true
@@ -379,14 +368,17 @@ extension AddController {
 //MARK: - Swipe Gesture
 
 extension AddController {
-    func addGestureRecognizer(){
+    private func addGestureRecognizer(){
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeDownGesture))
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
     }
 
-    @objc func respondToSwipeDownGesture(gesture: UISwipeGestureRecognizer) {
-        if titleTextField.text!.count > 0 || dateTextField.text!.count > 0 {
+    @objc private func respondToSwipeDownGesture(gesture: UISwipeGestureRecognizer) {
+        guard let dateText = dateTextField.text else { return }
+        guard let titleText = titleTextField.text else { return }
+        
+        if titleText.count > 0 || dateText.count > 0 {
             let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
 
             let action = UIAlertAction(title: "OK", style: .default) { (action) in

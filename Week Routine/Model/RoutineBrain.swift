@@ -46,7 +46,17 @@ struct RoutineBrain {
         newLog.content = content
         
         routine.addToLogs(newLog)
+        saveContext()
+    }
+    
+    mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String) {
+        routine.title = title
+        routine.day = Int16(day)
+        routine.hour = Int16(hour)
+        routine.minute = Int16(minute)
+        routine.color = color
         
+        updateRoutineNotification(routine: routine)
         saveContext()
     }
     
@@ -289,12 +299,11 @@ struct RoutineBrain {
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
     }
     
-    func updateRoutineNotification(_ index: Int){
-        let item = routineArray[index]
-        guard let title = item.title else{return}
-        guard let uuid = item.uuid else{return}
+    func updateRoutineNotification(routine: Routine){
+        guard let title = routine.title else{return}
+        guard let uuid = routine.uuid else{return}
         
         removeNotification(id: uuid)
-        addNotification(title: title, dayInt: Int(item.day), hour: Int(item.hour), minute: Int(item.minute), color: item.color ?? "", id: uuid)
+        addNotification(title: title, dayInt: Int(routine.day), hour: Int(routine.hour), minute: Int(routine.minute), color: routine.color ?? "", id: uuid)
     }
 }
