@@ -47,8 +47,7 @@ enum Images {
     static let menu                      = UIImage(named: "menu")
     static let routine                   = UIImage(named: "routine")
     
-    static let timer                     = UIImage(named: "timer")
-    static let logs                      = UIImage(named: "logs")
+    static let history                   = UIImage(named: "history")
     static let dots                      = UIImage(named: "dots")
 }
 

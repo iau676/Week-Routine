@@ -40,26 +40,8 @@ final class RoutineCell: UICollectionViewCell {
         return view
     }()
     
-    private lazy var timerButton: UIButton = {
-       let button = UIButton()
-        button.setImageWithRenderingMode(image: Images.timer, width: 24, height: 24, color: .label)
-        button.addTarget(self, action: #selector(timerPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var logsButton: UIButton = {
-       let button = UIButton()
-        button.setImageWithRenderingMode(image: Images.logs, width: 24, height: 24, color: .label)
-        button.addTarget(self, action: #selector(logsPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var settingButton: UIButton = {
-       let button = UIButton()
-        button.setImageWithRenderingMode(image: Images.dots, width: 24, height: 24, color: .label)
-        button.addTarget(self, action: #selector(settingPressed), for: .touchUpInside)
-        return button
-    }()
+    private lazy var historyButton = UIButton()
+    private lazy var editButton = UIButton()
     
     //MARK: - Lifecycle
     
@@ -67,14 +49,20 @@ final class RoutineCell: UICollectionViewCell {
         super.init(frame: .zero)
         backgroundColor = .clear
         
+        historyButton.setImageWithRenderingMode(image: Images.history, width: 24, height: 24, color: .label)
+        editButton.setImageWithRenderingMode(image: Images.dots, width: 24, height: 24, color: .label)
+        
+        historyButton.addTarget(self, action: #selector(historyPressed), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
+        
         addSubview(borderView)
         borderView.anchor(top: topAnchor, left: leftAnchor,
                           bottom: bottomAnchor, right: rightAnchor,
                           paddingTop: 8, paddingLeft: 8,
                           paddingBottom: 8, paddingRight: 8)
         
-        timerButton.setDimensions(width: 24, height: 24)
-        let buttonStack = UIStackView(arrangedSubviews: [timerButton, logsButton, settingButton])
+        historyButton.setDimensions(width: 24, height: 24)
+        let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
         buttonStack.axis = .horizontal
         buttonStack.spacing = 16
@@ -99,17 +87,13 @@ final class RoutineCell: UICollectionViewCell {
     
     //MARK: - Selectors
     
-    @objc private func timerPressed() {
-        print("DEBUG::timerPressed")
-    }
-    
-    @objc private func logsPressed() {
+    @objc private func historyPressed() {
         guard let routine = routine else { return }
         delegate?.goLog(routine: routine)
     }
     
-    @objc private func settingPressed() {
-        print("DEBUG::settingPressed")
+    @objc private func editPressed() {
+        print("DEBUG::editPressed")
     }
     
     //MARK: - Helpers
