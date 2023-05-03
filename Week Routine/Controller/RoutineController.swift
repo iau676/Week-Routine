@@ -248,4 +248,13 @@ extension RoutineController: RoutineCellDelegate {
         nav.modalPresentationStyle = .formSheet
         self.present(nav, animated: true)
     }
+    
+    func goEdit(routine: Routine) {
+        let controller = AddController()
+        controller.delegate = self
+        controller.routine = routine
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
+    }
 }

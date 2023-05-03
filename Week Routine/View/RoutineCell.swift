@@ -9,6 +9,7 @@ import UIKit
 
 protocol RoutineCellDelegate: AnyObject {
     func goLog(routine: Routine)
+    func goEdit(routine: Routine)
 }
 
 final class RoutineCell: UICollectionViewCell {
@@ -93,7 +94,8 @@ final class RoutineCell: UICollectionViewCell {
     }
     
     @objc private func editPressed() {
-        print("DEBUG::editPressed")
+        guard let routine = routine else { return }
+        delegate?.goEdit(routine: routine)
     }
     
     //MARK: - Helpers

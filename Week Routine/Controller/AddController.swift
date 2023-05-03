@@ -15,7 +15,6 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     var routine: Routine?
     var delegate: UpdateDelegate?
-    var isEditMode = false
     
     private var stackView = UIStackView()
     private let titleTextField = UITextField()
@@ -33,7 +32,6 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
     private let blueButton = UIButton()
     private let purpleButton = UIButton()
     
-    private var routineTitle = ""
     private var day = "Every day"
     private var dayInt = brain.getDayInt()
     private var hour = "\(brain.getHour())"
@@ -61,7 +59,7 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     //MARK: - Helpers
     
-    private func setGradientSelectColorButton(){
+    private func setGradientSelectColorButton() {
         let topGradientColor = Colors.blue
         let bottomGradientColor = Colors.purple
 
@@ -77,22 +75,31 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
         colorButton.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    private func updateGradientLayerColors(_ topGradientColor: UIColor?, _ bottomGradientColor: UIColor?){
+    private func updateGradientLayerColors(_ topGradientColor: UIColor?, _ bottomGradientColor: UIColor?) {
         isGradientChanged = true
         clearColorButton.isHidden = false
         gradientLayer.colors = [topGradientColor?.cgColor ?? UIColor.darkGray.cgColor, bottomGradientColor?.cgColor ?? UIColor.white.cgColor]
-        colorButtonBackgroundChanged()
+        colorButton.setTitleColor(colorName == ColorName.defaultt ? Colors.labelColor : .white, for: .normal)
     }
     
     private func updateScreenByMode() {
         day = brain.getDayName(Int16(dayInt))
         hour = Int(hour) ?? 00 < 10 ? "0\(hour)" : "\(hour)"
         minute = Int(minute) ?? 00 < 10 ? "0\(minute)" : "\(minute)"
-        if isEditMode == true {
+        
+        if let routine = routine {
             title = "Edit Routine"
-            let color = brain.getColor(colorName)
-            titleTextField.text = routineTitle
+            
+            dayInt = Int(routine.day)
+            day = brain.getDayName(Int16(dayInt))
+            hour = hours[Int(routine.hour)]
+            minute = minutes[Int(routine.minute)]
+            colorName = routine.color ?? ColorName.defaultt
+            
+            titleTextField.text = routine.title
             dateTextField.text = "\(day), \(hour):\(minute)"
+            
+            let color = brain.getColor(colorName)
             updateGradientLayerColors(color, color)
             clearColorButton.isHidden = false
         } else {
@@ -104,24 +111,9 @@ final class AddController: UIViewController, UIPickerViewDataSource, UIPickerVie
     private func updatePickerView() {
         let hour = Int(hour) ?? 0
         let minute = Int(minute) ?? 0
-        if isEditMode == true {
-            pickerView.selectRow(dayInt, inComponent: 0, animated: true)
-            pickerView.selectRow(hour, inComponent: 1, animated: true)
-            pickerView.selectRow(minute, inComponent: 2, animated: true)
-        } else {
-            pickerView.selectRow(dayInt, inComponent: 0, animated: true)
-            pickerView.selectRow(hour, inComponent: 1, animated: true)
-            pickerView.selectRow(minute, inComponent: 2, animated: true)
-            dateTextField.text = ""
-        }
-    }
-    
-    private func colorButtonBackgroundChanged(){
-        if colorName == ColorName.defaultt {
-            colorButton.setTitleColor(Colors.labelColor, for: .normal)
-        } else {
-            colorButton.setTitleColor(.white, for: .normal)
-        }
+        pickerView.selectRow(dayInt, inComponent: 0, animated: true)
+        pickerView.selectRow(hour, inComponent: 1, animated: true)
+        pickerView.selectRow(minute, inComponent: 2, animated: true)
     }
 }
 
@@ -292,8 +284,7 @@ extension AddController {
         guard let titleText = titleTextField.text else { return }
         
         if titleText.count > 0 && dateText.count > 0 {
-            if isEditMode == true {
-                guard let routine = routine else { return }
+            if let routine = routine {
                 let hour = Int(hour) ?? 0
                 let minute = Int(minute) ?? 0
                 brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute, color: colorName)
