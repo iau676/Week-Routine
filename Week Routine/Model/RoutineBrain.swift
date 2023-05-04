@@ -210,7 +210,7 @@ struct RoutineBrain {
         case ColorName.purple:
             return Colors.purple
         default:
-            return Colors.viewColor ?? .darkGray
+            return .label
         }
     }
     

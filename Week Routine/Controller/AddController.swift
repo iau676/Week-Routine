@@ -11,6 +11,8 @@ protocol UpdateDelegate {
     func updateCV()
 }
 
+private let reuseIdentifier = "ColorCell"
+
 final class AddController: UIViewController {
     
     var routine: Routine?
@@ -22,13 +24,13 @@ final class AddController: UIViewController {
     private let clearColorButton = UIButton()
     private let pickerView = UIPickerView()
     
-    private let colorPaletteView = UIView()
-    private let redButton = UIButton()
-    private let orangeButton = UIButton()
-    private let yellowButton = UIButton()
-    private let greenButton = UIButton()
-    private let blueButton = UIButton()
-    private let purpleButton = UIButton()
+    private let colorCV: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }()
     
     private var dayInt = brain.getDayInt()
     private var day = days[brain.getDayInt()]
@@ -144,40 +146,18 @@ extension AddController {
         clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
         clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20,
                                                    color: Colors.viewColor ?? .darkGray)
-                
-        colorPaletteView.backgroundColor = .darkGray
-        colorPaletteView.isHidden = true
         
-        redButton.backgroundColor = Colors.red
-        redButton.addTarget(self, action: #selector(redButtonPressed), for: .touchUpInside)
-        
-        orangeButton.backgroundColor = Colors.orange
-        orangeButton.addTarget(self, action: #selector(orangeButtonPressed), for: .touchUpInside)
-        
-        yellowButton.backgroundColor = Colors.yellow
-        yellowButton.addTarget(self, action: #selector(yellowButtonPressed), for: .touchUpInside)
-        
-        greenButton.backgroundColor = Colors.green
-        greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .touchUpInside)
-        
-        blueButton.backgroundColor = Colors.blue
-        blueButton.addTarget(self, action: #selector(blueButtonPressed), for: .touchUpInside)
-        
-        purpleButton.backgroundColor = Colors.purple
-        purpleButton.addTarget(self, action: #selector(purpleButtonPressed), for: .touchUpInside)
+        colorCV.delegate = self
+        colorCV.dataSource = self
+        colorCV.backgroundColor = .clear
+        colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        colorCV.isHidden = true
         
         updateScreenByMode()
     }
     
     private func layout() {
-        view.addSubview(colorPaletteView)
-        
-        let colorStack = UIStackView(arrangedSubviews: [redButton, orangeButton, yellowButton,
-                                                        greenButton, blueButton, purpleButton])
-        colorStack.axis = .horizontal
-        colorStack.distribution = .fillEqually
-        colorStack.spacing = 0
-        colorPaletteView.addSubview(colorStack)
+        view.addSubview(colorCV)
         
         let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton])
         stack.axis = .vertical
@@ -192,13 +172,10 @@ extension AddController {
         clearColorButton.centerY(inView: colorButton)
         clearColorButton.anchor(right: colorButton.rightAnchor)
         
-        colorPaletteView.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
-                                bottom: view.bottomAnchor, right: view.rightAnchor,
-                                paddingTop: -32, paddingLeft: 32,
-                                paddingBottom: 16, paddingRight: 32)
-        
-        colorStack.anchor(top: colorPaletteView.topAnchor, left: colorPaletteView.leftAnchor,
-                      bottom: view.bottomAnchor, right: colorPaletteView.rightAnchor)
+        colorCV.setHeight(250)
+        colorCV.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: -32,
+                       paddingLeft: 32, paddingRight: 32)
     }
     
     private func configureBarButton() {
@@ -211,6 +188,35 @@ extension AddController {
                                                             target: self,
                                                             action: #selector(dismissView))
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
+    }
+}
+
+//MARK: - UICollectionViewDelegate/DataSource
+
+extension AddController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        cell.contentView.backgroundColor = colors[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        colorName = colorNames[indexPath.row]
+        let color = colors[indexPath.row]
+        updateGradientLayerColors(color, color)
+        colorCV.isHidden = true
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension AddController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (view.bounds.width-64)/6, height: 250)
     }
 }
 
@@ -292,48 +298,12 @@ extension AddController {
     }
     
     @objc private func colorButtonPressed() {
-        colorPaletteView.isHidden = false
+        colorCV.isHidden = false
     }
     
     @objc private func clearColorButtonPressed() {
         colorName = ColorName.defaultt
         updateGradientLayerColors(Colors.viewColor, Colors.viewColor)
+        colorCV.isHidden = true
     }
-    
-    @objc private func redButtonPressed() {
-        colorName = ColorName.red
-        updateGradientLayerColors(Colors.red, Colors.red)
-        colorPaletteView.isHidden = true
-    }
-    
-    @objc private func orangeButtonPressed() {
-        colorName = ColorName.orange
-        updateGradientLayerColors(Colors.orange, Colors.orange)
-        colorPaletteView.isHidden = true
-    }
-    
-    @objc private func yellowButtonPressed() {
-        colorName = ColorName.yellow
-        updateGradientLayerColors(Colors.yellow, Colors.yellow)
-        colorPaletteView.isHidden = true
-    }
-    
-    @objc private func greenButtonPressed() {
-        colorName = ColorName.green
-        updateGradientLayerColors(Colors.green, Colors.green)
-        colorPaletteView.isHidden = true
-    }
-    
-    @objc private func blueButtonPressed() {
-        colorName = ColorName.blue
-        updateGradientLayerColors(Colors.blue, Colors.blue)
-        colorPaletteView.isHidden = true
-    }
-    
-    @objc private func purpleButtonPressed() {
-        colorName = ColorName.purple
-        updateGradientLayerColors(Colors.purple, Colors.purple)
-        colorPaletteView.isHidden = true
-    }
-
 }
