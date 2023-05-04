@@ -60,9 +60,9 @@ struct RoutineBrain {
         saveContext()
     }
     
-    mutating func removeRoutine(at index: Int){
-        guard let uuid = routineArray[index].uuid else{return}
-        let dayInt = routineArray[index].day
+    mutating func deleteRoutine(_ routine: Routine) {
+        guard let uuid = routine.uuid else { return }
+        let dayInt = routine.day
         switch dayInt {
             case 8:
                 removeNotification(id: "\(uuid)wr2")
@@ -79,8 +79,7 @@ struct RoutineBrain {
                 removeNotification(id: uuid)
             break
         }
-        context.delete(routineArray[index])
-        routineArray.remove(at: index)
+        context.delete(routine)
         saveContext()
     }
     

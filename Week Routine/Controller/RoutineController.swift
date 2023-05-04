@@ -149,50 +149,6 @@ extension RoutineController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
-//MARK: - Swipe Cell
-
-//extension ViewController {
-//    func tableView(_ tableView: UITableView,
-//                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//            let alert = UIAlertController(title: "Routine will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
-//            let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-//                RoutineBrain.shareInstance.removeRoutine(at: self.tempArray[indexPath.row])
-//                self.findWhichRoutinesShouldShow()
-//            }
-//            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
-//                alert.dismiss(animated: true, completion: nil)
-//            }
-//            alert.addAction(actionDelete)
-//            alert.addAction(actionCancel)
-//            self.present(alert, animated: true, completion: nil)
-//            success(true)
-//        })
-//        deleteAction.setImage(image: Images.bin, width: 21, height: 21)
-//
-//        let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//            let vc = AddViewController()
-//            let item = RoutineBrain.shareInstance.routineArray[self.tempArray[indexPath.row]]
-//            vc.delegate = self
-//            vc.isEditMode = true
-//            vc.routineTitle = item.title ?? ""
-//            vc.dayInt = Int(item.day)
-//            vc.hour = "\(item.hour)"
-//            vc.minute = "\(item.minute)"
-//            vc.colorName = item.color ?? ""
-//            vc.routineArrayIndex = self.tempArray[indexPath.row]
-//            vc.modalPresentationStyle = .overCurrentContext
-//            self.present(vc, animated: true)
-//            success(true)
-//        })
-//        editAction.setImage(image: Images.edit, width: 21, height: 21)
-//        editAction.setBackgroundColor(Colors.blue)
-//
-//        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-//    }
-//}
-
 //MARK: - Swipe Gesture
 
 extension RoutineController {

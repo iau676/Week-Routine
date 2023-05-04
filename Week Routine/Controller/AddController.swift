@@ -23,7 +23,6 @@ final class AddController: UIViewController {
     private let colorButton = UIButton()
     private let clearColorButton = UIButton()
     private let pickerView = UIPickerView()
-    
     private let colorCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -31,6 +30,7 @@ final class AddController: UIViewController {
         layout.minimumInteritemSpacing = 0
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
+    private let deleteButton = UIButton()
     
     private var dayInt = brain.getDayInt()
     private var day = days[brain.getDayInt()]
@@ -93,9 +93,11 @@ final class AddController: UIViewController {
             let color = brain.getColor(colorName)
             updateGradientLayerColors(color, color)
             clearColorButton.isHidden = false
+            deleteButton.isHidden = false
         } else {
             title = "New Routine"
             clearColorButton.isHidden = true
+            deleteButton.isHidden = true
         }
     }
     
@@ -153,6 +155,10 @@ extension AddController {
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
         
+        deleteButton.setTitle("Delete", for: .normal)
+        deleteButton.setTitleColor(.systemRed, for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+        
         updateScreenByMode()
     }
     
@@ -176,6 +182,10 @@ extension AddController {
         colorCV.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
                        right: view.rightAnchor, paddingTop: -32,
                        paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(deleteButton)
+        deleteButton.setHeight(50)
+        deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: stack.rightAnchor)
     }
     
     private func configureBarButton() {
@@ -305,5 +315,19 @@ extension AddController {
         colorName = ColorName.defaultt
         updateGradientLayerColors(Colors.viewColor, Colors.viewColor)
         colorCV.isHidden = true
+    }
+    
+    @objc private func deleteButtonPressed() {
+        let alert = UIAlertController(title: "Routine will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+        let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            guard let routine = self.routine else { return }
+            brain.deleteRoutine(routine)
+            self.delegate?.updateCV()
+            self.dismissView()
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(actionDelete)
+        alert.addAction(actionCancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
