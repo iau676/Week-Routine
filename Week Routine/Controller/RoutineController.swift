@@ -35,6 +35,7 @@ final class RoutineController: UIViewController {
     
     @objc private func addButtonPressed() {
         let controller = AddController()
+        controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         self.present(nav, animated: true)

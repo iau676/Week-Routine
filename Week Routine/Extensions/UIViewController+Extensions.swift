@@ -26,4 +26,15 @@ extension UIViewController {
         label.setWidth(self.view.frame.width-32)
         return label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
+    
+    func showDeleteAlert(title: String, message: String, completion: @escaping(Bool)-> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            completion(true)
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(actionDelete)
+        alert.addAction(actionCancel)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
