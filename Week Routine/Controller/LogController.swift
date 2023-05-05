@@ -74,5 +74,23 @@ extension LogController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension LogController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView,
+                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            let alert = UIAlertController(title: "Data will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+            let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                brain.deleteLog(self.routine, indexPath.row)
+                tableView.reloadData()
+            }
+            let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+            alert.addAction(actionDelete)
+            alert.addAction(actionCancel)
+            self.present(alert, animated: true, completion: nil)
+            success(true)
+        })
+        deleteAction.setBackgroundColor(.systemRed)
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
 }

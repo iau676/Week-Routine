@@ -83,6 +83,11 @@ struct RoutineBrain {
         saveContext()
     }
     
+    mutating func deleteLog(_ routine: Routine, _ index: Int) {
+        context.delete(routine.logArray[index])
+        saveContext()
+    }
+    
     mutating func loadRoutineArray(with request: NSFetchRequest<Routine> = Routine.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "ascending", ascending: true)]
