@@ -114,6 +114,12 @@ final class RoutineController: UIViewController {
         tempArray = brain.findRoutines(for: daySegmentedControl.selectedSegmentIndex)
         updatePlaceholderViewVisibility()
     }
+    
+    private func checkSelectedSegmentToday() -> Bool {
+        var day = Calendar.current.component(.weekday, from: Date())
+        day = (day-2 < 0) ? 6 : day-2
+        return daySegmentedControl.selectedSegmentIndex == day
+    }
 }
 
 //MARK: - UICollectionViewDelegate/DataSource
@@ -132,13 +138,15 @@ extension RoutineController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        brain.updateRoutineState(routine: brain.routineArray[tempArray[indexPath.row]])
-//        routineCV.reloadData()
-        let routine = brain.routineArray[tempArray[indexPath.row]]
-        let controller = CompleteController(routine: routine)
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .formSheet
-        self.present(nav, animated: true)
+        if checkSelectedSegmentToday() {
+            let routine = brain.routineArray[tempArray[indexPath.row]]
+            let controller = CompleteController(routine: routine)
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .formSheet
+            self.present(nav, animated: true)
+        } else {
+            self.showAlertWithTimer(title: "Not Today")
+        }
     }
 }
 
