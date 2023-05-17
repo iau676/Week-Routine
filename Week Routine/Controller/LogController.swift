@@ -15,6 +15,7 @@ final class LogController: UIViewController {
     
     private let routine: Routine
     private let tableView = UITableView()
+    private let placeholderView = PlaceholderView(text: "No Data")
     
     //MARK: - Lifecycle
     
@@ -51,12 +52,20 @@ final class LogController: UIViewController {
         view.addSubview(tableView)
         tableView.fillSuperview()
     }
+    
+    private func updatePlaceholderViewVisibility(){
+        view.addSubview(placeholderView)
+        placeholderView.centerX(inView: tableView)
+        placeholderView.centerY(inView: tableView)
+        placeholderView.isHidden = routine.logArray.count != 0
+    }
 }
 
 //MARK: - UITableViewDataSource
 
 extension LogController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        updatePlaceholderViewVisibility()
         return routine.logArray.count
     }
     

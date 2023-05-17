@@ -7,7 +7,9 @@
 
 import UIKit
 
-class PlaceholderView: UIView {
+final class PlaceholderView: UIView {
+    
+    private let text: String
     
     private let imageView: UIImageView = {
         let image = Images.routine
@@ -21,7 +23,6 @@ class PlaceholderView: UIView {
         
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "No Routine"
         label.font = UIFont(name: Fonts.AvenirNextMedium, size: 17)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -29,8 +30,9 @@ class PlaceholderView: UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(text: String) {
+        self.text = text
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         setupViews()
     }
     
@@ -39,6 +41,8 @@ class PlaceholderView: UIView {
     }
     
     private func setupViews() {
+        titleLabel.text = text
+        
         let stack = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stack.axis = .vertical
         stack.spacing = 8

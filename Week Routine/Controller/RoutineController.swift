@@ -12,7 +12,7 @@ private let reuseIdentifier = "RoutineCell"
 final class RoutineController: UIViewController {
 
     private let routineCV = makeCollectionView()
-    private let placeholderView = PlaceholderView()
+    private let placeholderView = PlaceholderView(text: "No Routine")
     private let daySegmentedControl = UISegmentedControl()
     private var tempArray = [Int]() { didSet { routineCV.reloadData() } }
         
