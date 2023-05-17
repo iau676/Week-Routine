@@ -32,7 +32,7 @@ extension Routine {
         let logsSet = logs as? Set<Log> ?? []
         
         return logsSet.sorted {
-            $0.unwrappedDate < $1.unwrappedDate
+            $0.unwrappedDate > $1.unwrappedDate
         }
     }
 

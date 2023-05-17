@@ -19,6 +19,14 @@ final class RoutineCell: UICollectionViewCell {
     var routine: Routine? { didSet { configure() } }
     weak var delegate: RoutineCellDelegate?
     
+    private let borderView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = 16
+        view.layer.borderWidth = 2
+        return view
+    }()
+    
     private let routineLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
@@ -31,14 +39,6 @@ final class RoutineCell: UICollectionViewCell {
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
         label.textColor = .darkGray
         return label
-    }()
-    
-    private let borderView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = 16
-        view.layer.borderWidth = 2
-        return view
     }()
     
     private lazy var historyButton = UIButton()
@@ -108,20 +108,15 @@ final class RoutineCell: UICollectionViewCell {
         let minute = routine.minute < 10 ? "0\(routine.minute)" : "\(routine.minute)"
         let color = brain.getColor(routine.color ?? ColorName.defaultt)
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
-        
-        
-//        let todayDate = brain.getTodayDate()
-//        if routine.isDone == true && routine.doneDate == todayDate {
-//            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
-//            self.alpha = 0.5
-//        } else {
-//            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle , range: NSRange(location: 0, length: attributeString.length))
-//            self.alpha = 1
-//        }
 
         routineLabel.attributedText = attributeString
         dateLabel.text = "\(hour):\(minute) ・ \(day)"
         
         borderView.layer.borderColor = color.cgColor
+        borderView.backgroundColor = .clear
+        guard let lastLogDate =  routine.logArray.first?.date else { return }
+        if Calendar.current.isDateInToday(lastLogDate) {
+            borderView.backgroundColor = color.withAlphaComponent(0.3)
+        }
     }
 }
