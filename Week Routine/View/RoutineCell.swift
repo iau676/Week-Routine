@@ -62,11 +62,11 @@ final class RoutineCell: UICollectionViewCell {
                           paddingTop: 8, paddingLeft: 8,
                           paddingBottom: 8, paddingRight: 8)
         
-        historyButton.setDimensions(width: 24, height: 24)
+        historyButton.setDimensions(width: 32, height: 32)
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
         buttonStack.axis = .horizontal
-        buttonStack.spacing = 16
+        buttonStack.spacing = 8
         
         addSubview(buttonStack)
         buttonStack.centerY(inView: borderView)
@@ -110,7 +110,7 @@ final class RoutineCell: UICollectionViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        dateLabel.text = "\(hour):\(minute) ・ \(day)"
+        dateLabel.text = "\(hour):\(minute)・\(day)"
         
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
