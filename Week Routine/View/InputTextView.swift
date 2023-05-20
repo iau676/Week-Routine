@@ -28,6 +28,7 @@ final class InputTextView: UITextView {
         font = UIFont.systemFont(ofSize: 16)
         isScrollEnabled = false
         heightAnchor.constraint(equalToConstant: 300).isActive = true
+        layer.cornerRadius = 8
         
         addSubview(placeholderLabel)
         placeholderLabel.anchor(top: topAnchor, left: leftAnchor,
