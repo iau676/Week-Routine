@@ -23,13 +23,7 @@ final class AddController: UIViewController {
     private let colorButton = UIButton()
     private let clearColorButton = UIButton()
     private let pickerView = UIPickerView()
-    private let colorCV: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
+    private let colorCV = makeCollectionView()
     private let deleteButton = UIButton()
     
     private var dayInt = brain.getDayInt()
@@ -160,7 +154,7 @@ final class AddController: UIViewController {
         
         let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton])
         stack.axis = .vertical
-        stack.spacing = 20
+        stack.spacing = 16
         
         view.addSubview(stack)
         stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
@@ -171,14 +165,14 @@ final class AddController: UIViewController {
         clearColorButton.centerY(inView: colorButton)
         clearColorButton.anchor(right: colorButton.rightAnchor)
         
-        colorCV.setHeight(250)
         colorCV.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: -32,
-                       paddingLeft: 32, paddingRight: 32)
+                       bottom: view.bottomAnchor, right: view.rightAnchor,
+                       paddingTop: -32, paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(deleteButton)
         deleteButton.setHeight(50)
-        deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: stack.rightAnchor)
+        deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                            right: stack.rightAnchor)
     }
     
     private func configureBarButton() {
@@ -271,7 +265,7 @@ extension AddController: UICollectionViewDataSource {
 
 extension AddController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.bounds.width-64)/6, height: 250)
+        return CGSize(width: (view.bounds.width-64)/6, height: view.frame.height)
     }
 }
 
