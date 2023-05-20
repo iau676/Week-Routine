@@ -38,7 +38,7 @@ final class LogController: UIViewController {
     
     private func style() {
         title = routine.title
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = Colors.backgroundColor
         
         tableView.allowsSelection = false
         tableView.backgroundColor = .systemGroupedBackground

@@ -33,6 +33,8 @@ final class LogCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        backgroundColor = Colors.viewColor
+        
         let stack = UIStackView(arrangedSubviews: [dateLabel, contentLabel])
         stack.axis = .vertical
         stack.spacing = 1
