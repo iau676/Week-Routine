@@ -16,6 +16,7 @@ final class RoutineCell: UICollectionViewCell {
     
     //MARK: - Properties
     
+    var selectedSegmentIndex: Int?
     var routine: Routine? { didSet { configure() } }
     weak var delegate: RoutineCellDelegate?
     
@@ -115,8 +116,14 @@ final class RoutineCell: UICollectionViewCell {
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
         guard let lastLogDate =  routine.logArray.first?.date else { return }
-        if Calendar.current.isDateInToday(lastLogDate) {
+        if checkToday() && Calendar.current.isDateInToday(lastLogDate) {
             borderView.backgroundColor = color.withAlphaComponent(0.3)
         }
+    }
+    
+    private func checkToday() -> Bool {
+        var day = Calendar.current.component(.weekday, from: Date())
+        day = (day-2 < 0) ? 6 : day-2
+        return selectedSegmentIndex == day
     }
 }

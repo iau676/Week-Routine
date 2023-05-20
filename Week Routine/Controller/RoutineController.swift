@@ -132,6 +132,7 @@ extension RoutineController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
+        cell.selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
         cell.delegate = self
         return cell
