@@ -43,6 +43,7 @@
 /* Begin PBXFileReference section */
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		702BA40428EE105800BB7EDB /* AddController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddController.swift; sourceTree = "<group>"; };
+		703E5A602A19A6E500496771 /* Week Routine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Week Routine.entitlements"; sourceTree = "<group>"; };
 		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		705221A029F561930010D327 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 			children = (
 				707168B928EE0C7B008B1D69 /* AppDelegate.swift */,
 				707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */,
+				703E5A602A19A6E500496771 /* Week Routine.entitlements */,
 				707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */,
 				707168CA28EE0C7E008B1D69 /* Info.plist */,
 				707168C528EE0C7E008B1D69 /* Assets.xcassets */,
@@ -433,6 +435,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Week Routine/Week Routine.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
@@ -463,6 +466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Week Routine/Week Routine.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
