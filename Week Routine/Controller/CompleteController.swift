@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol CompleteControllerDelegate : AnyObject {
+    func updateTableView()
+}
+
 final class CompleteController: UIViewController {
     
     //MARK: - Properties
+    
+    weak var delegate: CompleteControllerDelegate?
     
     private let routine: Routine
     private let textView = InputTextView()
@@ -36,6 +42,7 @@ final class CompleteController: UIViewController {
     @objc private func saveButtonPressed() {
         guard let content = textView.text else { return }
         brain.addLog(routine: routine, content: content)
+        delegate?.updateTableView()
         self.dismiss(animated: true, completion: nil)
     }
     

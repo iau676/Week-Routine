@@ -142,6 +142,7 @@ extension RoutineController: UICollectionViewDataSource {
         if checkSelectedSegmentToday() {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             let controller = CompleteController(routine: routine)
+            controller.delegate = self
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .formSheet
             self.present(nav, animated: true)
@@ -222,5 +223,13 @@ extension RoutineController: RoutineCellDelegate {
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         self.present(nav, animated: true)
+    }
+}
+
+//MARK: - CompleteControllerDelegate
+
+extension RoutineController: CompleteControllerDelegate {
+    func updateTableView() {
+        routineCV.reloadData()
     }
 }
