@@ -13,6 +13,8 @@
 		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
 		705221A129F561930010D327 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A029F561930010D327 /* Factories.swift */; };
 		705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A229F57A170010D327 /* UIViewController+Extensions.swift */; };
+		706D66D32A34942E003BE508 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D22A34942E003BE508 /* FilterCell.swift */; };
+		706D66D52A349440003BE508 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D42A349440003BE508 /* FilterView.swift */; };
 		707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168B928EE0C7B008B1D69 /* AppDelegate.swift */; };
 		707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */; };
 		707168BE28EE0C7B008B1D69 /* RoutineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168BD28EE0C7B008B1D69 /* RoutineController.swift */; };
@@ -48,6 +50,8 @@
 		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		705221A029F561930010D327 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		705221A229F57A170010D327 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		706D66D22A34942E003BE508 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		706D66D42A349440003BE508 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		707168B628EE0C7B008B1D69 /* Week Routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Week Routine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		707168B928EE0C7B008B1D69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		707168BB28EE0C7B008B1D69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 				70A76A5429FEB69C003D72D6 /* LogCell.swift */,
 				707A5D20293A862500D7D19A /* PlaceholderView.swift */,
 				70A76A5829FED9DF003D72D6 /* InputTextView.swift */,
+				706D66D22A34942E003BE508 /* FilterCell.swift */,
+				706D66D42A349440003BE508 /* FilterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */,
 				70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */,
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
+				706D66D52A349440003BE508 /* FilterView.swift in Sources */,
 				70A76A5129FEACF4003D72D6 /* Routine+CoreDataProperties.swift in Sources */,
 				70A76A5529FEB69C003D72D6 /* LogCell.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddController.swift in Sources */,
@@ -289,6 +296,7 @@
 				70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */,
 				70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */,
 				70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */,
+				706D66D32A34942E003BE508 /* FilterCell.swift in Sources */,
 				707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */,
 				70A76A5329FEB0C4003D72D6 /* LogController.swift in Sources */,
 				7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */,

@@ -11,10 +11,11 @@ private let reuseIdentifier = "RoutineCell"
 
 final class RoutineController: UIViewController {
 
+    private let headerView = FilterView()
     private let tableView = UITableView()
     private let placeholderView = PlaceholderView(text: "No Routine")
-    private let daySegmentedControl = UISegmentedControl()
     private var tempArray = [Int]() { didSet { tableView.reloadData() } }
+    private var currrentIndex = 0 { didSet { tableView.reloadData() } }
         
     //MARK: - Life Cycle
     
@@ -24,11 +25,14 @@ final class RoutineController: UIViewController {
         layout()
         updateCV()
         addGestureRecognizer()
+        findWhichRoutinesShouldShow(for: brain.getDayInt())
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         brain.askNotificationPermission()
+        headerView.updateSelected(for: brain.getDayInt())
+        tableView.reloadData()
     }
     
     //MARK: - Selectors
@@ -47,42 +51,29 @@ final class RoutineController: UIViewController {
         vc.modalPresentationStyle = .formSheet
         self.present(vc, animated: true)
     }
-    
-    @objc private func daySegmentedControlChanged(segment: UISegmentedControl) -> Void {
-        findWhichRoutinesShouldShow()
-    }
-    
+
     //MARK: - Helpers
     
     private func style() {
         configureBarButton()
         view.backgroundColor = Colors.backgroundColor
         
-        tableView.rowHeight = 90
+        headerView.setDimensions(width: view.frame.width, height: 50)
+        headerView.delegate = self
+        tableView.tableHeaderView = headerView
+        tableView.rowHeight = 99
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.layer.cornerRadius = 8
+        tableView.alwaysBounceVertical = false
         tableView.backgroundColor = Colors.viewColor
         tableView.register(RoutineCell.self, forCellReuseIdentifier: reuseIdentifier)
-        
-        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
-        daySegmentedControl.selectedSegmentIndex = brain.getDayInt()
-        daySegmentedControl.tintColor = .black
-        daySegmentedControl.addTarget(self, action: #selector(self.daySegmentedControlChanged), for: .valueChanged)
     }
     
     private func layout() {
-        let stack = UIStackView(arrangedSubviews: [tableView, daySegmentedControl])
-        stack.axis = .vertical
-        stack.spacing = 16
-        stack.distribution = .fill
-        
-        view.addSubview(stack)
-        daySegmentedControl.setHeight(50)
-        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                     paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        view.addSubview(tableView)
+        tableView.fillSuperview()
     }
     
     private func updatePlaceholderViewVisibility(){
@@ -111,16 +102,11 @@ final class RoutineController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
     }
     
-    private func findWhichRoutinesShouldShow(){
+    private func findWhichRoutinesShouldShow(for index: Int) {
+        currrentIndex = index
         tempArray.removeAll()
-        tempArray = brain.findRoutines(for: daySegmentedControl.selectedSegmentIndex)
+        tempArray = brain.findRoutines(for: index)
         updatePlaceholderViewVisibility()
-    }
-    
-    private func checkSelectedSegmentToday() -> Bool {
-        var day = Calendar.current.component(.weekday, from: Date())
-        day = (day-2 < 0) ? 6 : day-2
-        return daySegmentedControl.selectedSegmentIndex == day
     }
 }
 
@@ -133,7 +119,7 @@ extension RoutineController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
-        cell.selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
+        cell.selectedSegmentIndex = currrentIndex
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
         cell.delegate = self
         return cell
@@ -148,7 +134,8 @@ extension RoutineController: UITableViewDataSource {
 
 extension RoutineController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if checkSelectedSegmentToday() {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if currrentIndex == brain.getDayInt() {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             let controller = CompleteController(routine: routine)
             controller.delegate = self
@@ -176,17 +163,15 @@ extension RoutineController {
     }
     
     @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
-        var selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
-        selectedSegmentIndex = (selectedSegmentIndex + 1 > 6) ? 0 : selectedSegmentIndex + 1
-        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
-        findWhichRoutinesShouldShow()
+        currrentIndex = (currrentIndex + 1 > 6) ? 0 : currrentIndex + 1
+        findWhichRoutinesShouldShow(for: currrentIndex)
+        headerView.updateSelected(for: currrentIndex)
     }
         
     @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
-        var selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
-        selectedSegmentIndex = (selectedSegmentIndex - 1 < 0) ? 6 : selectedSegmentIndex - 1
-        daySegmentedControl.selectedSegmentIndex = selectedSegmentIndex
-        findWhichRoutinesShouldShow()
+        currrentIndex = (currrentIndex - 1 < 0) ? 6 : currrentIndex - 1
+        findWhichRoutinesShouldShow(for: currrentIndex)
+        headerView.updateSelected(for: currrentIndex)
     }
 }
 
@@ -195,7 +180,7 @@ extension RoutineController {
 extension RoutineController: UpdateDelegate {
     func updateCV() {
         brain.loadRoutineArray()
-        findWhichRoutinesShouldShow()
+        findWhichRoutinesShouldShow(for: currrentIndex)
     }
 }
 
@@ -203,7 +188,7 @@ extension RoutineController: UpdateDelegate {
 
 extension RoutineController: SettingsDelegate {
     func updateSettings() {
-        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
+//        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
     }
 }
 
@@ -232,5 +217,13 @@ extension RoutineController: RoutineCellDelegate {
 extension RoutineController: CompleteControllerDelegate {
     func updateTableView() {
         tableView.reloadData()
+    }
+}
+
+//MARK: - FilterViewDelegate
+
+extension RoutineController: FilterViewDelegate {
+    func filterView(_ view: FilterView, didSelect index: Int) {
+        findWhichRoutinesShouldShow(for: index)
     }
 }
