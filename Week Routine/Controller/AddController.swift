@@ -22,10 +22,12 @@ final class AddController: UIViewController {
     private let dateTextField = UITextField()
     private let colorButton = UIButton()
     private let clearColorButton = UIButton()
-    private let pickerView = UIPickerView()
     private let colorCV = makeCollectionView()
-    private let setTimerButton = UIButton()
+    private let timerTextField = UITextField()
     private let deleteButton = UIButton()
+    
+    private let datePickerView = CustomPickerView(type: .date)
+    private let timerPickerView = CustomPickerView(type: .timer)
     
     private var dayInt = brain.getDayInt()
     private var day = days[brain.getDayInt()]
@@ -33,13 +35,17 @@ final class AddController: UIViewController {
     private var minute = minutes[brain.getMinute()]
     private var colorName = ColorName.defaultt
     
+    private var timerHour = "00"
+    private var timerMin = "00"
+    private var timerSec = "00"
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
         layout()
-        updatePickerView()
+        configureDatePickerView()
         hideKeyboardWhenTappedAround()
     }
     
@@ -77,7 +83,7 @@ final class AddController: UIViewController {
     
     @objc private func colorButtonPressed() {
         colorCV.isHidden = false
-        setTimerButton.isHidden = true
+        timerTextField.isHidden = true
     }
     
     @objc private func clearColorButtonPressed() {
@@ -86,10 +92,6 @@ final class AddController: UIViewController {
         colorButton.setTitleColor(Colors.viewColor, for: .normal)
         clearColorButton.isHidden = true
         colorCV.isHidden = true
-    }
-    
-    @objc private func setTimerButtonPressed() {
-        print("DEBUG::setTimerButtonPressed")
     }
     
     @objc private func deleteButtonPressed() {
@@ -114,15 +116,25 @@ final class AddController: UIViewController {
         titleTextField.setLeftPaddingPoints(10)
         titleTextField.becomeFirstResponder()
         
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        dateTextField.inputView = pickerView
+        datePickerView.delegate = self
+        datePickerView.dataSource = self
+        dateTextField.inputView = datePickerView
         dateTextField.placeholder = "Date"
         dateTextField.backgroundColor = Colors.viewColor
         dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear
         dateTextField.setHeight(50)
         dateTextField.setLeftPaddingPoints(10)
+        
+        timerPickerView.delegate = self
+        timerPickerView.dataSource = self
+        timerTextField.inputView = timerPickerView
+        timerTextField.placeholder = "Timer"
+        timerTextField.backgroundColor = Colors.viewColor
+        timerTextField.layer.cornerRadius = 8
+        timerTextField.tintColor = .clear
+        timerTextField.setHeight(50)
+        timerTextField.setLeftPaddingPoints(10)
         
         colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
@@ -144,14 +156,6 @@ final class AddController: UIViewController {
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
         
-        setTimerButton.setHeight(50)
-        setTimerButton.backgroundColor = Colors.viewColor
-        setTimerButton.setTitle("Set Timer", for: .normal)
-        setTimerButton.setTitleColor(.label, for: .normal)
-        setTimerButton.layer.cornerRadius = 8
-        setTimerButton.setImageWithRenderingMode(image: Images.next, width: 20, height: 20, color: .label)
-        setTimerButton.addTarget(self, action: #selector(setTimerButtonPressed), for: .touchUpInside)
-        
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.setTitleColor(.systemRed, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
@@ -162,7 +166,7 @@ final class AddController: UIViewController {
     private func layout() {
         view.addSubview(colorCV)
         
-        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, setTimerButton])
+        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, timerTextField])
         stack.axis = .vertical
         stack.spacing = 16
         
@@ -183,8 +187,6 @@ final class AddController: UIViewController {
         deleteButton.setHeight(50)
         deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                             right: stack.rightAnchor)
-        
-        setTimerButton.moveImageRightTextLeft()
     }
     
     private func configureBarButton() {
@@ -197,6 +199,14 @@ final class AddController: UIViewController {
                                                             target: self,
                                                             action: #selector(dismissView))
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
+    }
+    
+    private func configureDatePickerView() {
+        let hour = Int(hour) ?? 0
+        let minute = Int(minute) ?? 0
+        datePickerView.selectRow(dayInt, inComponent: 0, animated: true)
+        datePickerView.selectRow(hour, inComponent: 1, animated: true)
+        datePickerView.selectRow(minute, inComponent: 2, animated: true)
     }
     
     private func updateScreenByMode() {
@@ -222,14 +232,6 @@ final class AddController: UIViewController {
             deleteButton.isHidden = true
         }
     }
-    
-    private func updatePickerView() {
-        let hour = Int(hour) ?? 0
-        let minute = Int(minute) ?? 0
-        pickerView.selectRow(dayInt, inComponent: 0, animated: true)
-        pickerView.selectRow(hour, inComponent: 1, animated: true)
-        pickerView.selectRow(minute, inComponent: 2, animated: true)
-    }
 }
 
 //MARK: - UICollectionViewDelegate/DataSource
@@ -251,7 +253,7 @@ extension AddController: UICollectionViewDataSource {
         colorButton.backgroundColor = color
         colorCV.isHidden = true
         clearColorButton.isHidden = false
-        setTimerButton.isHidden = false
+        timerTextField.isHidden = false
     }
 }
 
@@ -273,34 +275,67 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0 {
-            return days.count
-        } else if component == 1 {
-            return hours.count
-        } else {
-            return minutes.count
+        let customPickerView = pickerView as? CustomPickerView
+        
+        switch customPickerView?.type {
+        case .date:
+            switch component {
+            case 0:  return days.count
+            case 1:  return hours.count
+            default: return minutes.count
+            }
+        case .timer:
+            switch component {
+            case 0:  return hours.count
+            case 1:  return minutes.count
+            default: return seconds.count
+            }
+        default: break
         }
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if component == 0 {
-            return days[row]
-        } else if component == 1 {
-            return hours[row]
-        } else {
-            return minutes[row]
+        let customPickerView = pickerView as? CustomPickerView
+        
+        switch customPickerView?.type {
+        case .date:
+            switch component {
+            case 0:  return days[row]
+            case 1:  return hours[row]
+            default: return minutes[row]
+            }
+        case .timer:
+            switch component {
+            case 0:  return hours[row]
+            case 1:  return minutes[row]
+            default: return seconds[row]
+            }
+        default: break
         }
+        return days[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            day = days[row]
-            dayInt = row
-        } else if component == 1 {
-            hour = hours[row]
-        } else {
-            minute = minutes[row]
+        let customPickerView = pickerView as? CustomPickerView
+        
+        switch customPickerView?.type {
+        case .date:
+            switch component {
+            case 0:  day = days[row]
+                     dayInt = row
+            case 1:  hour = hours[row]
+            default: minute = minutes[row]
+            }
+            dateTextField.text = "\(day), \(hour):\(minute)"
+        case .timer:
+            switch component {
+            case 0:  timerHour = hours[row]
+            case 1:  timerMin = minutes[row]
+            default: timerSec = seconds[row]
+            }
+            timerTextField.text = "\(timerHour):\(timerMin):\(timerSec)"
+        default: break
         }
-        dateTextField.text = "\(day), \(hour):\(minute)"
     }
 }
