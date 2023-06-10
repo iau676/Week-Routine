@@ -24,6 +24,7 @@ final class AddController: UIViewController {
     private let clearColorButton = UIButton()
     private let pickerView = UIPickerView()
     private let colorCV = makeCollectionView()
+    private let setTimerButton = UIButton()
     private let deleteButton = UIButton()
     
     private var dayInt = brain.getDayInt()
@@ -83,12 +84,17 @@ final class AddController: UIViewController {
     
     @objc private func colorButtonPressed() {
         colorCV.isHidden = false
+        setTimerButton.isHidden = true
     }
     
     @objc private func clearColorButtonPressed() {
         colorName = ColorName.defaultt
         updateGradientLayerColors(Colors.labelColor, Colors.labelColor)
         colorCV.isHidden = true
+    }
+    
+    @objc private func setTimerButtonPressed() {
+        print("DEBUG::setTimerButtonPressed")
     }
     
     @objc private func deleteButtonPressed() {
@@ -133,14 +139,21 @@ final class AddController: UIViewController {
         clearColorButton.setDimensions(width: 50, height: 50)
         clearColorButton.layer.cornerRadius = 8
         clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
-        clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20,
-                                                   color: Colors.labelColor ?? .label)
+        clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20, color: .label)
         
         colorCV.delegate = self
         colorCV.dataSource = self
         colorCV.backgroundColor = .clear
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
+        
+        setTimerButton.setHeight(50)
+        setTimerButton.backgroundColor = .white
+        setTimerButton.setTitle("Set Timer", for: .normal)
+        setTimerButton.setTitleColor(.label, for: .normal)
+        setTimerButton.layer.cornerRadius = 8
+        setTimerButton.setImageWithRenderingMode(image: Images.next, width: 20, height: 20, color: .label)
+        setTimerButton.addTarget(self, action: #selector(setTimerButtonPressed), for: .touchUpInside)
         
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.setTitleColor(.systemRed, for: .normal)
@@ -152,7 +165,7 @@ final class AddController: UIViewController {
     private func layout() {
         view.addSubview(colorCV)
         
-        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton])
+        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, setTimerButton])
         stack.axis = .vertical
         stack.spacing = 16
         
@@ -173,6 +186,8 @@ final class AddController: UIViewController {
         deleteButton.setHeight(50)
         deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                             right: stack.rightAnchor)
+        
+        setTimerButton.moveImageRightTextLeft()
     }
     
     private func configureBarButton() {
@@ -258,6 +273,7 @@ extension AddController: UICollectionViewDataSource {
         let color = colors[indexPath.row]
         updateGradientLayerColors(color, color)
         colorCV.isHidden = true
+        setTimerButton.isHidden = false
     }
 }
 

@@ -60,6 +60,7 @@ enum Images {
     
     static let history                   = UIImage(named: "history")
     static let dots                      = UIImage(named: "dots")
+    static let next                      = UIImage(named: "next")
 }
 
 enum Fonts {

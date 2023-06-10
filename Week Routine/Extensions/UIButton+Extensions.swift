@@ -16,6 +16,13 @@ extension UIButton {
         titleEdgeInsets = UIEdgeInsets(top: 0.0, left: (bounds.width - titleLabelWidth) / 2 - imageViewWidth, bottom: 0.0, right: 0.0)
     }
     
+    func moveImageRightTextLeft(imagePadding: CGFloat = 32.0){
+        guard let imageViewWidth = self.imageView?.frame.width else{return}
+        self.contentHorizontalAlignment = .left
+        imageEdgeInsets = UIEdgeInsets(top: 0.0, left: bounds.width-32.0, bottom: 0.0, right: 0.0)
+        titleEdgeInsets = UIEdgeInsets(top: 0.0, left: -imageViewWidth+10 , bottom: 0.0, right: 0.0)
+    }
+    
     func updateIcon(_ imageName: String, _ buttonImageSize: Int) {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(UIColor.white)
         self.setImage(UIGraphicsImageRenderer(size: CGSize(width: buttonImageSize, height: buttonImageSize)).image { _ in
