@@ -93,7 +93,6 @@
 			children = (
 				70A76A4929FEAC06003D72D6 /* Core Data */,
 				70ECB52028F03465002B2483 /* RoutineBrain.swift */,
-				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,6 +154,7 @@
 			children = (
 				70D5560328F1652600FE9C83 /* Constants.swift */,
 				705221A029F561930010D327 /* Factories.swift */,
+				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

@@ -11,10 +11,10 @@ private let reuseIdentifier = "RoutineCell"
 
 final class RoutineController: UIViewController {
 
-    private let routineCV = makeCollectionView()
+    private let tableView = UITableView()
     private let placeholderView = PlaceholderView(text: "No Routine")
     private let daySegmentedControl = UISegmentedControl()
-    private var tempArray = [Int]() { didSet { routineCV.reloadData() } }
+    private var tempArray = [Int]() { didSet { tableView.reloadData() } }
         
     //MARK: - Life Cycle
     
@@ -58,11 +58,13 @@ final class RoutineController: UIViewController {
         configureBarButton()
         view.backgroundColor = Colors.backgroundColor
         
-        routineCV.delegate = self
-        routineCV.dataSource = self
-        routineCV.layer.cornerRadius = 8
-        routineCV.backgroundColor = Colors.viewColor
-        routineCV.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 90
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.layer.cornerRadius = 8
+        tableView.backgroundColor = Colors.viewColor
+        tableView.register(RoutineCell.self, forCellReuseIdentifier: reuseIdentifier)
         
         daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
         daySegmentedControl.selectedSegmentIndex = brain.getDayInt()
@@ -71,7 +73,7 @@ final class RoutineController: UIViewController {
     }
     
     private func layout() {
-        let stack = UIStackView(arrangedSubviews: [routineCV, daySegmentedControl])
+        let stack = UIStackView(arrangedSubviews: [tableView, daySegmentedControl])
         stack.axis = .vertical
         stack.spacing = 16
         stack.distribution = .fill
@@ -85,8 +87,8 @@ final class RoutineController: UIViewController {
     
     private func updatePlaceholderViewVisibility(){
         view.addSubview(placeholderView)
-        placeholderView.centerX(inView: routineCV)
-        placeholderView.centerY(inView: routineCV)
+        placeholderView.centerX(inView: tableView)
+        placeholderView.centerY(inView: tableView)
         placeholderView.isHidden = tempArray.count != 0
     }
         
@@ -122,23 +124,30 @@ final class RoutineController: UIViewController {
     }
 }
 
-//MARK: - UICollectionViewDelegate/DataSource
+//MARK: - UITableViewDataSource
 
-extension RoutineController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension RoutineController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tempArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
         cell.selectedSegmentIndex = daySegmentedControl.selectedSegmentIndex
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
         cell.delegate = self
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return size(forText: tempArray[indexPath.row].description).height + 50
+//    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension RoutineController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if checkSelectedSegmentToday() {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             let controller = CompleteController(routine: routine)
@@ -149,14 +158,6 @@ extension RoutineController: UICollectionViewDataSource {
         } else {
             self.showAlertWithTimer(title: "Not Today")
         }
-    }
-}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-
-extension RoutineController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((view.bounds.width)-32), height: 100)
     }
 }
 
@@ -230,6 +231,6 @@ extension RoutineController: RoutineCellDelegate {
 
 extension RoutineController: CompleteControllerDelegate {
     func updateTableView() {
-        routineCV.reloadData()
+        tableView.reloadData()
     }
 }

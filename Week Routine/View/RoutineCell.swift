@@ -12,7 +12,7 @@ protocol RoutineCellDelegate: AnyObject {
     func goEdit(routine: Routine)
 }
 
-final class RoutineCell: UICollectionViewCell {
+final class RoutineCell: UITableViewCell {
     
     //MARK: - Properties
     
@@ -47,8 +47,8 @@ final class RoutineCell: UICollectionViewCell {
     
     //MARK: - Lifecycle
     
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         
         historyButton.setImageWithRenderingMode(image: Images.history, width: 24, height: 24, color: .label)
