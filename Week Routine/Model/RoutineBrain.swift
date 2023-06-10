@@ -55,6 +55,7 @@ struct RoutineBrain {
         routine.hour = Int16(hour)
         routine.minute = Int16(minute)
         routine.color = color
+        routine.ascending = Int16(hour * 66 + minute)
         
         updateRoutineNotification(routine: routine)
         saveContext()
