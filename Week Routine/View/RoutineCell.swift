@@ -116,14 +116,8 @@ final class RoutineCell: UITableViewCell {
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
         guard let lastLogDate =  routine.logArray.first?.date else { return }
-        if checkToday() && Calendar.current.isDateInToday(lastLogDate) {
+        if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
             borderView.backgroundColor = color.withAlphaComponent(0.3)
         }
-    }
-    
-    private func checkToday() -> Bool {
-        var day = Calendar.current.component(.weekday, from: Date())
-        day = (day-2 < 0) ? 6 : day-2
-        return selectedSegmentIndex == day
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 enum FilterOptions: Int, CaseIterable {
+    case Sun0
     case Mon
     case Tue
     case Wed
@@ -15,9 +16,11 @@ enum FilterOptions: Int, CaseIterable {
     case Fri
     case Sat
     case Sun
+    case Mon0
     
     var description: String {
         switch self {
+        case .Sun0: return "Sunday"
         case .Mon: return "Monday"
         case .Tue: return "Tuesday"
         case .Wed: return "Wednesday"
@@ -25,6 +28,7 @@ enum FilterOptions: Int, CaseIterable {
         case .Fri: return "Friday"
         case .Sat: return "Saturday"
         case .Sun: return "Sunday"
+        case .Mon0: return "Monday"
         }
     }
 }

@@ -15,7 +15,7 @@ final class RoutineController: UIViewController {
     private let tableView = UITableView()
     private let placeholderView = PlaceholderView(text: "No Routine")
     private var tempArray = [Int]() { didSet { tableView.reloadData() } }
-    private var currrentIndex = 0 { didSet { tableView.reloadData() } }
+    private var currrentIndex = 0
         
     //MARK: - Life Cycle
     
@@ -25,13 +25,14 @@ final class RoutineController: UIViewController {
         layout()
         updateCV()
         addGestureRecognizer()
-        findWhichRoutinesShouldShow(for: brain.getDayInt())
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         brain.askNotificationPermission()
-        headerView.updateSelected(for: brain.getDayInt())
+        currrentIndex = brain.getDayInt()+1
+        headerView.updateSelected(for: currrentIndex)
+        findWhichRoutinesShouldShow()
         tableView.reloadData()
     }
     
@@ -102,10 +103,10 @@ final class RoutineController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
     }
     
-    private func findWhichRoutinesShouldShow(for index: Int) {
-        currrentIndex = index
+    private func findWhichRoutinesShouldShow() {
+        currrentIndex = (currrentIndex > 7) ? 1 : (currrentIndex < 1) ? 7 : currrentIndex
         tempArray.removeAll()
-        tempArray = brain.findRoutines(for: index)
+        tempArray = brain.findRoutines(for: currrentIndex-1)
         updatePlaceholderViewVisibility()
     }
 }
@@ -119,7 +120,7 @@ extension RoutineController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
-        cell.selectedSegmentIndex = currrentIndex
+        cell.selectedSegmentIndex = currrentIndex-1
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
         cell.delegate = self
         return cell
@@ -135,7 +136,7 @@ extension RoutineController: UITableViewDataSource {
 extension RoutineController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if currrentIndex == brain.getDayInt() {
+        if currrentIndex == brain.getDayInt()+1 {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             let controller = CompleteController(routine: routine)
             controller.delegate = self
@@ -163,15 +164,15 @@ extension RoutineController {
     }
     
     @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
-        currrentIndex = (currrentIndex + 1 > 6) ? 0 : currrentIndex + 1
-        findWhichRoutinesShouldShow(for: currrentIndex)
+        currrentIndex = (currrentIndex + 1 > 7) ? 1 : currrentIndex + 1
         headerView.updateSelected(for: currrentIndex)
+        findWhichRoutinesShouldShow()
     }
         
     @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
-        currrentIndex = (currrentIndex - 1 < 0) ? 6 : currrentIndex - 1
-        findWhichRoutinesShouldShow(for: currrentIndex)
+        currrentIndex = (currrentIndex - 1 < 1) ? 7 : currrentIndex - 1
         headerView.updateSelected(for: currrentIndex)
+        findWhichRoutinesShouldShow()
     }
 }
 
@@ -180,7 +181,7 @@ extension RoutineController {
 extension RoutineController: UpdateDelegate {
     func updateCV() {
         brain.loadRoutineArray()
-        findWhichRoutinesShouldShow(for: currrentIndex)
+        findWhichRoutinesShouldShow()
     }
 }
 
@@ -224,6 +225,7 @@ extension RoutineController: CompleteControllerDelegate {
 
 extension RoutineController: FilterViewDelegate {
     func filterView(_ view: FilterView, didSelect index: Int) {
-        findWhichRoutinesShouldShow(for: index)
+        currrentIndex = index
+        findWhichRoutinesShouldShow()
     }
 }

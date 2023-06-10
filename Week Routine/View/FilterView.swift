@@ -54,8 +54,6 @@ final class FilterView: UIView {
         grayView.backgroundColor = .lightGray
         addSubview(grayView)
         grayView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.75)
-        
-        
     }
     
     override func layoutSubviews() {}
@@ -67,8 +65,8 @@ final class FilterView: UIView {
     //MARK: - Helpers
     
     func updateSelected(for index: Int) {
-        collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: false)
-        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
+        collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: [], animated: true)
+        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
 }
 
@@ -91,7 +89,7 @@ extension FilterView: UICollectionViewDataSource {
 
 extension FilterView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width/2, height: frame.height)
+        return CGSize(width: frame.width/3, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -104,5 +102,8 @@ extension FilterView: UICollectionViewDelegateFlowLayout {
 extension FilterView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.filterView(self, didSelect: indexPath.row)
+        var index = indexPath.row
+        index = (index > 7) ? 1 : (index < 1) ? 7 : index
+        updateSelected(for: index)
     }
 }
