@@ -27,12 +27,6 @@ final class FilterView: UIView {
         cv.showsHorizontalScrollIndicator = false
         return cv
     }()
-    
-    private let underlineView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .systemBlue
-        return view
-    }()
         
     //MARK: - Lifecycle
     

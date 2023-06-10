@@ -50,13 +50,13 @@ final class FilterCell: UICollectionViewCell {
     
     private let underlineView: UIView = {
        let view = UIView()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = Colors.labelColor
         return view
     }()
     
     override var isSelected: Bool {
         didSet {
-            titleLabel.textColor = isSelected ? .systemBlue : .lightGray
+            titleLabel.textColor = isSelected ? Colors.labelColor : .lightGray
             underlineView.isHidden = !isSelected
         }
     }
