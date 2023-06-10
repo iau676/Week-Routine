@@ -153,24 +153,19 @@ extension RoutineController: UITableViewDelegate {
 
 extension RoutineController {
     private func addGestureRecognizer(){
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeft))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToGesture))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToGesture))
         swipeLeft.direction = .left
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRight))
         swipeRight.direction = .right
-        
         view.addGestureRecognizer(swipeLeft)
         view.addGestureRecognizer(swipeRight)
     }
     
-    @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
-        currrentIndex = (currrentIndex + 1 > 7) ? 1 : currrentIndex + 1
-        headerView.updateSelected(for: currrentIndex)
-        findWhichRoutinesShouldShow()
-    }
-        
-    @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
-        currrentIndex = (currrentIndex - 1 < 1) ? 7 : currrentIndex - 1
+    @objc private func respondToGesture(gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .left: currrentIndex = (currrentIndex + 1 > 7) ? 1 : currrentIndex + 1
+        case .right: currrentIndex = (currrentIndex - 1 < 1) ? 7 : currrentIndex - 1
+        default: break }
         headerView.updateSelected(for: currrentIndex)
         findWhichRoutinesShouldShow()
     }
