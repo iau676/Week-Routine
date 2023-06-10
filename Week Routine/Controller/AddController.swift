@@ -33,9 +33,6 @@ final class AddController: UIViewController {
     private var minute = minutes[brain.getMinute()]
     private var colorName = ColorName.defaultt
     
-    private let gradientLayer = CAGradientLayer()
-    private var isGradientChanged = false
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -44,10 +41,6 @@ final class AddController: UIViewController {
         layout()
         updatePickerView()
         hideKeyboardWhenTappedAround()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        setGradientSelectColorButton()
     }
     
     //MARK: - Selectors
@@ -89,7 +82,9 @@ final class AddController: UIViewController {
     
     @objc private func clearColorButtonPressed() {
         colorName = ColorName.defaultt
-        updateGradientLayerColors(Colors.labelColor, Colors.labelColor)
+        colorButton.backgroundColor = Colors.labelColor
+        colorButton.setTitleColor(Colors.viewColor, for: .normal)
+        clearColorButton.isHidden = true
         colorCV.isHidden = true
     }
     
@@ -132,9 +127,11 @@ final class AddController: UIViewController {
         colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
         colorButton.setTitle("Color", for: .normal)
+        colorButton.setTitleColor(Colors.viewColor, for: .normal)
         colorButton.contentHorizontalAlignment = .left
         colorButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0);
         colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
+        colorButton.backgroundColor = Colors.labelColor
         
         clearColorButton.setDimensions(width: 50, height: 50)
         clearColorButton.layer.cornerRadius = 8
@@ -148,7 +145,7 @@ final class AddController: UIViewController {
         colorCV.isHidden = true
         
         setTimerButton.setHeight(50)
-        setTimerButton.backgroundColor = .white
+        setTimerButton.backgroundColor = Colors.viewColor
         setTimerButton.setTitle("Set Timer", for: .normal)
         setTimerButton.setTitleColor(.label, for: .normal)
         setTimerButton.layer.cornerRadius = 8
@@ -202,26 +199,6 @@ final class AddController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
     }
     
-    private func setGradientSelectColorButton() {
-        gradientLayer.frame = colorButton.bounds
-        if !isGradientChanged { gradientLayer.colors = [Colors.blue.cgColor, Colors.purple.cgColor] }
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer.cornerRadius = 8
-        gradientLayer.locations = [0.0, 1.0]
-
-        colorButton.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    private func updateGradientLayerColors(_ leftGradientColor: UIColor?, _ rightGradientColor: UIColor?) {
-        let leftColor = leftGradientColor?.cgColor ?? UIColor.darkGray.cgColor
-        let rightColor = rightGradientColor?.cgColor ?? UIColor.white.cgColor
-        isGradientChanged = true
-        clearColorButton.isHidden = false
-        gradientLayer.colors = [leftColor, rightColor]
-        colorButton.setTitleColor(colorName == ColorName.defaultt ? Colors.viewColor : .white, for: .normal)
-    }
-    
     private func updateScreenByMode() {
         if let routine = routine {
             title = "Edit Routine"
@@ -236,7 +213,7 @@ final class AddController: UIViewController {
             dateTextField.text = "\(day), \(hour):\(minute)"
             
             let color = brain.getColor(colorName)
-            updateGradientLayerColors(color, color)
+            colorButton.backgroundColor = color
             clearColorButton.isHidden = false
             deleteButton.isHidden = false
         } else {
@@ -271,8 +248,9 @@ extension AddController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         colorName = colorNames[indexPath.row]
         let color = colors[indexPath.row]
-        updateGradientLayerColors(color, color)
+        colorButton.backgroundColor = color
         colorCV.isHidden = true
+        clearColorButton.isHidden = false
         setTimerButton.isHidden = false
     }
 }
