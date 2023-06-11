@@ -42,8 +42,8 @@ final class RoutineCell: UITableViewCell {
         return label
     }()
     
-    private lazy var historyButton = UIButton()
-    private lazy var editButton = UIButton()
+    private var historyButton = UIButton()
+    private var editButton = UIButton()
     
     //MARK: - Lifecycle
     
@@ -111,7 +111,7 @@ final class RoutineCell: UITableViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        dateLabel.text = "\(hour):\(minute)・\(day)"
+        dateLabel.text = "\(hour):\(minute)・\(day) \(brain.getTimerString(routine: routine))"
         
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
