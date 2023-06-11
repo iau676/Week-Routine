@@ -55,13 +55,20 @@ final class AddController: UIViewController {
         guard let dateText = dateTextField.text else { return }
         guard let titleText = titleTextField.text else { return }
         
+        let hour = Int(hour) ?? 0
+        let minute = Int(minute) ?? 0
+        
+        let tHour = Int(timerHour) ?? 0
+        let tMin = Int(timerMin) ?? 0
+        let tSec = Int(timerSec) ?? 0
+        
         if titleText.count > 0 && dateText.count > 0 {
             if let routine = routine {
-                let hour = Int(hour) ?? 0
-                let minute = Int(minute) ?? 0
-                brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute, color: colorName)
+                brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute,
+                                    color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec)
             } else {
-                brain.addRoutine(title: titleText, day: Int16(dayInt), hour: Int16(hour)!, minute: Int16(minute)!, color: colorName)
+                brain.addRoutine(title: titleText, day: dayInt, hour: hour, minute: minute,
+                                 color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec)
             }
             delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)
@@ -129,7 +136,7 @@ final class AddController: UIViewController {
         timerPickerView.delegate = self
         timerPickerView.dataSource = self
         timerTextField.inputView = timerPickerView
-        timerTextField.placeholder = "Timer"
+        timerTextField.placeholder = "Timer (Optional)"
         timerTextField.backgroundColor = Colors.viewColor
         timerTextField.layer.cornerRadius = 8
         timerTextField.tintColor = .clear

@@ -22,14 +22,15 @@ struct RoutineBrain {
     
     //MARK: - Model Manupulation Methods
     
-    mutating func addRoutine(title: String, day: Int16, hour: Int16, minute: Int16, color: String){
+    mutating func addRoutine(title: String, day: Int, hour: Int, minute: Int, color: String, timerHour: Int, timerMin: Int, timerSec: Int){
         let newRoutine = Routine(context: self.context)
         newRoutine.title = title
-        newRoutine.day = day
-        newRoutine.hour = hour
-        newRoutine.minute = minute
+        newRoutine.day = Int16(day)
+        newRoutine.hour = Int16(hour)
+        newRoutine.minute = Int16(minute)
         newRoutine.color = color
-        newRoutine.ascending = hour * 66 + minute
+        newRoutine.ascending = Int16(hour * 66 + minute)
+        newRoutine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
         newRoutine.date = Date()
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
@@ -49,14 +50,14 @@ struct RoutineBrain {
         saveContext()
     }
     
-    mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String) {
+    mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, timerHour: Int, timerMin: Int, timerSec: Int) {
         routine.title = title
         routine.day = Int16(day)
         routine.hour = Int16(hour)
         routine.minute = Int16(minute)
         routine.color = color
         routine.ascending = Int16(hour * 66 + minute)
-        
+        routine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
         updateRoutineNotification(routine: routine)
         saveContext()
     }
@@ -71,14 +72,11 @@ struct RoutineBrain {
                 removeNotification(id: "\(uuid)wr4")
                 removeNotification(id: "\(uuid)wr5")
                 removeNotification(id: "\(uuid)wr6")
-            break
             case 9:
                 removeNotification(id: "\(uuid)wr7")
                 removeNotification(id: "\(uuid)wr1")
-            break
             default:
                 removeNotification(id: uuid)
-            break
         }
         context.delete(routine)
         saveContext()
@@ -115,27 +113,13 @@ struct RoutineBrain {
         for i in 0..<array.count {
             let routine = array[i]
             switch selectedSegmentIndex {
-            case 0:
-                if routine.day == 0 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
-                break
-            case 1:
-                if routine.day == 1 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
-                break
-            case 2:
-                if routine.day == 2 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
-                break
-            case 3:
-                if routine.day == 3 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
-                break
-            case 4:
-                if routine.day == 4 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
-                break
-            case 5:
-                if routine.day == 5 || routine.day == 7 || routine.day == 9 { tempArray.append(i) }
-                break
-            case 6:
-                if routine.day == 6 || routine.day == 7 || routine.day == 9 { tempArray.append(i) }
-                break
+            case 0: if routine.day == 0 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
+            case 1: if routine.day == 1 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
+            case 2: if routine.day == 2 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
+            case 3: if routine.day == 3 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
+            case 4: if routine.day == 4 || routine.day == 7 || routine.day == 8 { tempArray.append(i) }
+            case 5: if routine.day == 5 || routine.day == 7 || routine.day == 9 { tempArray.append(i) }
+            case 6: if routine.day == 6 || routine.day == 7 || routine.day == 9 { tempArray.append(i) }
             default: break
             }
         }
@@ -175,66 +159,41 @@ struct RoutineBrain {
     
     func getDayName(_ dayInt: Int16) -> String {
         switch dayInt {
-            case 0:
-                return "Monday"
-            case 1:
-                return "Tuesday"
-            case 2:
-                return "Wednesday"
-            case 3:
-                return "Thursday"
-            case 4:
-                return "Friday"
-            case 5:
-                return "Saturday"
-            case 6:
-                return "Sunday"
-            case 7:
-                return "Every day"
-            case 8:
-                return "Weekday"
-            case 9:
-                return "Weekend"
-            default:
-                return ""
+            case 0: return "Monday"
+            case 1: return "Tuesday"
+            case 2: return "Wednesday"
+            case 3: return "Thursday"
+            case 4: return "Friday"
+            case 5: return "Saturday"
+            case 6: return "Sunday"
+            case 7: return "Every day"
+            case 8: return "Weekday"
+            case 9: return "Weekend"
+            default:return ""
         }
     }
     
     func getColor(_ colorName: String) -> UIColor {
         switch colorName {
-        case ColorName.red:
-            return Colors.red
-        case ColorName.orange:
-            return Colors.orange
-        case ColorName.yellow:
-            return Colors.yellow
-        case ColorName.green:
-            return Colors.green
-        case ColorName.blue:
-            return Colors.blue
-        case ColorName.purple:
-            return Colors.purple
-        default:
-            return .label
+        case ColorName.red:    return Colors.red
+        case ColorName.orange: return Colors.orange
+        case ColorName.yellow: return Colors.yellow
+        case ColorName.green:  return Colors.green
+        case ColorName.blue:   return Colors.blue
+        case ColorName.purple: return Colors.purple
+        default:               return .label
         }
     }
     
     func getColorEmoji(_ colorName: String) -> String {
         switch colorName {
-        case ColorName.red:
-            return "🔴 "
-        case ColorName.orange:
-            return "🟠 "
-        case ColorName.yellow:
-            return "🟡 "
-        case ColorName.green:
-            return "🟢 "
-        case ColorName.blue:
-            return "🔵 "
-        case ColorName.purple:
-            return "🟣 "
-        default:
-            return ""
+        case ColorName.red:    return "🔴 "
+        case ColorName.orange: return "🟠 "
+        case ColorName.yellow: return "🟡 "
+        case ColorName.green:  return "🟢 "
+        case ColorName.blue:   return "🔵 "
+        case ColorName.purple: return "🟣 "
+        default:               return ""
         }
     }
     
