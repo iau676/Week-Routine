@@ -213,6 +213,7 @@ final class AddController: UIViewController {
             configureTimerPickerView()
             timerTextField.text = getTimerString()
             
+            colorName = routine.color ?? ColorName.defaultt
             let color = brain.getColor(colorName)
             colorButton.backgroundColor = color
             clearColorButton.isHidden = false
@@ -229,7 +230,6 @@ final class AddController: UIViewController {
         day = brain.getDayName(Int16(dayInt))
         hour = hours[Int(routine.hour)]
         minute = minutes[Int(routine.minute)]
-        colorName = routine.color ?? ColorName.defaultt
     }
     
     private func congifureTimerValues(routine: Routine) {

@@ -38,6 +38,16 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showAlert(title: String, errorMessage: String, completion: @escaping(Bool)-> Void) {
+        let alert = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "OK", style: .default) { (action) in
+            alert.dismiss(animated: false, completion: nil)
+            completion(true)
+        }
+        alert.addAction(actionOK)
+        present(alert, animated: true)
+    }
+    
     func showAlertWithTimer(title: String, time: TimeInterval = 0.5) {
         let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
         

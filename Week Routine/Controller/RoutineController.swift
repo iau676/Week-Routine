@@ -138,11 +138,17 @@ extension RoutineController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if currrentIndex == brain.getDayInt()+1 {
             let routine = brain.routineArray[tempArray[indexPath.row]]
-            let controller = CompleteController(routine: routine)
-            controller.delegate = self
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .formSheet
-            self.present(nav, animated: true)
+            
+            if routine.timerSeconds > 0 {
+                let controller = TimerController(routine: routine)
+                self.navigationController?.pushViewController(controller, animated: true)
+            } else {
+                let controller = CompleteController(routine: routine)
+                controller.delegate = self
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .formSheet
+                self.present(nav, animated: true)
+            }
         } else {
             self.showAlertWithTimer(title: "Not Today")
         }

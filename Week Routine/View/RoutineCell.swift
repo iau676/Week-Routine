@@ -111,7 +111,7 @@ final class RoutineCell: UITableViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        dateLabel.text = "\(hour):\(minute)・\(day) \(brain.getTimerString(routine: routine))"
+        dateLabel.text = "\(hour):\(minute)・\(day) \(brain.getTimerString(for: Int(routine.timerSeconds)))"
         
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear

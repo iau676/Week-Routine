@@ -137,8 +137,8 @@ struct RoutineBrain {
         brain.saveContext()
     }
     
-    func getTimerString(routine: Routine) -> String {
-        let totalSeconds = routine.timerSeconds
+    func getTimerString(for second: Int) -> String {
+        let totalSeconds = second
         var str = totalSeconds > 0 ? "- " : ""
     
         let hour = totalSeconds / 3600
