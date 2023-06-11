@@ -24,6 +24,7 @@ final class RoutineController: UIViewController {
         style()
         layout()
         updateCV()
+        addObserver()
         addGestureRecognizer()
     }
     
@@ -51,6 +52,33 @@ final class RoutineController: UIViewController {
         vc.delegate = self
         vc.modalPresentationStyle = .formSheet
         self.present(vc, animated: true)
+    }
+    
+    @objc private func checkTimer() {
+        let routineUUID = UDM.routineUUID.getString()
+        brain.findRoutine(uuid: routineUUID) { routine in
+            guard let currentNotificationDate = UDM.currentNotificationDate.getDateValue() else { return }
+            let dateComponents = Calendar.current.dateComponents([.second], from: currentNotificationDate, to: Date())
+            guard let passedSeconds = dateComponents.second else { return }
+            let lastTimerCounter = UDM.lastTimerCounter.getInt()
+            let timerSeconds = Int(routine.timerSeconds)
+            
+            //timer working
+            if timerSeconds - lastTimerCounter - passedSeconds > 0 {
+                let controller = TimerController(routine: routine)
+                controller.timerCounter = CGFloat(lastTimerCounter + passedSeconds)
+                self.navigationController?.pushViewController(controller, animated: true)
+            } else {
+                if !UDM.isTimerCompleted.getBool() {
+                    UDM.isTimerCompleted.set(true)
+                    let controller = CompleteController(routine: routine)
+                    controller.delegate = self
+                    let nav = UINavigationController(rootViewController: controller)
+                    nav.modalPresentationStyle = .formSheet
+                    self.present(nav, animated: true)
+                }
+            }
+        }
     }
 
     //MARK: - Helpers
@@ -108,6 +136,11 @@ final class RoutineController: UIViewController {
         tempArray.removeAll()
         tempArray = brain.findRoutines(for: currrentIndex-1)
         updatePlaceholderViewVisibility()
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.checkTimer),
+                                               name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
 

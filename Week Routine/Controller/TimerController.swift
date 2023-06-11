@@ -17,8 +17,8 @@ final class TimerController: UIViewController {
     private let stopButton = UIButton()
     private let timerView = UIView()
     
+    var timerCounter: CGFloat = 0
     private var timeR = Timer()
-    private var timerCounter: CGFloat = 0
     private lazy var totalSecond: CGFloat = CGFloat(routine.timerSeconds)
     
     //MARK: - Lifecycle
@@ -51,7 +51,7 @@ final class TimerController: UIViewController {
     }
     
     @objc func appMovedToBackground() {
-        print("DEBUG::appMovedToBackground")
+        setNotification(remindSecond: totalSecond-timerCounter)
     }
     
     //MARK: - Helpers
@@ -82,6 +82,7 @@ final class TimerController: UIViewController {
         stopButton.isHidden = true
         NotificationCenter.default.removeObserver(self)
         AudioServicesPlayAlertSound(SystemSoundID(1002))
+        UDM.isTimerCompleted.set(true)
         showCompletedAlert()
     }
     
@@ -113,6 +114,32 @@ final class TimerController: UIViewController {
     private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground),
                                                name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    func setNotification(remindSecond: CGFloat) {
+        timeR.invalidate()
+        self.navigationController?.popToRootViewController(animated: false)
+        if remindSecond > 0 {
+            UDM.currentNotificationDate.set(Date())
+            UDM.routineUUID.set(routine.uuid ?? "")
+            UDM.lastTimerCounter.set(timerCounter)
+            UDM.isTimerCompleted.set(false)
+            
+            let content = UNMutableNotificationContent()
+            content.title = "Timer Completed"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
+            let id = routine.uuid ?? ""
+            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().add(request) { (error) in
+                if(error != nil){
+                    print("Error " + error.debugDescription)
+                    return
+                }
+            }
+        }
     }
     
     private func style() {

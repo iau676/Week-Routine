@@ -25,6 +25,10 @@ struct UserDefaultsManager {
         UserDefaults.standard.object(forKey: key)
     }
     
+    func getBool() -> Bool {
+        UserDefaults.standard.bool(forKey: key)
+    }
+    
     func getInt() -> Int {
         UserDefaults.standard.integer(forKey: key)
     }
@@ -39,6 +43,10 @@ struct UserDefaultsManager {
     
     func getCGFloat() -> CGFloat {
         CGFloat(UserDefaults.standard.integer(forKey: key))
+    }
+    
+    func getDateValue() -> Date? {
+        return UserDefaults.standard.object(forKey: key) as? Date
     }
     
     // MARK: - Deleting Data

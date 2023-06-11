@@ -126,6 +126,14 @@ struct RoutineBrain {
         return tempArray
     }
     
+    mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
+        loadRoutineArray()
+        if let item = routineArray.first(where: {$0.uuid == uuid}) {
+            removeNotification(id: uuid)
+            completion(item)
+        }
+    }
+    
     func updateRoutineState(routine: Routine) {
         if routine.isDone {
             routine.isDone = false
@@ -277,7 +285,7 @@ struct RoutineBrain {
         }
     }
     
-    func removeNotification(id: String){
+    func removeNotification(id: String) {
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
     }
     
