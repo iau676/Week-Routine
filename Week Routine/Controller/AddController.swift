@@ -45,14 +45,12 @@ final class AddController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
-        configureDatePickerView()
         hideKeyboardWhenTappedAround()
     }
     
     //MARK: - Selectors
     
     @objc private func saveButtonPressed() {
-        guard let dateText = dateTextField.text else { return }
         guard let titleText = titleTextField.text else { return }
         
         let hour = Int(hour) ?? 0
@@ -62,7 +60,7 @@ final class AddController: UIViewController {
         let tMin = Int(timerMin) ?? 0
         let tSec = Int(timerSec) ?? 0
         
-        if titleText.count > 0 && dateText.count > 0 {
+        if titleText.count > 0 {
             if let routine = routine {
                 brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute,
                                     color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec)
@@ -73,14 +71,7 @@ final class AddController: UIViewController {
             delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)
         } else {
-            if titleText.count == 0 && dateText.count == 0 {
-                titleTextField.flash()
-                dateTextField.flash()
-            } else if titleText.count == 0 {
-                titleTextField.flash()
-            } else {
-                dateTextField.flash()
-            }
+            titleTextField.flash()
         }
     }
     
@@ -126,12 +117,13 @@ final class AddController: UIViewController {
         datePickerView.delegate = self
         datePickerView.dataSource = self
         dateTextField.inputView = datePickerView
-        dateTextField.placeholder = "Date"
+        dateTextField.text = "\(day), \(hour):\(minute)"
         dateTextField.backgroundColor = Colors.viewColor
         dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear
         dateTextField.setHeight(50)
         dateTextField.setLeftPaddingPoints(10)
+        configureDatePickerView()
         
         timerPickerView.delegate = self
         timerPickerView.dataSource = self
@@ -208,26 +200,18 @@ final class AddController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
     }
     
-    private func configureDatePickerView() {
-        let hour = Int(hour) ?? 0
-        let minute = Int(minute) ?? 0
-        datePickerView.selectRow(dayInt, inComponent: 0, animated: true)
-        datePickerView.selectRow(hour, inComponent: 1, animated: true)
-        datePickerView.selectRow(minute, inComponent: 2, animated: true)
-    }
-    
     private func updateScreenByMode() {
         if let routine = routine {
             title = "Edit Routine"
-            
-            dayInt = Int(routine.day)
-            day = brain.getDayName(Int16(dayInt))
-            hour = hours[Int(routine.hour)]
-            minute = minutes[Int(routine.minute)]
-            colorName = routine.color ?? ColorName.defaultt
-            
             titleTextField.text = routine.title
+            
+            configureDateValues(routine: routine)
+            configureDatePickerView()
             dateTextField.text = "\(day), \(hour):\(minute)"
+            
+            congifureTimerValues(routine: routine)
+            configureTimerPickerView()
+            timerTextField.text = getTimerString()
             
             let color = brain.getColor(colorName)
             colorButton.backgroundColor = color
@@ -238,6 +222,52 @@ final class AddController: UIViewController {
             clearColorButton.isHidden = true
             deleteButton.isHidden = true
         }
+    }
+    
+    private func configureDateValues(routine: Routine) {
+        dayInt = Int(routine.day)
+        day = brain.getDayName(Int16(dayInt))
+        hour = hours[Int(routine.hour)]
+        minute = minutes[Int(routine.minute)]
+        colorName = routine.color ?? ColorName.defaultt
+    }
+    
+    private func congifureTimerValues(routine: Routine) {
+        let totalSeconds = routine.timerSeconds
+        let hour = totalSeconds / 3600
+        let min = (totalSeconds - (hour*3600)) / 60
+        let sec = totalSeconds - ((hour*3600)+(min*60))
+        
+        timerHour = "\(hours[Int(hour)])"
+        timerMin = "\(minutes[Int(min)])"
+        timerSec = "\(seconds[Int(sec)])"
+    }
+    
+    private func getTimerString() -> String {
+        var hStr = Int(timerHour) ?? 0 > 0 ? "\(timerHour)\'" : ""
+        let mStr = Int(timerMin) ?? 0 > 0 ? "\(timerMin)\"" : ""
+        let sStr = Int(timerSec) ?? 0 > 0 ? timerSec : ""
+        
+        hStr.append(mStr)
+        hStr.append(sStr)
+        return hStr
+    }
+    
+    private func configureDatePickerView() {
+        let hour = Int(hour) ?? 0
+        let min = Int(minute) ?? 0
+        datePickerView.selectRow(dayInt, inComponent: 0, animated: true)
+        datePickerView.selectRow(hour, inComponent: 1, animated: true)
+        datePickerView.selectRow(min, inComponent: 2, animated: true)
+    }
+    
+    private func configureTimerPickerView() {
+        let hour = Int(timerHour) ?? 0
+        let min = Int(timerMin) ?? 0
+        let sec = Int(timerSec) ?? 0
+        timerPickerView.selectRow(hour, inComponent: 0, animated: true)
+        timerPickerView.selectRow(min, inComponent: 1, animated: true)
+        timerPickerView.selectRow(sec, inComponent: 2, animated: true)
     }
 }
 
@@ -277,7 +307,6 @@ extension AddController: UICollectionViewDelegateFlowLayout {
 extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        dateTextField.text = "\(day), \(hour):\(minute)"
         return 3
     }
     
@@ -341,7 +370,7 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 1:  timerMin = minutes[row]
             default: timerSec = seconds[row]
             }
-            timerTextField.text = "\(timerHour):\(timerMin):\(timerSec)"
+            timerTextField.text = getTimerString()
         default: break
         }
     }
