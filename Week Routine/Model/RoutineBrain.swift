@@ -41,6 +41,7 @@ struct RoutineBrain {
         newLog.uuid = UUID().uuidString
         newLog.title = routine.title
         newLog.content = content
+        newLog.timerSeconds = routine.timerSeconds
         
         routine.addToLogs(newLog)
         saveContext()
@@ -142,12 +143,11 @@ struct RoutineBrain {
     }
     
     func getTimerString(for second: Int) -> String {
-        let totalSeconds = second
-        var str = totalSeconds > 0 ? "- " : ""
+        var str = ""
     
-        let hour = totalSeconds / 3600
-        let min = (totalSeconds - (hour*3600)) / 60
-        let sec = totalSeconds - ((hour*3600)+(min*60))
+        let hour = second / 3600
+        let min = (second - (hour*3600)) / 60
+        let sec = second - ((hour*3600)+(min*60))
     
         let hStr = hour > 0 ? "\(hours[Int(hour)])\'" : ""
         let mStr = min > 0 ? "\(minutes[Int(min)])\"" : ""

@@ -28,6 +28,13 @@ final class LogCell: UITableViewCell {
         return label
     }()
     
+    private let timerLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
+        label.textColor = .darkGray
+        return label
+    }()
+    
     //MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,6 +50,10 @@ final class LogCell: UITableViewCell {
         stack.centerY(inView: self)
         stack.anchor(left: leftAnchor, right: rightAnchor,
                      paddingLeft: 16, paddingRight: 16)
+        
+        addSubview(timerLabel)
+        timerLabel.centerY(inView: dateLabel)
+        timerLabel.anchor(right: rightAnchor, paddingRight: 16)
     }
     
     required init?(coder: NSCoder) {
@@ -55,9 +66,10 @@ final class LogCell: UITableViewCell {
         guard let log = log else { return }
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm E, d MMM y"
+        dateFormatter.dateFormat = "HH:mm・E, d MMM y"
         
         dateLabel.text = "\(dateFormatter.string(from: log.date ?? Date()))"
         contentLabel.text = log.content
+        if log.timerSeconds > 0 { timerLabel.text = "Timer: \(brain.getTimerString(for: Int(log.timerSeconds)))" }
     }
 }

@@ -95,7 +95,7 @@ final class TimerController: UIViewController {
     }
     
     private func updateStopButtonTitle() {
-        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(totalSecond-timerCounter)).dropFirst(2))", for: .normal)
+        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(totalSecond-timerCounter)))", for: .normal)
     }
     
     private func showStopAlert() {
@@ -155,7 +155,7 @@ final class TimerController: UIViewController {
         stopButton.titleLabel?.numberOfLines = 1
         stopButton.titleLabel?.adjustsFontSizeToFitWidth = true
         stopButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(routine.timerSeconds)).dropFirst(2))", for: .normal)
+        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(routine.timerSeconds)))", for: .normal)
         stopButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
         stopButton.backgroundColor = .systemRed
         stopButton.setTitleColor(.white, for: .normal)
