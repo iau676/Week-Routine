@@ -14,6 +14,7 @@ final class TimerController: UIViewController {
     
     private let routine: Routine
     
+    private let titleLabel = UILabel()
     private let stopButton = UIButton()
     private let timerView = UIView()
     
@@ -87,14 +88,14 @@ final class TimerController: UIViewController {
     }
     
     private func updateStopButtonTitle() {
-        stopButton.setTitle("\(brain.getTimerString(for: Int(totalSecond-timerCounter)).dropFirst(2))", for: .normal)
+        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(totalSecond-timerCounter)).dropFirst(2))", for: .normal)
     }
     
     private func showStopAlert() {
         let alert = UIAlertController(title: "Are you sure you want to stop timer?", message: "", preferredStyle: .alert)
         let actionStop = UIAlertAction(title: "Stop", style: .destructive) { (action) in
             NotificationCenter.default.removeObserver(self)
-            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
         }
         let actionContinue = UIAlertAction(title: "Continue", style: UIAlertAction.Style.cancel) { (action) in
             self.startTimer()
@@ -107,7 +108,7 @@ final class TimerController: UIViewController {
     
     private func showCompletedAlert() {
         showAlert(title: "Routine Completed", errorMessage: "") { OKpressed in
-            self.navigationController?.popViewController(animated: false)
+            self.dismiss(animated: false)
         }
     }
     
@@ -118,7 +119,7 @@ final class TimerController: UIViewController {
     
     func setNotification(remindSecond: CGFloat) {
         timeR.invalidate()
-        self.navigationController?.popToRootViewController(animated: false)
+        self.dismiss(animated: false)
         if remindSecond > 0 {
             UDM.currentNotificationDate.set(Date())
             UDM.routineUUID.set(routine.uuid ?? "")
@@ -143,14 +144,17 @@ final class TimerController: UIViewController {
     }
     
     private func style() {
-        title = routine.title
         view.backgroundColor = Colors.viewColor
-        timerView.backgroundColor = brain.getColor(routine.color ?? ColorName.defaultt)
+        timerView.backgroundColor = RoutineBrain.shareInstance.getColor(routine.color ?? ColorName.defaultt)
+        
+        titleLabel.text = routine.title
+        titleLabel.textColor = Colors.labelColor
+        titleLabel.textAlignment = .center
         
         stopButton.titleLabel?.numberOfLines = 1
         stopButton.titleLabel?.adjustsFontSizeToFitWidth = true
         stopButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        stopButton.setTitle("\(brain.getTimerString(for: Int(routine.timerSeconds)).dropFirst(2))", for: .normal)
+        stopButton.setTitle("\(RoutineBrain.shareInstance.getTimerString(for: Int(routine.timerSeconds)).dropFirst(2))", for: .normal)
         stopButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
         stopButton.backgroundColor = .systemRed
         stopButton.setTitleColor(.white, for: .normal)
@@ -164,6 +168,10 @@ final class TimerController: UIViewController {
     }
     
     private func layout() {
+        view.addSubview(titleLabel)
+        titleLabel.centerX(inView: view)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        
         view.addSubview(timerView)
         timerView.anchor(bottom: view.bottomAnchor)
         timerView.setWidth(view.frame.width)

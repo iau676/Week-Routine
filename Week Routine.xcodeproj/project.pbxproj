@@ -123,8 +123,8 @@
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
 				702BA40428EE105800BB7EDB /* AddController.swift */,
 				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
-				70A76A5629FECE80003D72D6 /* CompleteController.swift */,
 				706D66DA2A361FA4003BE508 /* TimerController.swift */,
+				70A76A5629FECE80003D72D6 /* CompleteController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

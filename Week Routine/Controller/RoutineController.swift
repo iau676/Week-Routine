@@ -60,7 +60,8 @@ final class RoutineController: UICollectionViewController {
             if timerSeconds - lastTimerCounter - passedSeconds > 0 {
                 let controller = TimerController(routine: routine)
                 controller.timerCounter = CGFloat(lastTimerCounter + passedSeconds)
-                self.navigationController?.pushViewController(controller, animated: true)
+                controller.modalPresentationStyle = .overCurrentContext
+                self.present(controller, animated: true)
             } else {
                 if !UDM.isTimerCompleted.getBool() {
                     UDM.isTimerCompleted.set(true)
@@ -161,7 +162,8 @@ extension RoutineController {
             
             if routine.timerSeconds > 0 {
                 let controller = TimerController(routine: routine)
-                self.navigationController?.pushViewController(controller, animated: true)
+                controller.modalPresentationStyle = .overCurrentContext
+                self.present(controller, animated: true)
             } else {
                 let controller = CompleteController(routine: routine)
                 controller.delegate = self
