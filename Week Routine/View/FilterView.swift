@@ -7,13 +7,13 @@
 
 import UIKit
 
-private let reuseIdentifier = "FilterCell"
+private let reIdentifier = "FilterCell"
 
 protocol FilterViewDelegate: AnyObject {
     func filterView(_ view: FilterView, didSelect index: Int)
 }
 
-final class FilterView: UIView {
+final class FilterView: UICollectionReusableView {
     
     //MARK: - Properties
     
@@ -36,7 +36,7 @@ final class FilterView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = Colors.viewColor
-        collectionView.register(FilterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FilterCell.self, forCellWithReuseIdentifier: reIdentifier)
         
         let selectedIndexPath = IndexPath(row: 0, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
@@ -72,7 +72,7 @@ extension FilterView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FilterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reIdentifier, for: indexPath) as! FilterCell
         let option = FilterOptions(rawValue: indexPath.row)
         cell.option = option
         return cell

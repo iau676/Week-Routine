@@ -12,7 +12,7 @@ protocol RoutineCellDelegate: AnyObject {
     func goEdit(routine: Routine)
 }
 
-final class RoutineCell: UITableViewCell {
+final class RoutineCell: UICollectionViewCell {
     
     //MARK: - Properties
     
@@ -42,17 +42,25 @@ final class RoutineCell: UITableViewCell {
         return label
     }()
     
-    private var historyButton = UIButton()
-    private var editButton = UIButton()
+    private let historyButton: UIButton = {
+        let button = UIButton()
+        button.setDimensions(width: 32, height: 32)
+        button.setImageWithRenderingMode(image: Images.history, width: 24, height: 24, color: .label)
+        return button
+    }()
+    
+    private let editButton: UIButton = {
+        let button = UIButton()
+        button.setDimensions(width: 32, height: 32)
+        button.setImageWithRenderingMode(image: Images.dots, width: 24, height: 24, color: .label)
+        return button
+    }()
     
     //MARK: - Lifecycle
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
         backgroundColor = .clear
-        
-        historyButton.setImageWithRenderingMode(image: Images.history, width: 24, height: 24, color: .label)
-        editButton.setImageWithRenderingMode(image: Images.dots, width: 24, height: 24, color: .label)
         
         historyButton.addTarget(self, action: #selector(historyPressed), for: .touchUpInside)
         editButton.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
@@ -63,11 +71,10 @@ final class RoutineCell: UITableViewCell {
                           paddingTop: 8, paddingLeft: 8,
                           paddingBottom: 8, paddingRight: 8)
         
-        historyButton.setDimensions(width: 32, height: 32)
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
         buttonStack.axis = .horizontal
-        buttonStack.spacing = 8
+        buttonStack.spacing = 16
         
         addSubview(buttonStack)
         buttonStack.centerY(inView: borderView)

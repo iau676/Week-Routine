@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = UINavigationController(rootViewController: RoutineController())
+        window?.rootViewController = UINavigationController(rootViewController: RoutineController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         return true
     }

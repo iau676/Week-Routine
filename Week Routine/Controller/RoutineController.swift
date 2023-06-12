@@ -8,13 +8,12 @@
 import UIKit
 
 private let reuseIdentifier = "RoutineCell"
+private let headerIdentifier = "FilterView"
 
-final class RoutineController: UIViewController {
+final class RoutineController: UICollectionViewController {
 
-    private let headerView = FilterView()
-    private let tableView = UITableView()
     private let placeholderView = PlaceholderView(text: "No Routine")
-    private var tempArray = [Int]() { didSet { tableView.reloadData() } }
+    private var tempArray = [Int]() { didSet { collectionView.reloadData() } }
     private var currrentIndex = 0
         
     //MARK: - Life Cycle
@@ -22,7 +21,6 @@ final class RoutineController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
-        layout()
         updateCV()
         addObserver()
         addGestureRecognizer()
@@ -32,9 +30,7 @@ final class RoutineController: UIViewController {
         super.viewDidAppear(animated)
         brain.askNotificationPermission()
         currrentIndex = brain.getDayInt()+1
-        headerView.updateSelected(for: currrentIndex)
         findWhichRoutinesShouldShow()
-        tableView.reloadData()
     }
     
     //MARK: - Selectors
@@ -86,29 +82,21 @@ final class RoutineController: UIViewController {
     private func style() {
         configureBarButton()
         view.backgroundColor = Colors.backgroundColor
-        
-        headerView.setDimensions(width: view.frame.width, height: 50)
-        headerView.delegate = self
-        tableView.tableHeaderView = headerView
-        tableView.rowHeight = 99
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = 8
-        tableView.alwaysBounceVertical = false
-        tableView.backgroundColor = Colors.viewColor
-        tableView.register(RoutineCell.self, forCellReuseIdentifier: reuseIdentifier)
-    }
-    
-    private func layout() {
-        view.addSubview(tableView)
-        tableView.fillSuperview()
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.layer.cornerRadius = 8
+        collectionView.backgroundColor = Colors.viewColor
+        collectionView.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FilterView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: headerIdentifier)
     }
     
     private func updatePlaceholderViewVisibility(){
         view.addSubview(placeholderView)
-        placeholderView.centerX(inView: tableView)
-        placeholderView.centerY(inView: tableView)
+        placeholderView.centerX(inView: collectionView)
+        placeholderView.centerY(inView: collectionView)
         placeholderView.isHidden = tempArray.count != 0
     }
         
@@ -146,29 +134,31 @@ final class RoutineController: UIViewController {
 
 //MARK: - UITableViewDataSource
 
-extension RoutineController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension RoutineController {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tempArray.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RoutineCell
         cell.selectedSegmentIndex = currrentIndex-1
         cell.routine = brain.routineArray[tempArray[indexPath.row]]
         cell.delegate = self
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return size(forText: tempArray[indexPath.row].description).height + 50
-//    }
 }
 
-//MARK: - UITableViewDelegate
+//MARK: - UICollectionViewDelegate
 
-extension RoutineController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+extension RoutineController {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! FilterView
+        header.delegate = self
+        header.updateSelected(for: currrentIndex)
+        return header
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if currrentIndex == brain.getDayInt()+1 {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             
@@ -185,6 +175,18 @@ extension RoutineController: UITableViewDelegate {
         } else {
             self.showAlertWithTimer(title: "Not Today")
         }
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension RoutineController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.bounds.width, height: 100)
     }
 }
 
@@ -205,7 +207,6 @@ extension RoutineController {
         case .left: currrentIndex = (currrentIndex + 1 > 7) ? 1 : currrentIndex + 1
         case .right: currrentIndex = (currrentIndex - 1 < 1) ? 7 : currrentIndex - 1
         default: break }
-        headerView.updateSelected(for: currrentIndex)
         findWhichRoutinesShouldShow()
     }
 }
@@ -251,7 +252,7 @@ extension RoutineController: RoutineCellDelegate {
 
 extension RoutineController: CompleteControllerDelegate {
     func updateTableView() {
-        tableView.reloadData()
+        collectionView.reloadData()
     }
 }
 
