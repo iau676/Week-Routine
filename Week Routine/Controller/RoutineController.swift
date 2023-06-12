@@ -61,7 +61,8 @@ final class RoutineController: UICollectionViewController {
                 let controller = TimerController(routine: routine)
                 controller.timerCounter = CGFloat(lastTimerCounter + passedSeconds)
                 controller.modalPresentationStyle = .overCurrentContext
-                self.present(controller, animated: true)
+                controller.delegate = self
+                self.present(controller, animated: false)
             } else {
                 if !UDM.isTimerCompleted.getBool() {
                     UDM.isTimerCompleted.set(true)
@@ -162,6 +163,7 @@ extension RoutineController {
             
             if routine.timerSeconds > 0 {
                 let controller = TimerController(routine: routine)
+                controller.delegate = self
                 controller.modalPresentationStyle = .overCurrentContext
                 self.present(controller, animated: true)
             } else {
@@ -261,5 +263,17 @@ extension RoutineController: FilterViewDelegate {
     func filterView(_ view: FilterView, didSelect index: Int) {
         currrentIndex = index
         findWhichRoutinesShouldShow()
+    }
+}
+
+//MARK: - TimerControllerDelegate
+
+extension RoutineController: TimerControllerDelegate {
+    func timerCompleted(routine: Routine) {
+        let controller = CompleteController(routine: routine)
+        controller.delegate = self
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
     }
 }

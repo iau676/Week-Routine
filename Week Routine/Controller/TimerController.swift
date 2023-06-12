@@ -8,10 +8,15 @@
 import UIKit
 import AudioToolbox
 
+protocol TimerControllerDelegate : AnyObject {
+    func timerCompleted(routine: Routine)
+}
+
 final class TimerController: UIViewController {
     
     //MARK: - Properties
     
+    weak var delegate: TimerControllerDelegate?
     private let routine: Routine
     
     private let titleLabel = UILabel()
@@ -109,6 +114,7 @@ final class TimerController: UIViewController {
     private func showCompletedAlert() {
         showAlert(title: "Routine Completed", errorMessage: "") { OKpressed in
             self.dismiss(animated: false)
+            self.delegate?.timerCompleted(routine: self.routine)
         }
     }
     
