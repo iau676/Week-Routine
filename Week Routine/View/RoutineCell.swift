@@ -68,8 +68,8 @@ final class RoutineCell: UICollectionViewCell {
         addSubview(borderView)
         borderView.anchor(top: topAnchor, left: leftAnchor,
                           bottom: bottomAnchor, right: rightAnchor,
-                          paddingTop: 8, paddingLeft: 8,
-                          paddingBottom: 8, paddingRight: 8)
+                          paddingTop: 0, paddingLeft: 16,
+                          paddingBottom: 0, paddingRight: 16)
         
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
