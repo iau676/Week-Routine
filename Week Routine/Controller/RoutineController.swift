@@ -65,7 +65,6 @@ final class RoutineController: UICollectionViewController {
                 self.present(controller, animated: false)
             } else {
                 if !UDM.isTimerCompleted.getBool() {
-                    UDM.isTimerCompleted.set(true)
                     let controller = CompleteController(routine: routine)
                     controller.delegate = self
                     let nav = UINavigationController(rootViewController: controller)

@@ -64,6 +64,7 @@ final class TimerController: UIViewController {
     
     private func startTimer() {
         handleTimer()
+        UDM.isTimerCompleted.set(false)
         self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.handleTimer()
         })
@@ -88,8 +89,9 @@ final class TimerController: UIViewController {
         stopButton.isHidden = true
         NotificationCenter.default.removeObserver(self)
         AudioServicesPlayAlertSound(SystemSoundID(1002))
-        UDM.isTimerCompleted.set(true)
-        showCompletedAlert()
+        
+        self.dismiss(animated: false)
+        self.delegate?.timerCompleted(routine: self.routine)
     }
     
     private func updateStopButtonTitle() {
@@ -109,13 +111,6 @@ final class TimerController: UIViewController {
         alert.addAction(actionStop)
         alert.addAction(actionContinue)
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func showCompletedAlert() {
-        showAlert(title: "Routine Completed", errorMessage: "") { OKpressed in
-            self.dismiss(animated: false)
-            self.delegate?.timerCompleted(routine: self.routine)
-        }
     }
     
     private func addObserver() {

@@ -16,8 +16,9 @@ final class CompleteController: UIViewController {
     //MARK: - Properties
     
     weak var delegate: CompleteControllerDelegate?
-    
     private let routine: Routine
+    
+    private let timerLabel = UILabel()
     private let textView = InputTextView()
     
     //MARK: - Lifecycle
@@ -35,6 +36,7 @@ final class CompleteController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
+        configureTimerLabelVisibility()
     }
     
     //MARK: - Selectors
@@ -54,17 +56,25 @@ final class CompleteController: UIViewController {
     
     private func style() {
         configureBarButton()
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = .systemGray5
+        
+        timerLabel.text = "Timer Completed!"
+        timerLabel.textColor = Colors.labelColor
+        timerLabel.textAlignment = .center
         
         textView.becomeFirstResponder()
-        textView.backgroundColor = .secondarySystemBackground
+        textView.backgroundColor = Colors.viewColor
     }
     
     private func layout() {
-        view.addSubview(textView)
-        textView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                        right: view.rightAnchor, paddingTop: 16,
-                        paddingLeft: 16, paddingRight: 16)
+        let stack = UIStackView(arrangedSubviews: [timerLabel, textView])
+        stack.axis = .vertical
+        stack.spacing = 16
+        
+        view.addSubview(stack)
+        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     right: view.rightAnchor, paddingTop: 16,
+                     paddingLeft: 16, paddingRight: 16)
     }
     
     private func configureBarButton() {
@@ -79,5 +89,14 @@ final class CompleteController: UIViewController {
                                                             target: self,
                                                             action: #selector(dismissView))
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
+    }
+    
+    private func configureTimerLabelVisibility() {
+        if UDM.isTimerCompleted.getBool() {
+            timerLabel.isHidden = true
+        } else {
+            UDM.isTimerCompleted.set(true)
+            timerLabel.isHidden = false
+        }
     }
 }
