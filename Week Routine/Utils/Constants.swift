@@ -50,7 +50,6 @@ enum ColorName {
 }
 
 enum UDM {
-    static var selectedDayType           = UserDefaultsManager(key: "selectedDayType")
     static var currentNotificationDate   = UserDefaultsManager(key: "currentNotificationDate")
     static var routineUUID               = UserDefaultsManager(key: "routineUUID")
     static var lastTimerCounter          = UserDefaultsManager(key: "lastTimerCounter")

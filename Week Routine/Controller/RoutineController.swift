@@ -43,11 +43,8 @@ final class RoutineController: UICollectionViewController {
         self.present(nav, animated: true)
     }
     
-    @objc private func settingsButtonPressed() {
-        let vc = SettingsController()
-        vc.delegate = self
-        vc.modalPresentationStyle = .formSheet
-        self.present(vc, animated: true)
+    @objc private func leftBarButtonPressed() {
+        print("DEBUG::leftBarButtonPressed")
     }
     
     @objc private func checkTimer() {
@@ -114,7 +111,7 @@ final class RoutineController: UICollectionViewController {
         leftBarIV.isUserInteractionEnabled = true
         
         leftBarIV.image = Images.menu?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
-        let tapLeft = UITapGestureRecognizer(target: self, action: #selector(settingsButtonPressed))
+        let tapLeft = UITapGestureRecognizer(target: self, action: #selector(leftBarButtonPressed))
         leftBarIV.addGestureRecognizer(tapLeft)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
     }
@@ -225,14 +222,6 @@ extension RoutineController: UpdateDelegate {
     func updateCV() {
         brain.loadRoutineArray()
         findWhichRoutinesShouldShow()
-    }
-}
-
-//MARK: - SettingsDelegate
-
-extension RoutineController: SettingsDelegate {
-    func updateSettings() {
-//        daySegmentedControl.replaceSegments(segments: brain.days[UDM.selectedDayType.getInt()])
     }
 }
 
