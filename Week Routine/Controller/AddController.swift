@@ -24,10 +24,14 @@ final class AddController: UIViewController {
     private let clearColorButton = UIButton()
     private let colorCV = makeCollectionView()
     private let timerTextField = UITextField()
+    private let timerLabel = UILabel()
     private let deleteButton = UIButton()
     
     private let datePickerView = CustomPickerView(type: .date)
     private let timerPickerView = CustomPickerView(type: .timer)
+    
+    private let soundLabel = UILabel()
+    private let soundButton = UIButton()
     
     private let freezeLabel = makePaddingLabel(withText: "Freeze")
     private let freezeSwitch = UISwitch()
@@ -84,10 +88,7 @@ final class AddController: UIViewController {
     
     @objc private func colorButtonPressed() {
         colorCV.isHidden = false
-        timerTextField.isHidden = true
-        guard let _ = self.routine else { return }
-        freezeLabel.isHidden = true
-        freezeSwitch.isHidden = true
+        updateViewsVisibility(bool: true)
     }
     
     @objc private func clearColorButtonPressed() {
@@ -96,6 +97,11 @@ final class AddController: UIViewController {
         colorButton.setTitleColor(Colors.viewColor, for: .normal)
         clearColorButton.isHidden = true
         colorCV.isHidden = true
+        updateViewsVisibility(bool: false)
+    }
+    
+    @objc private func soundButtonPressed() {
+        print("DEBUG::soundButtonPressed")
     }
     
     @objc private func freezeChanged(sender: UISwitch) {
@@ -141,12 +147,16 @@ final class AddController: UIViewController {
         timerPickerView.delegate = self
         timerPickerView.dataSource = self
         timerTextField.inputView = timerPickerView
-        timerTextField.placeholder = "Timer (Optional)"
+        timerTextField.text = "Timer"
         timerTextField.backgroundColor = Colors.viewColor
         timerTextField.layer.cornerRadius = 8
         timerTextField.tintColor = .clear
         timerTextField.setHeight(50)
         timerTextField.setLeftPaddingPoints(10)
+        
+        timerLabel.text = "00"
+        timerLabel.textColor = .darkGray
+        timerLabel.textAlignment = .right
         
         colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
@@ -168,6 +178,18 @@ final class AddController: UIViewController {
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
         
+        soundLabel.text = "Notification Sound"
+        soundLabel.textColor = Colors.labelColor
+        
+        soundButton.setHeight(50)
+        soundButton.setTitle("Default", for: .normal)
+        soundButton.setTitleColor(.darkGray, for: .normal)
+        soundButton.backgroundColor = Colors.viewColor
+        soundButton.layer.cornerRadius = 8
+        soundButton.contentHorizontalAlignment = .right
+        soundButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .touchUpInside)
+        
         freezeLabel.setHeight(50)
         freezeLabel.backgroundColor = Colors.viewColor
         freezeLabel.clipsToBounds = true
@@ -186,13 +208,14 @@ final class AddController: UIViewController {
     private func layout() {
         view.addSubview(colorCV)
         
-        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, timerTextField, freezeLabel])
+        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton,
+                                                   timerTextField, soundButton, freezeLabel])
         stack.axis = .vertical
-        stack.spacing = 16
+        stack.spacing = 10
         
         view.addSubview(stack)
         stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                     right: view.rightAnchor, paddingTop: 32,
+                     right: view.rightAnchor, paddingTop: 16,
                      paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(clearColorButton)
@@ -203,9 +226,17 @@ final class AddController: UIViewController {
                        bottom: view.bottomAnchor, right: view.rightAnchor,
                        paddingTop: -32, paddingLeft: 32, paddingRight: 32)
         
+        view.addSubview(timerLabel)
+        timerLabel.centerY(inView: timerTextField)
+        timerLabel.anchor(right: view.rightAnchor, paddingRight: 32+16)
+        
         view.addSubview(freezeSwitch)
         freezeSwitch.centerY(inView: freezeLabel)
         freezeSwitch.anchor(right: view.rightAnchor, paddingRight: 32+16)
+        
+        view.addSubview(soundLabel)
+        soundLabel.centerY(inView: soundButton)
+        soundLabel.anchor(left: view.leftAnchor, paddingLeft: 32+10)
         
         view.addSubview(deleteButton)
         deleteButton.setHeight(50)
@@ -238,7 +269,7 @@ final class AddController: UIViewController {
             
             congifureTimerValues(routine: routine)
             configureTimerPickerView()
-            timerTextField.text = getTimerString()
+            timerLabel.text = getTimerString()
             
             colorName = routine.color ?? ColorName.defaultt
             let color = brain.getColor(colorName)
@@ -253,10 +284,12 @@ final class AddController: UIViewController {
                 dateTextField.isEnabled = false
                 timerTextField.isEnabled = false
                 colorButton.isEnabled = false
+                soundButton.isEnabled = false
                 dateTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 titleTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 timerTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                soundButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.setTitleColor(Colors.labelColor, for: .normal)
                 clearColorButton.isHidden = true
             } else {
@@ -264,9 +297,11 @@ final class AddController: UIViewController {
                 dateTextField.isEnabled = true
                 timerTextField.isEnabled = true
                 colorButton.isEnabled = true
+                soundButton.isEnabled = true
                 dateTextField.backgroundColor = Colors.viewColor
                 titleTextField.backgroundColor = Colors.viewColor
                 timerTextField.backgroundColor = Colors.viewColor
+                soundButton.backgroundColor = Colors.viewColor
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
             }
         } else {
@@ -276,6 +311,17 @@ final class AddController: UIViewController {
             freezeLabel.isHidden = true
             freezeSwitch.isHidden = true
         }
+    }
+    
+    private func updateViewsVisibility(bool: Bool) {
+        timerTextField.isHidden = bool
+        soundButton.isHidden = bool
+        soundLabel.isHidden = bool
+        timerLabel.isHidden = bool
+        guard let _ = routine else { return }
+        freezeLabel.isHidden = bool
+        freezeSwitch.isHidden = bool
+        deleteButton.isHidden = bool
     }
     
     private func configureDateValues(routine: Routine) {
@@ -303,7 +349,7 @@ final class AddController: UIViewController {
         
         hStr.append(mStr)
         hStr.append(sStr)
-        return hStr
+        return hStr.count > 0 ? hStr : "Not Set"
     }
     
     private func configureDatePickerView() {
@@ -344,9 +390,7 @@ extension AddController: UICollectionViewDataSource {
         colorCV.isHidden = true
         clearColorButton.isHidden = false
         timerTextField.isHidden = false
-        guard let _ = self.routine else { return }
-        freezeLabel.isHidden = false
-        freezeSwitch.isHidden = false
+        updateViewsVisibility(bool: false)
     }
 }
 
@@ -426,7 +470,7 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 1:  timerMin = minutes[row]
             default: timerSec = seconds[row]
             }
-            timerTextField.text = getTimerString()
+            timerLabel.text = getTimerString()
         default: break
         }
     }
