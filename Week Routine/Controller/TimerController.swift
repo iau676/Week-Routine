@@ -102,6 +102,7 @@ final class TimerController: UIViewController {
         let alert = UIAlertController(title: "Are you sure you want to stop timer?", message: "", preferredStyle: .alert)
         let actionStop = UIAlertAction(title: "Stop", style: .destructive) { (action) in
             NotificationCenter.default.removeObserver(self)
+            UDM.isTimerCompleted.set(true)
             self.dismiss(animated: true)
         }
         let actionContinue = UIAlertAction(title: "Continue", style: UIAlertAction.Style.cancel) { (action) in
