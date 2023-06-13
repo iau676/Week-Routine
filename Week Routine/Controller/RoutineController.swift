@@ -28,7 +28,7 @@ final class RoutineController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        brain.askNotificationPermission()
+        NotificationManager.shared.askNotificationPermission()
         currrentIndex = brain.getDayInt()+1
         findWhichRoutinesShouldShow()
     }

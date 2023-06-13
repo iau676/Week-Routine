@@ -13,7 +13,6 @@ struct RoutineBrain {
     static var shareInstance = RoutineBrain()
     
     var routineArray = [Routine]()
-    let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Model Manupulation Methods
@@ -31,7 +30,8 @@ struct RoutineBrain {
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
         self.routineArray.append(newRoutine)
-        addNotification(title: title, dayInt: Int(day), hour: Int(hour), minute: Int(minute), color: color, id: uuid)
+        NotificationManager.shared.addNotification(title: title, dayInt: Int(day), hour: Int(hour),
+                                                   minute: Int(minute), color: color, id: uuid)
         saveContext()
     }
     
@@ -55,7 +55,7 @@ struct RoutineBrain {
         routine.color = color
         routine.ascending = Int16(hour * 66 + minute)
         routine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
-        updateRoutineNotification(routine: routine)
+        NotificationManager.shared.updateRoutineNotification(routine: routine)
         saveContext()
     }
     
@@ -64,16 +64,16 @@ struct RoutineBrain {
         let dayInt = routine.day
         switch dayInt {
             case 8:
-                removeNotification(id: "\(uuid)wr2")
-                removeNotification(id: "\(uuid)wr3")
-                removeNotification(id: "\(uuid)wr4")
-                removeNotification(id: "\(uuid)wr5")
-                removeNotification(id: "\(uuid)wr6")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr2")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr3")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr4")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr5")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr6")
             case 9:
-                removeNotification(id: "\(uuid)wr7")
-                removeNotification(id: "\(uuid)wr1")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr7")
+            NotificationManager.shared.removeNotification(id: "\(uuid)wr1")
             default:
-                removeNotification(id: uuid)
+            NotificationManager.shared.removeNotification(id: uuid)
         }
         context.delete(routine)
         saveContext()
@@ -126,7 +126,7 @@ struct RoutineBrain {
     mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
         loadRoutineArray()
         if let item = routineArray.first(where: {$0.uuid == uuid}) {
-            removeNotification(id: uuid)
+            NotificationManager.shared.removeNotification(id: uuid)
             completion(item)
         }
     }
@@ -206,90 +206,5 @@ struct RoutineBrain {
         default:               return .label
         }
     }
-    
-    func getColorEmoji(_ colorName: String) -> String {
-        switch colorName {
-        case ColorName.red:    return "🔴 "
-        case ColorName.orange: return "🟠 "
-        case ColorName.yellow: return "🟡 "
-        case ColorName.green:  return "🟢 "
-        case ColorName.blue:   return "🔵 "
-        case ColorName.purple: return "🟣 "
-        default:               return ""
-        }
-    }
-    
-    //MARK: - Notification
-    
-    func askNotificationPermission(){
-        notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted){
-                print("Permission Denied")
-            }
-        }
-    }
-    
-    func addNotification(title: String, dayInt: Int, hour: Int, minute: Int, color: String, id: String){
-        DispatchQueue.main.async{
-            let emoji = getColorEmoji(color)
-            let title = "\(emoji)\(title)"
-            let message = ""
-            var date = DateComponents()
-
-            let content = UNMutableNotificationContent()
-            content.title = title
-            content.body = message
-            content.sound = UNNotificationSound.default
-            
-            switch dayInt {
-                case 7:
-                    date = DateComponents(hour: hour, minute: minute)
-                    addNotificationCenter(date: date, content: content, id: id)
-                break
-                case 8:
-                    for i in 2...6 {
-                        date = DateComponents(hour: hour, minute: minute, weekday: i)
-                        addNotificationCenter(date: date, content: content, id: "\(id)wr\(i)")
-                    }
-                break
-                case 9:
-                    date = DateComponents(hour: hour, minute: minute, weekday: 7)
-                    addNotificationCenter(date: date, content: content, id: "\(id)wr7")
-                    date = DateComponents(hour: hour, minute: minute, weekday: 1)
-                    addNotificationCenter(date: date, content: content, id: "\(id)wr1")
-                break
-                default:
-                    let weekday = (dayInt+2 > 7) ? 1 : dayInt+2
-                    date = DateComponents(hour: hour, minute: minute, weekday: weekday)
-                    addNotificationCenter(date: date, content: content, id: id)
-                break
-            }
-        }
-    }
-    
-    func addNotificationCenter(date: DateComponents, content: UNMutableNotificationContent, id: String){
-        let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-        let id = id
-        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                    
-        self.notificationCenter.add(request) { (error) in
-            if(error != nil){
-                print("Error " + error.debugDescription)
-                return
-            }
-        }
-    }
-    
-    func removeNotification(id: String) {
-        self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
-    }
-    
-    func updateRoutineNotification(routine: Routine){
-        guard let title = routine.title else{return}
-        guard let uuid = routine.uuid else{return}
-        
-        removeNotification(id: uuid)
-        addNotification(title: title, dayInt: Int(routine.day), hour: Int(routine.hour), minute: Int(routine.minute), color: routine.color ?? "", id: uuid)
-    }
+ 
 }
