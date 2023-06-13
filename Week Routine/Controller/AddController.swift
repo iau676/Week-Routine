@@ -29,6 +29,9 @@ final class AddController: UIViewController {
     private let datePickerView = CustomPickerView(type: .date)
     private let timerPickerView = CustomPickerView(type: .timer)
     
+    private let freezeLabel = makePaddingLabel(withText: "Freeze")
+    private let freezeSwitch = UISwitch()
+    
     private var dayInt = brain.getDayInt()
     private var day = days[brain.getDayInt()]
     private var hour = hours[brain.getHour()]
@@ -82,6 +85,8 @@ final class AddController: UIViewController {
     @objc private func colorButtonPressed() {
         colorCV.isHidden = false
         timerTextField.isHidden = true
+        freezeLabel.isHidden = true
+        freezeSwitch.isHidden = true
     }
     
     @objc private func clearColorButtonPressed() {
@@ -90,6 +95,10 @@ final class AddController: UIViewController {
         colorButton.setTitleColor(Colors.viewColor, for: .normal)
         clearColorButton.isHidden = true
         colorCV.isHidden = true
+    }
+    
+    @objc private func freezeChanged(sender: UISwitch) {
+        print("DEBUG::sender::\(sender.isOn)")
     }
     
     @objc private func deleteButtonPressed() {
@@ -155,6 +164,14 @@ final class AddController: UIViewController {
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
         
+        freezeLabel.setHeight(50)
+        freezeLabel.backgroundColor = Colors.viewColor
+        freezeLabel.clipsToBounds = true
+        freezeLabel.layer.cornerRadius = 8
+        
+        freezeSwitch.onTintColor = .systemBlue
+        freezeSwitch.addTarget(self, action: #selector(freezeChanged), for: .valueChanged)
+        
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.setTitleColor(.systemRed, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
@@ -165,7 +182,7 @@ final class AddController: UIViewController {
     private func layout() {
         view.addSubview(colorCV)
         
-        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, timerTextField])
+        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton, timerTextField, freezeLabel])
         stack.axis = .vertical
         stack.spacing = 16
         
@@ -181,6 +198,10 @@ final class AddController: UIViewController {
         colorCV.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
                        bottom: view.bottomAnchor, right: view.rightAnchor,
                        paddingTop: -32, paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(freezeSwitch)
+        freezeSwitch.centerY(inView: freezeLabel)
+        freezeSwitch.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
         view.addSubview(deleteButton)
         deleteButton.setHeight(50)
@@ -291,6 +312,8 @@ extension AddController: UICollectionViewDataSource {
         colorCV.isHidden = true
         clearColorButton.isHidden = false
         timerTextField.isHidden = false
+        freezeLabel.isHidden = false
+        freezeSwitch.isHidden = false
     }
 }
 
