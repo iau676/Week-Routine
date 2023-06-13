@@ -14,6 +14,7 @@ final class LogController: UIViewController {
     //MARK: - Properties
     
     private let routine: Routine
+    private lazy var headerView = LogHeader(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
     private let tableView = UITableView()
     private let placeholderView = PlaceholderView(text: "No Data")
     
@@ -40,6 +41,9 @@ final class LogController: UIViewController {
         title = routine.title
         view.backgroundColor = Colors.backgroundColor
         
+        headerView.routine = routine
+        headerView.delegate = self
+        tableView.tableHeaderView = headerView
         tableView.allowsSelection = false
         tableView.backgroundColor = .systemGroupedBackground
         tableView.tableFooterView = UIView()
@@ -89,6 +93,7 @@ extension LogController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             self.showDeleteAlert(title: "Data will be deleted", message: "This action cannot be undone") { _ in
                 brain.deleteLog(self.routine, indexPath.row)
+                self.routineChanged()
                 tableView.reloadData()
             }
             success(true)
@@ -97,5 +102,13 @@ extension LogController: UITableViewDelegate {
         deleteAction.setBackgroundColor(.systemRed)
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+//MARK: - LogHeaderDelegate
+
+extension LogController: LogHeaderDelegate {
+    func routineChanged() {
+        headerView.routine = routine
     }
 }
