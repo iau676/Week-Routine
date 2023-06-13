@@ -343,9 +343,9 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             }
         case .timer:
             switch component {
-            case 0:  return hours[row]
-            case 1:  return minutes[row]
-            default: return seconds[row]
+            case 0:  return "\(hours[row]) hour"
+            case 1:  return "\(minutes[row]) min"
+            default: return "\(seconds[row]) sec"
             }
         default: break
         }
