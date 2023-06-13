@@ -29,9 +29,10 @@ final class AddController: UIViewController {
     
     private let datePickerView = CustomPickerView(type: .date)
     private let timerPickerView = CustomPickerView(type: .timer)
+    private let soundPickerView = CustomPickerView(type: .sound)
     
+    private let soundTextField = UITextField()
     private let soundLabel = UILabel()
-    private let soundButton = UIButton()
     
     private let freezeLabel = makePaddingLabel(withText: "Freeze")
     private let freezeSwitch = UISwitch()
@@ -178,17 +179,19 @@ final class AddController: UIViewController {
         colorCV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         colorCV.isHidden = true
         
-        soundLabel.text = "Notification Sound"
-        soundLabel.textColor = Colors.labelColor
+        soundPickerView.delegate = self
+        soundPickerView.dataSource = self
+        soundTextField.inputView = soundPickerView
+        soundTextField.text = "Notification Sound"
+        soundTextField.backgroundColor = Colors.viewColor
+        soundTextField.layer.cornerRadius = 8
+        soundTextField.tintColor = .clear
+        soundTextField.setHeight(50)
+        soundTextField.setLeftPaddingPoints(10)
         
-        soundButton.setHeight(50)
-        soundButton.setTitle("Default", for: .normal)
-        soundButton.setTitleColor(.darkGray, for: .normal)
-        soundButton.backgroundColor = Colors.viewColor
-        soundButton.layer.cornerRadius = 8
-        soundButton.contentHorizontalAlignment = .right
-        soundButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .touchUpInside)
+        soundLabel.text = "Default"
+        soundLabel.textColor = .darkGray
+        soundLabel.textAlignment = .right
         
         freezeLabel.setHeight(50)
         freezeLabel.backgroundColor = Colors.viewColor
@@ -209,7 +212,7 @@ final class AddController: UIViewController {
         view.addSubview(colorCV)
         
         let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton,
-                                                   timerTextField, soundButton, freezeLabel])
+                                                   timerTextField, soundTextField, freezeLabel])
         stack.axis = .vertical
         stack.spacing = 10
         
@@ -235,8 +238,8 @@ final class AddController: UIViewController {
         freezeSwitch.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
         view.addSubview(soundLabel)
-        soundLabel.centerY(inView: soundButton)
-        soundLabel.anchor(left: view.leftAnchor, paddingLeft: 32+10)
+        soundLabel.centerY(inView: soundTextField)
+        soundLabel.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
         view.addSubview(deleteButton)
         deleteButton.setHeight(50)
@@ -284,12 +287,12 @@ final class AddController: UIViewController {
                 dateTextField.isEnabled = false
                 timerTextField.isEnabled = false
                 colorButton.isEnabled = false
-                soundButton.isEnabled = false
+                soundTextField.isEnabled = false
                 dateTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 titleTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 timerTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
-                soundButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                soundTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.setTitleColor(Colors.labelColor, for: .normal)
                 clearColorButton.isHidden = true
             } else {
@@ -297,11 +300,11 @@ final class AddController: UIViewController {
                 dateTextField.isEnabled = true
                 timerTextField.isEnabled = true
                 colorButton.isEnabled = true
-                soundButton.isEnabled = true
+                soundTextField.isEnabled = true
                 dateTextField.backgroundColor = Colors.viewColor
                 titleTextField.backgroundColor = Colors.viewColor
                 timerTextField.backgroundColor = Colors.viewColor
-                soundButton.backgroundColor = Colors.viewColor
+                soundTextField.backgroundColor = Colors.viewColor
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
             }
         } else {
@@ -315,7 +318,7 @@ final class AddController: UIViewController {
     
     private func updateViewsVisibility(bool: Bool) {
         timerTextField.isHidden = bool
-        soundButton.isHidden = bool
+        soundTextField.isHidden = bool
         soundLabel.isHidden = bool
         timerLabel.isHidden = bool
         guard let _ = routine else { return }
@@ -407,6 +410,13 @@ extension AddController: UICollectionViewDelegateFlowLayout {
 extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        let customPickerView = pickerView as? CustomPickerView
+        
+        switch customPickerView?.type {
+        case .sound:
+            return 1
+        default: break
+        }
         return 3
     }
     
@@ -426,6 +436,8 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 1:  return minutes.count
             default: return seconds.count
             }
+        case .sound:
+            return days.count
         default: break
         }
         return 0
@@ -447,6 +459,8 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 1:  return "\(minutes[row]) min"
             default: return "\(seconds[row]) sec"
             }
+        case .sound:
+            return days[row]
         default: break
         }
         return days[row]
@@ -471,6 +485,8 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             default: timerSec = seconds[row]
             }
             timerLabel.text = getTimerString()
+        case .sound:
+            soundLabel.text = days[row]
         default: break
         }
     }
