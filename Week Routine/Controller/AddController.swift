@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol UpdateDelegate {
+protocol AddControllerDelegate {
     func updateCV()
 }
 
@@ -16,7 +16,7 @@ private let reuseIdentifier = "ColorCell"
 final class AddController: UIViewController {
     
     var routine: Routine?
-    var delegate: UpdateDelegate?
+    var delegate: AddControllerDelegate?
     
     private let titleTextField = UITextField()
     private let dateTextField = UITextField()
@@ -85,6 +85,7 @@ final class AddController: UIViewController {
     @objc private func colorButtonPressed() {
         colorCV.isHidden = false
         timerTextField.isHidden = true
+        guard let _ = self.routine else { return }
         freezeLabel.isHidden = true
         freezeSwitch.isHidden = true
     }
@@ -98,7 +99,10 @@ final class AddController: UIViewController {
     }
     
     @objc private func freezeChanged(sender: UISwitch) {
-        print("DEBUG::sender::\(sender.isOn)")
+        guard let routine = self.routine else { return }
+        RoutineBrain.shareInstance.updateFrozen(routine: routine)
+        delegate?.updateCV()
+        updateScreenByMode()
     }
     
     @objc private func deleteButtonPressed() {
@@ -169,7 +173,7 @@ final class AddController: UIViewController {
         freezeLabel.clipsToBounds = true
         freezeLabel.layer.cornerRadius = 8
         
-        freezeSwitch.onTintColor = .systemBlue
+        freezeSwitch.onTintColor = Colors.iceColor.withAlphaComponent(0.5)
         freezeSwitch.addTarget(self, action: #selector(freezeChanged), for: .valueChanged)
         
         deleteButton.setTitle("Delete", for: .normal)
@@ -210,12 +214,14 @@ final class AddController: UIViewController {
     }
     
     private func configureBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
-                                                            target: self,
-                                                            action: #selector(saveButtonPressed))
+        let isFrozen: Bool = routine?.isFrozen ?? false
+        
+        navigationItem.rightBarButtonItem = isFrozen ? UIBarButtonItem() : UIBarButtonItem(barButtonSystemItem: .save,
+                                                                                           target: self,
+                                                                                           action: #selector(saveButtonPressed))
         navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: isFrozen ? .close : .cancel,
                                                             target: self,
                                                             action: #selector(dismissView))
         navigationItem.leftBarButtonItem?.tintColor = Colors.labelColor
@@ -239,10 +245,36 @@ final class AddController: UIViewController {
             colorButton.backgroundColor = color
             clearColorButton.isHidden = false
             deleteButton.isHidden = false
+            
+            configureBarButton()
+            if routine.isFrozen {
+                freezeSwitch.isOn = routine.isFrozen
+                titleTextField.isEnabled = false
+                dateTextField.isEnabled = false
+                timerTextField.isEnabled = false
+                colorButton.isEnabled = false
+                dateTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                titleTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                timerTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                colorButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                colorButton.setTitleColor(Colors.labelColor, for: .normal)
+                clearColorButton.isHidden = true
+            } else {
+                titleTextField.isEnabled = true
+                dateTextField.isEnabled = true
+                timerTextField.isEnabled = true
+                colorButton.isEnabled = true
+                dateTextField.backgroundColor = Colors.viewColor
+                titleTextField.backgroundColor = Colors.viewColor
+                timerTextField.backgroundColor = Colors.viewColor
+                colorButton.setTitleColor(Colors.viewColor, for: .normal)
+            }
         } else {
             title = "New Routine"
             clearColorButton.isHidden = true
             deleteButton.isHidden = true
+            freezeLabel.isHidden = true
+            freezeSwitch.isHidden = true
         }
     }
     
@@ -312,6 +344,7 @@ extension AddController: UICollectionViewDataSource {
         colorCV.isHidden = true
         clearColorButton.isHidden = false
         timerTextField.isHidden = false
+        guard let _ = self.routine else { return }
         freezeLabel.isHidden = false
         freezeSwitch.isHidden = false
     }

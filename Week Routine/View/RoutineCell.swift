@@ -28,6 +28,14 @@ final class RoutineCell: UICollectionViewCell {
         return view
     }()
     
+    private let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = Images.ice
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        return iv
+    }()
+    
     private let routineLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
@@ -88,6 +96,11 @@ final class RoutineCell: UICollectionViewCell {
         labelStack.centerY(inView: borderView)
         labelStack.anchor(left: borderView.leftAnchor, right: buttonStack.leftAnchor,
                      paddingLeft: 16, paddingRight: 16)
+        
+        addSubview(imageView)
+        imageView.setDimensions(width: 50, height: 50)
+        imageView.centerX(inView: self)
+        imageView.centerY(inView: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -124,11 +137,20 @@ final class RoutineCell: UICollectionViewCell {
         dateText.append(timerText)
         dateLabel.text = dateText
         
+        imageView.isHidden = true
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
-        guard let lastLogDate =  routine.logArray.first?.date else { return }
-        if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
-            borderView.backgroundColor = color.withAlphaComponent(0.3)
+        
+        if let lastLogDate = routine.logArray.first?.date {
+            if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
+                borderView.backgroundColor = color.withAlphaComponent(0.3)
+            }
+        }
+        
+        if routine.isFrozen {
+            imageView.isHidden = false
+            borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+            borderView.layer.borderColor = Colors.iceColor.cgColor
         }
     }
 }

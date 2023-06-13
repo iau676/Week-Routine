@@ -60,6 +60,12 @@ struct RoutineBrain {
     }
     
     mutating func deleteRoutine(_ routine: Routine) {
+        deleteNotification(routine: routine)
+        context.delete(routine)
+        saveContext()
+    }
+    
+    func deleteNotification(routine: Routine) {
         guard let uuid = routine.uuid else { return }
         let dayInt = routine.day
         switch dayInt {
@@ -75,12 +81,29 @@ struct RoutineBrain {
             default:
             NotificationManager.shared.removeNotification(id: uuid)
         }
-        context.delete(routine)
         saveContext()
     }
     
     mutating func deleteLog(_ routine: Routine, _ index: Int) {
         context.delete(routine.logArray[index])
+        saveContext()
+    }
+    
+    func updateFrozen(routine: Routine) {
+        let currentFrozen = routine.isFrozen
+        
+        if currentFrozen {
+            if let title = routine.title,
+                let color = routine.color,
+                let uuid = routine.uuid {
+                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day), hour: Int(routine.hour),
+                                                           minute: Int(routine.minute), color: color, id: uuid)
+            }
+        } else {
+            deleteNotification(routine: routine)
+        }
+        
+        routine.isFrozen = !currentFrozen
         saveContext()
     }
     
@@ -125,9 +148,9 @@ struct RoutineBrain {
     
     mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
         loadRoutineArray()
-        if let item = routineArray.first(where: {$0.uuid == uuid}) {
-            NotificationManager.shared.removeNotification(id: uuid)
-            completion(item)
+        if let routine = routineArray.first(where: {$0.uuid == uuid}) {
+            deleteNotification(routine: routine)
+            completion(routine)
         }
     }
     

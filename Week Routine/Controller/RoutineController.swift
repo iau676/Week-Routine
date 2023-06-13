@@ -160,17 +160,21 @@ extension RoutineController {
         if currrentIndex == brain.getDayInt()+1 {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             
-            if routine.timerSeconds > 0 {
-                let controller = TimerController(routine: routine)
-                controller.delegate = self
-                controller.modalPresentationStyle = .overCurrentContext
-                self.present(controller, animated: true)
+            if routine.isFrozen {
+                self.showAlertWithTimer(title: "Frozen")
             } else {
-                let controller = CompleteController(routine: routine)
-                controller.delegate = self
-                let nav = UINavigationController(rootViewController: controller)
-                nav.modalPresentationStyle = .formSheet
-                self.present(nav, animated: true)
+                if routine.timerSeconds > 0 {
+                    let controller = TimerController(routine: routine)
+                    controller.delegate = self
+                    controller.modalPresentationStyle = .overCurrentContext
+                    self.present(controller, animated: true)
+                } else {
+                    let controller = CompleteController(routine: routine)
+                    controller.delegate = self
+                    let nav = UINavigationController(rootViewController: controller)
+                    nav.modalPresentationStyle = .formSheet
+                    self.present(nav, animated: true)
+                }
             }
         } else {
             self.showAlertWithTimer(title: "Not Today")
@@ -219,12 +223,13 @@ extension RoutineController {
     }
 }
 
-//MARK: - UpdateDelegate
+//MARK: - AddControllerDelegate
 
-extension RoutineController: UpdateDelegate {
+extension RoutineController: AddControllerDelegate {
     func updateCV() {
         brain.loadRoutineArray()
         findWhichRoutinesShouldShow()
+        
     }
 }
 
