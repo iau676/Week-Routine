@@ -118,7 +118,11 @@ final class RoutineCell: UICollectionViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        dateLabel.text = "\(hour):\(minute)・\(day) \(brain.getTimerString(for: Int(routine.timerSeconds)))"
+        
+        var dateText = "\(hour):\(minute)・\(day)"
+        let  timerText = routine.timerSeconds > 0 ? "・Timer: \(brain.getTimerString(for: Int(routine.timerSeconds)))" : ""
+        dateText.append(timerText)
+        dateLabel.text = dateText
         
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
