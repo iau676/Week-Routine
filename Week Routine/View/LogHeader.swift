@@ -29,13 +29,6 @@ final class LogHeader: UIView {
         return label
     }()
     
-    private let lineView: UIView = {
-       let view = UIView()
-        view.setHeight(0.5)
-        view.backgroundColor = .lightGray
-        return view
-    }()
-    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -60,7 +53,14 @@ final class LogHeader: UIView {
         titleLabel.centerX(inView: self)
         titleLabel.centerY(inView: self)
         
-        addSubview(lineView)
-        lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        let topLineView = UIView()
+        topLineView.backgroundColor = .lightGray
+        addSubview(topLineView)
+        topLineView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, height: 0.5)
+        
+        let bottomLineView = UIView()
+        bottomLineView.backgroundColor = .lightGray
+        addSubview(bottomLineView)
+        bottomLineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
     }
 }
