@@ -111,11 +111,13 @@ final class RoutineCell: UICollectionViewCell {
     
     @objc private func historyPressed() {
         guard let routine = routine else { return }
+        historyButton.bounce()
         delegate?.goLog(routine: routine)
     }
     
     @objc private func editPressed() {
         guard let routine = routine else { return }
+        editButton.bounce()
         delegate?.goEdit(routine: routine)
     }
     

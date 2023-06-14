@@ -128,7 +128,7 @@ final class RoutineController: UICollectionViewController {
     }
 }
 
-//MARK: - UITableViewDataSource
+//MARK: - UICollectionViewDataSource
 
 extension RoutineController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -170,6 +170,7 @@ extension RoutineController {
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
             } else {
+                if let cell: RoutineCell = collectionView.cellForItem(at: indexPath) as? RoutineCell { cell.bounce() }
                 if routine.timerSeconds > 0 {
                     let controller = TimerController(routine: routine)
                     controller.delegate = self

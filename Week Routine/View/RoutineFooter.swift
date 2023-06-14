@@ -41,6 +41,7 @@ final class RoutineFooter: UICollectionReusableView {
     //MARK: - Selectors
     
     @objc private func goAdd() {
+        button.bounce()
         delegate?.goAdd()
     }
 }

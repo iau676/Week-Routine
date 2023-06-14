@@ -100,3 +100,19 @@ extension UIView {
         }
     }
 }
+
+//MARK: - Animate
+
+extension UIView {
+    func bounce() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [weak self] in
+                self?.transform = CGAffineTransform.identity
+            } completion: { _ in
+                
+            }
+        }
+    }
+}
