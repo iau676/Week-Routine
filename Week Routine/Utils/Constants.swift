@@ -53,6 +53,7 @@ enum ColorName {
 }
 
 enum UDM {
+    static var version12                 = UserDefaultsManager(key: "version12")
     static var currentNotificationDate   = UserDefaultsManager(key: "currentNotificationDate")
     static var routineUUID               = UserDefaultsManager(key: "routineUUID")
     static var lastTimerCounter          = UserDefaultsManager(key: "lastTimerCounter")
@@ -71,6 +72,7 @@ enum Images {
     static let next                      = UIImage(named: "next")
     
     static let ice                       = UIImage(named: "ice")
+    static let notification              = UIImage(named: "notification")
 }
 
 enum Fonts {

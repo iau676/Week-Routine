@@ -44,10 +44,13 @@ final class RoutineController: UICollectionViewController {
     }
     
     @objc private func leftBarButtonPressed() {
-        print("DEBUG::leftBarButtonPressed")
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @objc private func checkTimer() {
+        configureBarButton()
         let routineUUID = UDM.routineUUID.getString()
         brain.findRoutine(uuid: routineUUID) { routine in
             guard let currentNotificationDate = UDM.currentNotificationDate.getDateValue() else { return }
@@ -78,7 +81,6 @@ final class RoutineController: UICollectionViewController {
     //MARK: - Helpers
     
     private func style() {
-        configureBarButton()
         view.backgroundColor = Colors.backgroundColor
 
         collectionView.delegate = self
@@ -111,10 +113,15 @@ final class RoutineController: UICollectionViewController {
         leftBarIV.layer.masksToBounds = true
         leftBarIV.isUserInteractionEnabled = true
         
-        leftBarIV.image = Images.menu?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
+        leftBarIV.image = Images.notification?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
         let tapLeft = UITapGestureRecognizer(target: self, action: #selector(leftBarButtonPressed))
         leftBarIV.addGestureRecognizer(tapLeft)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarIV)
+       
+       UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+           DispatchQueue.main.async {
+               self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized && UDM.version12.getBool() ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
+           }
+       }
     }
     
     private func findWhichRoutinesShouldShow() {
