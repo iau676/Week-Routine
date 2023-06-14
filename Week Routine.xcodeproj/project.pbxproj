@@ -38,11 +38,17 @@
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
 		70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */; };
+		70B416652A394355009389F5 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B416642A394355009389F5 /* Player.swift */; };
 		70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C38BF3294A120100961BBB /* Date+Extensions.swift */; };
 		70D5560428F1652600FE9C83 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5560328F1652600FE9C83 /* Constants.swift */; };
 		70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DAB4B629F1A71500957643 /* UIView+Extensions.swift */; };
 		70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB70E428F746D000710325 /* UserDefaultsManager.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
+		70F9D4B52A392E4300D659EC /* Cardinal.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4AE2A392E4100D659EC /* Cardinal.m4a */; };
+		70F9D4B72A392E4300D659EC /* Train.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4B02A392E4200D659EC /* Train.m4a */; };
+		70F9D4B82A392E4300D659EC /* Divinity.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4B12A392E4200D659EC /* Divinity.m4a */; };
+		70F9D4B92A392E4300D659EC /* Piouh.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4B22A392E4200D659EC /* Piouh.m4a */; };
+		70F9D4BB2A392E4300D659EC /* Multiverse.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4B42A392E4300D659EC /* Multiverse.m4a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,11 +86,17 @@
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70A92CCE28EF0C09004D5419 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
+		70B416642A394355009389F5 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C38BF3294A120100961BBB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		70D5560328F1652600FE9C83 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70DAB4B629F1A71500957643 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		70DB70E428F746D000710325 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
+		70F9D4AE2A392E4100D659EC /* Cardinal.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cardinal.m4a; sourceTree = "<group>"; };
+		70F9D4B02A392E4200D659EC /* Train.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Train.m4a; sourceTree = "<group>"; };
+		70F9D4B12A392E4200D659EC /* Divinity.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Divinity.m4a; sourceTree = "<group>"; };
+		70F9D4B22A392E4200D659EC /* Piouh.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Piouh.m4a; sourceTree = "<group>"; };
+		70F9D4B42A392E4300D659EC /* Multiverse.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Multiverse.m4a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +180,7 @@
 			children = (
 				70D5560328F1652600FE9C83 /* Constants.swift */,
 				705221A029F561930010D327 /* Factories.swift */,
+				70B416642A394355009389F5 /* Player.swift */,
 				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
 				706D66E02A386114003BE508 /* NotificationManager.swift */,
 			);
@@ -198,6 +211,7 @@
 				7052219829F55F770010D327 /* View */,
 				7052219929F55F7E0010D327 /* Controller */,
 				7052219A29F55F850010D327 /* Extensions */,
+				70F9D49F2A392CB700D659EC /* Sounds */,
 				7052219C29F55F940010D327 /* Files */,
 			);
 			path = "Week Routine";
@@ -213,6 +227,18 @@
 				707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		70F9D49F2A392CB700D659EC /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				70F9D4AE2A392E4100D659EC /* Cardinal.m4a */,
+				70F9D4B12A392E4200D659EC /* Divinity.m4a */,
+				70F9D4B42A392E4300D659EC /* Multiverse.m4a */,
+				70F9D4B22A392E4200D659EC /* Piouh.m4a */,
+				70F9D4B02A392E4200D659EC /* Train.m4a */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +300,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */,
+				70F9D4B92A392E4300D659EC /* Piouh.m4a in Resources */,
+				70F9D4BB2A392E4300D659EC /* Multiverse.m4a in Resources */,
+				70F9D4B72A392E4300D659EC /* Train.m4a in Resources */,
+				70F9D4B52A392E4300D659EC /* Cardinal.m4a in Resources */,
+				70F9D4B82A392E4300D659EC /* Divinity.m4a in Resources */,
 				707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +334,7 @@
 				70A76A5129FEACF4003D72D6 /* Routine+CoreDataProperties.swift in Sources */,
 				706D66E12A386114003BE508 /* NotificationManager.swift in Sources */,
 				70A76A5529FEB69C003D72D6 /* LogCell.swift in Sources */,
+				70B416652A394355009389F5 /* Player.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddController.swift in Sources */,
 				705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */,
 				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,

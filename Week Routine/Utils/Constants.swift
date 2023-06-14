@@ -22,6 +22,8 @@ let colors: [UIColor] = [UIColor.systemRed, UIColor.systemOrange, UIColor.system
 
 let colorNames: [String] = ["red", "orange", "yellow", "green", "blue", "purple", "default"]
 
+let sounds: [String] = ["Default", "Divinity", "Piouh", "Train", "Cardinal", "Multiverse", "None"]
+
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.7)
     static let backgroundColor           = UIColor(named: "backgroundColor")

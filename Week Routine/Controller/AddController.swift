@@ -47,6 +47,8 @@ final class AddController: UIViewController {
     private var timerMin = "00"
     private var timerSec = "00"
     
+    private var soundInt = 0
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -71,10 +73,10 @@ final class AddController: UIViewController {
         if titleText.count > 0 {
             if let routine = routine {
                 brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute,
-                                    color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec)
+                                    color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec, soundInt: soundInt)
             } else {
                 brain.addRoutine(title: titleText, day: dayInt, hour: hour, minute: minute,
-                                 color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec)
+                                 color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec, soundInt: soundInt)
             }
             delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)
@@ -274,6 +276,10 @@ final class AddController: UIViewController {
             configureTimerPickerView()
             timerLabel.text = getTimerString()
             
+            soundInt = Int(routine.soundInt)
+            soundLabel.text = sounds[soundInt]
+            configureSoundPickerView()
+            
             colorName = routine.color ?? ColorName.defaultt
             let color = brain.getColor(colorName)
             colorButton.backgroundColor = color
@@ -371,6 +377,10 @@ final class AddController: UIViewController {
         timerPickerView.selectRow(min, inComponent: 1, animated: true)
         timerPickerView.selectRow(sec, inComponent: 2, animated: true)
     }
+    
+    private func configureSoundPickerView() {
+        soundPickerView.selectRow(soundInt, inComponent: 0, animated: true)
+    }
 }
 
 //MARK: - UICollectionViewDelegate/DataSource
@@ -437,7 +447,7 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             default: return seconds.count
             }
         case .sound:
-            return days.count
+            return sounds.count
         default: break
         }
         return 0
@@ -460,7 +470,7 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             default: return "\(seconds[row]) sec"
             }
         case .sound:
-            return days[row]
+            return sounds[row]
         default: break
         }
         return days[row]
@@ -486,7 +496,9 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             }
             timerLabel.text = getTimerString()
         case .sound:
-            soundLabel.text = days[row]
+            soundInt = row
+            Player.shared.play(soundInt: row)
+            soundLabel.text = sounds[row]
         default: break
         }
     }

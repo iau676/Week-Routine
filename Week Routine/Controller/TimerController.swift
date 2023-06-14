@@ -88,8 +88,7 @@ final class TimerController: UIViewController {
         timeR.invalidate()
         stopButton.isHidden = true
         NotificationCenter.default.removeObserver(self)
-        AudioServicesPlayAlertSound(SystemSoundID(1002))
-        
+        Player.shared.play(soundInt: Int(routine.soundInt))
         self.dismiss(animated: false)
         self.delegate?.timerCompleted(routine: self.routine)
     }
