@@ -126,21 +126,7 @@ final class TimerController: UIViewController {
             UDM.routineUUID.set(routine.uuid ?? "")
             UDM.lastTimerCounter.set(timerCounter)
             UDM.isTimerCompleted.set(false)
-            
-            let content = UNMutableNotificationContent()
-            content.title = "Timer Completed"
-            content.sound = UNNotificationSound.default
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
-            let id = routine.uuid ?? ""
-            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-            
-            UNUserNotificationCenter.current().add(request) { (error) in
-                if(error != nil){
-                    print("Error " + error.debugDescription)
-                    return
-                }
-            }
+            NotificationManager.shared.setNotificationForTimer(remindSecond: remindSecond, routine: routine)
         }
     }
     

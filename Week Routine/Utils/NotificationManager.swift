@@ -100,6 +100,23 @@ struct NotificationManager {
         }
     }
     
+    func setNotificationForTimer(remindSecond: CGFloat, routine: Routine) {
+        let content = UNMutableNotificationContent()
+        content.title = "Timer Completed"
+        content.sound = getNotificationSound(soundInt: Int(routine.soundInt))
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
+        let id = routine.uuid ?? ""
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if(error != nil){
+                print("Error " + error.debugDescription)
+                return
+            }
+        }
+    }
+    
     func removeNotification(id: String) {
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
     }

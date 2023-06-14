@@ -129,7 +129,7 @@ final class AddController: UIViewController {
         titleTextField.backgroundColor = Colors.viewColor
         titleTextField.layer.cornerRadius = 8
         titleTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        titleTextField.setHeight(60)
+        titleTextField.setHeight(50)
         titleTextField.setLeftPaddingPoints(10)
         titleTextField.becomeFirstResponder()
         
@@ -139,7 +139,7 @@ final class AddController: UIViewController {
         dateTextField.text = "\(day), \(hour):\(minute)"
         dateTextField.backgroundColor = Colors.viewColor
         dateTextField.tintColor = .clear
-        dateTextField.setHeight(60)
+        dateTextField.setHeight(50)
         dateTextField.setLeftPaddingPoints(10)
         configureDatePickerView()
         
@@ -151,14 +151,14 @@ final class AddController: UIViewController {
         timerTextField.layer.cornerRadius = 8
         timerTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         timerTextField.tintColor = .clear
-        timerTextField.setHeight(60)
+        timerTextField.setHeight(50)
         timerTextField.setLeftPaddingPoints(10)
         
         timerLabel.text = "Not Set"
         timerLabel.textColor = .darkGray
         timerLabel.textAlignment = .right
         
-        colorButton.setHeight(60)
+        colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
         colorButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         colorButton.setTitle("Color", for: .normal)
@@ -185,14 +185,14 @@ final class AddController: UIViewController {
         soundTextField.text = "Notification Sound"
         soundTextField.backgroundColor = Colors.viewColor
         soundTextField.tintColor = .clear
-        soundTextField.setHeight(60)
+        soundTextField.setHeight(50)
         soundTextField.setLeftPaddingPoints(10)
         
         soundLabel.text = "Default"
         soundLabel.textColor = .darkGray
         soundLabel.textAlignment = .right
         
-        freezeLabel.setHeight(60)
+        freezeLabel.setHeight(50)
         freezeLabel.backgroundColor = Colors.viewColor
         freezeLabel.clipsToBounds = true
         freezeLabel.layer.cornerRadius = 8
