@@ -132,7 +132,8 @@ final class AddController: UIViewController {
         titleTextField.placeholder = "Routine"
         titleTextField.backgroundColor = Colors.viewColor
         titleTextField.layer.cornerRadius = 8
-        titleTextField.setHeight(50)
+        titleTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        titleTextField.setHeight(60)
         titleTextField.setLeftPaddingPoints(10)
         titleTextField.becomeFirstResponder()
         
@@ -141,9 +142,8 @@ final class AddController: UIViewController {
         dateTextField.inputView = datePickerView
         dateTextField.text = "\(day), \(hour):\(minute)"
         dateTextField.backgroundColor = Colors.viewColor
-        dateTextField.layer.cornerRadius = 8
         dateTextField.tintColor = .clear
-        dateTextField.setHeight(50)
+        dateTextField.setHeight(60)
         dateTextField.setLeftPaddingPoints(10)
         configureDatePickerView()
         
@@ -153,16 +153,18 @@ final class AddController: UIViewController {
         timerTextField.text = "Timer"
         timerTextField.backgroundColor = Colors.viewColor
         timerTextField.layer.cornerRadius = 8
+        timerTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         timerTextField.tintColor = .clear
-        timerTextField.setHeight(50)
+        timerTextField.setHeight(60)
         timerTextField.setLeftPaddingPoints(10)
         
         timerLabel.text = "00"
         timerLabel.textColor = .darkGray
         timerLabel.textAlignment = .right
         
-        colorButton.setHeight(50)
+        colorButton.setHeight(60)
         colorButton.layer.cornerRadius = 8
+        colorButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         colorButton.setTitle("Color", for: .normal)
         colorButton.setTitleColor(Colors.viewColor, for: .normal)
         colorButton.contentHorizontalAlignment = .left
@@ -186,19 +188,19 @@ final class AddController: UIViewController {
         soundTextField.inputView = soundPickerView
         soundTextField.text = "Notification Sound"
         soundTextField.backgroundColor = Colors.viewColor
-        soundTextField.layer.cornerRadius = 8
         soundTextField.tintColor = .clear
-        soundTextField.setHeight(50)
+        soundTextField.setHeight(60)
         soundTextField.setLeftPaddingPoints(10)
         
         soundLabel.text = "Default"
         soundLabel.textColor = .darkGray
         soundLabel.textAlignment = .right
         
-        freezeLabel.setHeight(50)
+        freezeLabel.setHeight(60)
         freezeLabel.backgroundColor = Colors.viewColor
         freezeLabel.clipsToBounds = true
         freezeLabel.layer.cornerRadius = 8
+        freezeLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         freezeSwitch.onTintColor = Colors.iceColor.withAlphaComponent(0.5)
         freezeSwitch.addTarget(self, action: #selector(freezeChanged), for: .valueChanged)
@@ -213,15 +215,23 @@ final class AddController: UIViewController {
     private func layout() {
         view.addSubview(colorCV)
         
-        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton,
-                                                   timerTextField, soundTextField, freezeLabel])
+        let stack = UIStackView(arrangedSubviews: [titleTextField, dateTextField, colorButton])
         stack.axis = .vertical
-        stack.spacing = 10
+        stack.spacing = 1
+        
+        let secondStack = UIStackView(arrangedSubviews: [timerTextField, soundTextField, freezeLabel])
+        secondStack.axis = .vertical
+        secondStack.spacing = 1
         
         view.addSubview(stack)
         stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                      right: view.rightAnchor, paddingTop: 16,
                      paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(secondStack)
+        secondStack.anchor(top: stack.bottomAnchor, left: view.leftAnchor,
+                           right: view.rightAnchor, paddingTop: 16,
+                           paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(clearColorButton)
         clearColorButton.centerY(inView: colorButton)
@@ -319,6 +329,8 @@ final class AddController: UIViewController {
             deleteButton.isHidden = true
             freezeLabel.isHidden = true
             freezeSwitch.isHidden = true
+            soundTextField.layer.cornerRadius = 8
+            soundTextField.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         }
     }
     
