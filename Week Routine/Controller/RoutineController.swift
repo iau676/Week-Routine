@@ -234,13 +234,12 @@ extension RoutineController {
     }
 }
 
-//MARK: - AddControllerDelegate
+//MARK: - AddControllerDelegate/LogControllerDelegate
 
-extension RoutineController: AddControllerDelegate {
+extension RoutineController: AddControllerDelegate, LogControllerDelegate {
     func updateCV() {
         brain.loadRoutineArray()
         findWhichRoutinesShouldShow()
-        
     }
 }
 
@@ -249,6 +248,7 @@ extension RoutineController: AddControllerDelegate {
 extension RoutineController: RoutineCellDelegate {
     func goLog(routine: Routine) {
         let controller = LogController(routine: routine)
+        controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         self.present(nav, animated: true)

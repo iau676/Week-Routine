@@ -9,10 +9,15 @@ import UIKit
 
 private let reuseIdentifier = "LogCell"
 
+protocol LogControllerDelegate: AnyObject {
+    func updateCV()
+}
+
 final class LogController: UIViewController {
     
     //MARK: - Properties
     
+    weak var delegate: LogControllerDelegate?
     private let routine: Routine
     private lazy var headerView = LogHeader(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
     private let tableView = UITableView()
@@ -94,6 +99,7 @@ extension LogController: UITableViewDelegate {
             self.showDeleteAlert(title: "Data will be deleted", message: "This action cannot be undone") { _ in
                 brain.deleteLog(self.routine, indexPath.row)
                 self.routineChanged()
+                self.delegate?.updateCV()
                 tableView.reloadData()
             }
             success(true)
