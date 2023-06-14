@@ -103,10 +103,6 @@ final class AddController: UIViewController {
         updateViewsVisibility(bool: false)
     }
     
-    @objc private func soundButtonPressed() {
-        print("DEBUG::soundButtonPressed")
-    }
-    
     @objc private func freezeChanged(sender: UISwitch) {
         guard let routine = self.routine else { return }
         RoutineBrain.shareInstance.updateFrozen(routine: routine)
@@ -158,7 +154,7 @@ final class AddController: UIViewController {
         timerTextField.setHeight(60)
         timerTextField.setLeftPaddingPoints(10)
         
-        timerLabel.text = "00"
+        timerLabel.text = "Not Set"
         timerLabel.textColor = .darkGray
         timerLabel.textAlignment = .right
         

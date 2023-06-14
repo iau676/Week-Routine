@@ -38,7 +38,18 @@ struct NotificationManager {
         }
     }
     
-    func addNotification(title: String, dayInt: Int, hour: Int, minute: Int, color: String, id: String){
+    func getNotificationSound(soundInt: Int) -> UNNotificationSound? {
+        switch soundInt {
+        case 0:
+            return UNNotificationSound.default
+        case 6:
+            return nil
+        default:
+            return UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(sounds[soundInt]).m4a"))
+        }
+    }
+    
+    func addNotification(title: String, dayInt: Int, hour: Int, minute: Int, color: String, soundInt: Int, id: String) {
         DispatchQueue.main.async{
             let emoji = getColorEmoji(color)
             let title = "\(emoji)\(title)"
@@ -48,7 +59,7 @@ struct NotificationManager {
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = message
-            content.sound = UNNotificationSound.default
+            content.sound = getNotificationSound(soundInt: soundInt)
             
             switch dayInt {
                 case 7:
@@ -98,7 +109,9 @@ struct NotificationManager {
         guard let uuid = routine.uuid else{return}
         
         removeNotification(id: uuid)
-        addNotification(title: title, dayInt: Int(routine.day), hour: Int(routine.hour),
-                        minute: Int(routine.minute), color: routine.color ?? "", id: uuid)
+        addNotification(title: title, dayInt: Int(routine.day),
+                        hour: Int(routine.hour), minute: Int(routine.minute),
+                        color: routine.color ?? "", soundInt: Int(routine.soundInt),
+                        id: uuid)
     }
 }

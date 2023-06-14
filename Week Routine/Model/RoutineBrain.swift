@@ -31,8 +31,10 @@ struct RoutineBrain {
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
         self.routineArray.append(newRoutine)
-        NotificationManager.shared.addNotification(title: title, dayInt: Int(day), hour: Int(hour),
-                                                   minute: Int(minute), color: color, id: uuid)
+        NotificationManager.shared.addNotification(title: title, dayInt: Int(day),
+                                                   hour: Int(hour), minute: Int(minute),
+                                                   color: color, soundInt: soundInt,
+                                                   id: uuid)
         saveContext()
     }
     
@@ -98,8 +100,10 @@ struct RoutineBrain {
             if let title = routine.title,
                 let color = routine.color,
                 let uuid = routine.uuid {
-                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day), hour: Int(routine.hour),
-                                                           minute: Int(routine.minute), color: color, id: uuid)
+                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day),
+                                                           hour: Int(routine.hour), minute: Int(routine.minute),
+                                                           color: color, soundInt: Int(routine.soundInt),
+                                                           id: uuid)
             }
         } else {
             deleteNotification(routine: routine)
