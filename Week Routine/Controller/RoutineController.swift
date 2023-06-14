@@ -9,6 +9,7 @@ import UIKit
 
 private let reuseIdentifier = "RoutineCell"
 private let headerIdentifier = "FilterView"
+private let footerIdentifier = "RoutineFooter"
 
 final class RoutineController: UICollectionViewController {
 
@@ -34,14 +35,6 @@ final class RoutineController: UICollectionViewController {
     }
     
     //MARK: - Selectors
-    
-    @objc private func addButtonPressed() {
-        let controller = AddController()
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .formSheet
-        self.present(nav, animated: true)
-    }
     
     @objc private func leftBarButtonPressed() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -91,6 +84,9 @@ final class RoutineController: UICollectionViewController {
         collectionView.register(FilterView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: headerIdentifier)
+        collectionView.register(RoutineFooter.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: footerIdentifier)
     }
     
     private func updatePlaceholderViewVisibility(){
@@ -102,11 +98,6 @@ final class RoutineController: UICollectionViewController {
         
     private func configureBarButton() {
         title = "Week Routine"
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItem?.tintColor = Colors.labelColor
         
         let leftBarIV = UIImageView()
         leftBarIV.setDimensions(width: 20, height: 20)
@@ -157,10 +148,19 @@ extension RoutineController {
 
 extension RoutineController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! FilterView
-        header.delegate = self
-        header.updateSelected(for: currrentIndex)
-        return header
+        
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! FilterView
+            header.delegate = self
+            header.updateSelected(for: currrentIndex)
+            return header
+        default:
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerIdentifier, for: indexPath) as! RoutineFooter
+            footer.delegate = self
+            return footer
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -205,7 +205,11 @@ extension RoutineController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 50)
     }
 }
 
@@ -282,6 +286,18 @@ extension RoutineController: FilterViewDelegate {
 extension RoutineController: TimerControllerDelegate {
     func timerCompleted(routine: Routine) {
         let controller = CompleteController(routine: routine)
+        controller.delegate = self
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
+    }
+}
+
+//MARK: - RoutineFooterDelegate
+
+extension RoutineController: RoutineFooterDelegate {
+    func goAdd() {
+        let controller = AddController()
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet

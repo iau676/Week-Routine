@@ -73,6 +73,7 @@ enum Images {
     
     static let ice                       = UIImage(named: "ice")
     static let notification              = UIImage(named: "notification")
+    static let plus                      = UIImage(named: "plus")
 }
 
 enum Fonts {
