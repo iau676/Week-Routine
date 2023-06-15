@@ -79,6 +79,11 @@ final class RoutineCell: UICollectionViewCell {
                           paddingTop: 0, paddingLeft: 16,
                           paddingBottom: 0, paddingRight: 16)
         
+        addSubview(imageView)
+        imageView.setDimensions(width: 50, height: 50)
+        imageView.centerX(inView: self)
+        imageView.centerY(inView: self)
+        
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
         buttonStack.axis = .horizontal
@@ -96,11 +101,6 @@ final class RoutineCell: UICollectionViewCell {
         labelStack.centerY(inView: borderView)
         labelStack.anchor(left: borderView.leftAnchor, right: buttonStack.leftAnchor,
                      paddingLeft: 16, paddingRight: 16)
-        
-        addSubview(imageView)
-        imageView.setDimensions(width: 50, height: 50)
-        imageView.centerX(inView: self)
-        imageView.centerY(inView: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -151,7 +151,7 @@ final class RoutineCell: UICollectionViewCell {
         
         if routine.isFrozen {
             imageView.isHidden = false
-            borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+            borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.3)
             borderView.layer.borderColor = Colors.iceColor.cgColor
         }
     }
