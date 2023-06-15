@@ -15,7 +15,7 @@ final class RoutineController: UICollectionViewController {
 
     private let placeholderView = PlaceholderView(text: "No Routine")
     private var tempArray = [Int]() { didSet { collectionView.reloadData() } }
-    private var currrentIndex = 0
+    private var currrentIndex: Int = 0
         
     //MARK: - Life Cycle
     
@@ -256,7 +256,7 @@ extension RoutineController: RoutineCellDelegate {
     }
     
     func goEdit(routine: Routine) {
-        let controller = AddController()
+        let controller = AddController(currrentIndex: currrentIndex)
         controller.delegate = self
         controller.routine = routine
         let nav = UINavigationController(rootViewController: controller)
@@ -298,7 +298,7 @@ extension RoutineController: TimerControllerDelegate {
 
 extension RoutineController: RoutineFooterDelegate {
     func goAdd() {
-        let controller = AddController()
+        let controller = AddController(currrentIndex: currrentIndex)
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet

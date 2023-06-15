@@ -15,6 +15,7 @@ private let reuseIdentifier = "ColorCell"
 
 final class AddController: UIViewController {
     
+    private var currrentIndex: Int
     var routine: Routine?
     var delegate: AddControllerDelegate?
     
@@ -37,8 +38,8 @@ final class AddController: UIViewController {
     private let freezeLabel = makePaddingLabel(withText: "Freeze")
     private let freezeSwitch = UISwitch()
     
-    private var dayInt = brain.getDayInt()
-    private var day = days[brain.getDayInt()]
+    private lazy var dayInt = currrentIndex-1
+    private lazy var day = days[currrentIndex-1]
     private var hour = hours[brain.getHour()]
     private var minute = minutes[brain.getMinute()]
     private var colorName = ColorName.defaultt
@@ -50,6 +51,15 @@ final class AddController: UIViewController {
     private var soundInt = 0
     
     //MARK: - Life Cycle
+    
+    init(currrentIndex: Int) {
+        self.currrentIndex = currrentIndex
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
