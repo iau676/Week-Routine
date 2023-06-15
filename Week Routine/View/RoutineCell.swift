@@ -40,6 +40,7 @@ final class RoutineCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
         label.textColor = .label
+        label.numberOfLines = 0
         return label
     }()
     
@@ -151,7 +152,7 @@ final class RoutineCell: UICollectionViewCell {
         
         if routine.isFrozen {
             imageView.isHidden = false
-            borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.3)
+            borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.6)
             borderView.layer.borderColor = Colors.iceColor.cgColor
         }
     }

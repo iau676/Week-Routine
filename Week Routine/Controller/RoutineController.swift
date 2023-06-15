@@ -198,7 +198,9 @@ extension RoutineController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width, height: 85)
+        let routine = brain.routineArray[tempArray[indexPath.row]]
+        let textHeight = size(forText: routine.title, minusWidth: 32+32+50+50).height
+        return CGSize(width: view.bounds.width, height: textHeight+66)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

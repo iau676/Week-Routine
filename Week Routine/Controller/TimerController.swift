@@ -137,6 +137,7 @@ final class TimerController: UIViewController {
         titleLabel.text = routine.title
         titleLabel.textColor = Colors.labelColor
         titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
         
         stopButton.titleLabel?.numberOfLines = 1
         stopButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -157,7 +158,9 @@ final class TimerController: UIViewController {
     private func layout() {
         view.addSubview(titleLabel)
         titleLabel.centerX(inView: view)
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          right: view.rightAnchor, paddingTop: 16,
+                          paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(timerView)
         timerView.anchor(bottom: view.bottomAnchor)
