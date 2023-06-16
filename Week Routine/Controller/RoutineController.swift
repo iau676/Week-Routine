@@ -79,6 +79,7 @@ final class RoutineController: UICollectionViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.layer.cornerRadius = 8
+        collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = Colors.viewColor
         collectionView.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(FilterView.self,
