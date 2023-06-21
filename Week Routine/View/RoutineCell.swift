@@ -30,7 +30,7 @@ final class RoutineCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = Images.ice
+        iv.image = Images.snowflake?.withTintColor(Colors.iceColor)
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv

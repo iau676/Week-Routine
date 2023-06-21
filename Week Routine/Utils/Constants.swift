@@ -32,7 +32,7 @@ enum Colors {
     static let placeholderColor          = UIColor(named: "placeholderColor")
     static let flashColor                = UIColor(named: "flashColor")
     static let blackColor                = UIColor(hex: "#1C1C1E")
-    static let iceColor                  = UIColor(hex: "#55dafe") ?? .systemBlue
+    static let iceColor                  = UIColor(hex: "#66cdfe") ?? .systemBlue
     
     static let red                       = UIColor.systemRed
     static let orange                    = UIColor.systemOrange
@@ -71,7 +71,7 @@ enum Images {
     static let dots                      = UIImage(named: "dots")
     static let next                      = UIImage(named: "next")
     
-    static let ice                       = UIImage(named: "ice")
+    static let snowflake                 = UIImage(named: "snowflake")
     static let notification              = UIImage(named: "notification")
     static let plus                      = UIImage(named: "plus")
 }
