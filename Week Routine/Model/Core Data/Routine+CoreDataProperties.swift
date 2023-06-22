@@ -20,7 +20,6 @@ extension Routine {
     @NSManaged public var color: String?
     @NSManaged public var date: Date?
     @NSManaged public var day: Int16
-    @NSManaged public var doneDate: String?
     @NSManaged public var hour: Int16
     @NSManaged public var isDone: Bool
     @NSManaged public var isFrozen: Bool

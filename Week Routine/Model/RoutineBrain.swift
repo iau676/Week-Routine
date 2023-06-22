@@ -160,17 +160,6 @@ struct RoutineBrain {
         }
     }
     
-    func updateRoutineState(routine: Routine) {
-        if routine.isDone {
-            routine.isDone = false
-            routine.doneDate = ""
-        } else {
-            routine.isDone = true
-            routine.doneDate = getTodayDate()
-        }
-        brain.saveContext()
-    }
-    
     func getTimerString(for second: Int) -> String {
         var str = ""
     
