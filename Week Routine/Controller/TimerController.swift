@@ -156,18 +156,19 @@ final class TimerController: UIViewController {
     }
     
     private func layout() {
+        view.addSubview(timerView)
         view.addSubview(titleLabel)
+        view.addSubview(stopButton)
+        
         titleLabel.centerX(inView: view)
         titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                           right: view.rightAnchor, paddingTop: 16,
                           paddingLeft: 32, paddingRight: 32)
         
-        view.addSubview(timerView)
         timerView.anchor(bottom: view.bottomAnchor)
         timerView.setWidth(view.frame.width)
         timerView.setHeight(0)
         
-        view.addSubview(stopButton)
         stopButton.centerY(inView: view)
         stopButton.centerX(inView: view)
     }
