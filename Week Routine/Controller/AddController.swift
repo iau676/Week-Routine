@@ -41,7 +41,7 @@ final class AddController: UIViewController {
     private lazy var dayInt = currrentIndex-1
     private lazy var day = days[currrentIndex-1]
     private var hour = hours[brain.getHour()]
-    private var minute = minutes[brain.getMinute()]
+    private var minute = minutesWithZero[brain.getMinute()]
     private var colorName = ColorName.defaultt
     
     private var timerHour = "00"
@@ -355,7 +355,7 @@ final class AddController: UIViewController {
         dayInt = Int(routine.day)
         day = brain.getDayName(Int16(dayInt))
         hour = hours[Int(routine.hour)]
-        minute = minutes[Int(routine.minute)]
+        minute = minutesWithZero[Int(routine.minute)]
     }
     
     private func congifureTimerValues(routine: Routine) {
@@ -365,8 +365,8 @@ final class AddController: UIViewController {
         let sec = totalSeconds - ((hour*3600)+(min*60))
         
         timerHour = "\(hours[Int(hour)])"
-        timerMin = "\(minutes[Int(min)])"
-        timerSec = "\(seconds[Int(sec)])"
+        timerMin = "\(minutesWithoutZero[Int(min)])"
+        timerSec = "\(minutesWithoutZero[Int(sec)])"
     }
     
     private func getTimerString() -> String {
@@ -456,13 +456,13 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             switch component {
             case 0:  return days.count
             case 1:  return hours.count
-            default: return minutes.count
+            default: return minutesWithZero.count
             }
         case .timer:
             switch component {
             case 0:  return hours.count
-            case 1:  return minutes.count
-            default: return seconds.count
+            case 1:  return minutesWithoutZero.count
+            default: return minutesWithoutZero.count
             }
         case .sound:
             return sounds.count
@@ -479,13 +479,13 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             switch component {
             case 0:  return days[row]
             case 1:  return hours[row]
-            default: return minutes[row]
+            default: return minutesWithZero[row]
             }
         case .timer:
             switch component {
             case 0:  return "\(hours[row]) hour"
-            case 1:  return "\(minutes[row]) min"
-            default: return "\(seconds[row]) sec"
+            case 1:  return "\(minutesWithoutZero[row]) min"
+            default: return "\(minutesWithoutZero[row]) sec"
             }
         case .sound:
             return sounds[row]
@@ -503,14 +503,14 @@ extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 0:  day = days[row]
                      dayInt = row
             case 1:  hour = hours[row]
-            default: minute = minutes[row]
+            default: minute = minutesWithZero[row]
             }
             dateTextField.text = "\(day), \(hour):\(minute)"
         case .timer:
             switch component {
             case 0:  timerHour = hours[row]
-            case 1:  timerMin = minutes[row]
-            default: timerSec = seconds[row]
+            case 1:  timerMin = minutesWithoutZero[row]
+            default: timerSec = minutesWithoutZero[row]
             }
             timerLabel.text = getTimerString()
         case .sound:
