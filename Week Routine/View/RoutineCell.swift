@@ -81,7 +81,7 @@ final class RoutineCell: UICollectionViewCell {
                           paddingBottom: 0, paddingRight: 16)
         
         addSubview(imageView)
-        imageView.setDimensions(width: 50, height: 50)
+        imageView.setDimensions(width: 40, height: 40)
         imageView.centerX(inView: self)
         imageView.centerY(inView: self)
         
