@@ -209,13 +209,13 @@
 		707168B828EE0C7B008B1D69 /* Week Routine */ = {
 			isa = PBXGroup;
 			children = (
+				7052219C29F55F940010D327 /* Files */,
+				7052219A29F55F850010D327 /* Extensions */,
+				70F9D49F2A392CB700D659EC /* Sounds */,
 				7052219D29F55FD60010D327 /* Utils */,
 				7052219729F55F720010D327 /* Model */,
 				7052219829F55F770010D327 /* View */,
 				7052219929F55F7E0010D327 /* Controller */,
-				7052219A29F55F850010D327 /* Extensions */,
-				70F9D49F2A392CB700D659EC /* Sounds */,
-				7052219C29F55F940010D327 /* Files */,
 			);
 			path = "Week Routine";
 			sourceTree = "<group>";

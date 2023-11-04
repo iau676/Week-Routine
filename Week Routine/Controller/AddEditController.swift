@@ -85,11 +85,17 @@ final class AddEditController: UIViewController {
         
         if titleText.count > 0 {
             if let routine = routine {
-                brain.updateRoutine(routine: routine, title: titleText, day: dayInt, hour: hour, minute: minute,
-                                    color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec, soundInt: soundInt)
+                brain.updateRoutine(routine: routine, title: titleText,
+                                    day: dayInt, hour: hour,
+                                    minute: minute, color: colorName,
+                                    timerHour: tHour, timerMin: tMin,
+                                    timerSec: tSec, soundInt: soundInt)
             } else {
-                brain.addRoutine(title: titleText, day: dayInt, hour: hour, minute: minute,
-                                 color: colorName, timerHour: tHour, timerMin: tMin, timerSec: tSec, soundInt: soundInt)
+                brain.addRoutine(title: titleText, day: dayInt,
+                                 hour: hour, minute: minute,
+                                 color: colorName, timerHour: tHour,
+                                 timerMin: tMin, timerSec: tSec,
+                                 soundInt: soundInt)
             }
             delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)

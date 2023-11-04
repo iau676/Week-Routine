@@ -122,14 +122,16 @@ struct NotificationManager {
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
     }
     
-    func updateRoutineNotification(routine: Routine){
-        guard let title = routine.title else{return}
-        guard let uuid = routine.uuid else{return}
-        
-        removeNotification(id: uuid)
-        addNotification(title: title, dayInt: Int(routine.day),
-                        hour: Int(routine.hour), minute: Int(routine.minute),
-                        color: routine.color ?? "", soundInt: Int(routine.soundInt),
-                        id: uuid)
+    func updateRoutineNotification(routine: Routine) {
+        if routine.isNotify {
+            guard let title = routine.title else{return}
+            guard let uuid = routine.uuid else{return}
+            
+            removeNotification(id: uuid)
+            addNotification(title: title, dayInt: Int(routine.day),
+                            hour: Int(routine.hour), minute: Int(routine.minute),
+                            color: routine.color ?? "", soundInt: Int(routine.soundInt),
+                            id: uuid)
+        }
     }
 }
