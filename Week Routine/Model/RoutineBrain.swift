@@ -28,6 +28,7 @@ struct RoutineBrain {
         newRoutine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
         newRoutine.soundInt = Int64(soundInt)
         newRoutine.date = Date()
+        newRoutine.isNotify = true
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
         self.routineArray.append(newRoutine)
@@ -95,6 +96,7 @@ struct RoutineBrain {
     
     func updateFrozen(routine: Routine) {
         let currentFrozen = routine.isFrozen
+        let currentNotify = routine.isNotify
         
         if currentFrozen {
             if let title = routine.title,
@@ -110,6 +112,28 @@ struct RoutineBrain {
         }
         
         routine.isFrozen = !currentFrozen
+        routine.isNotify = !currentNotify
+        saveContext()
+    }
+    
+    func updateNotification(routine: Routine) {
+        let currentNotify = routine.isNotify
+        
+        if currentNotify {
+            if let title = routine.title,
+                let color = routine.color,
+                let uuid = routine.uuid {
+                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day),
+                                                           hour: Int(routine.hour), minute: Int(routine.minute),
+                                                           color: color, soundInt: Int(routine.soundInt),
+                                                           id: uuid)
+            }
+        } else {
+            deleteNotification(routine: routine)
+        }
+        
+        routine.isNotify = !currentNotify
+        print("DEBUG::routine.isNotify::\(routine.isNotify)")
         saveContext()
     }
     

@@ -259,7 +259,7 @@ extension RoutineController: RoutineCellDelegate {
     }
     
     func goEdit(routine: Routine) {
-        let controller = AddController(currrentIndex: currrentIndex)
+        let controller = AddEditController(currrentIndex: currrentIndex)
         controller.delegate = self
         controller.routine = routine
         let nav = UINavigationController(rootViewController: controller)
@@ -301,7 +301,7 @@ extension RoutineController: TimerControllerDelegate {
 
 extension RoutineController: RoutineFooterDelegate {
     func goAdd() {
-        let controller = AddController(currrentIndex: currrentIndex)
+        let controller = AddEditController(currrentIndex: currrentIndex)
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet

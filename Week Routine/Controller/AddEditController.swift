@@ -13,7 +13,7 @@ protocol AddControllerDelegate {
 
 private let reuseIdentifier = "ColorCell"
 
-final class AddController: UIViewController {
+final class AddEditController: UIViewController {
     
     private var currrentIndex: Int
     var routine: Routine?
@@ -34,6 +34,9 @@ final class AddController: UIViewController {
     
     private let soundTextField = UITextField()
     private let soundLabel = UILabel()
+    
+    private let notificationLabel = makePaddingLabel(withText: "Notification")
+    private let notificationSwitch = UISwitch()
     
     private let freezeLabel = makePaddingLabel(withText: "Freeze")
     private let freezeSwitch = UISwitch()
@@ -120,6 +123,12 @@ final class AddController: UIViewController {
         updateScreenByMode()
     }
     
+    @objc private func notificationChanged(sender: UISwitch) {
+        guard let routine = self.routine else { return }
+        RoutineBrain.shareInstance.updateNotification(routine: routine)
+        delegate?.updateCV()
+    }
+    
     @objc private func deleteButtonPressed() {
         showDeleteAlert(title: "Routine will be deleted", message: "This action cannot be undone") { _ in
             guard let routine = self.routine else { return }
@@ -202,6 +211,11 @@ final class AddController: UIViewController {
         soundLabel.textColor = .darkGray
         soundLabel.textAlignment = .right
         
+        notificationLabel.setHeight(50)
+        notificationLabel.backgroundColor = Colors.viewColor
+        
+        notificationSwitch.addTarget(self, action: #selector(notificationChanged), for: .valueChanged)
+        
         freezeLabel.setHeight(50)
         freezeLabel.backgroundColor = Colors.viewColor
         freezeLabel.clipsToBounds = true
@@ -225,7 +239,8 @@ final class AddController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 1
         
-        let secondStack = UIStackView(arrangedSubviews: [timerTextField, soundTextField, freezeLabel])
+        let secondStack = UIStackView(arrangedSubviews: [timerTextField, soundTextField,
+                                                         notificationLabel, freezeLabel])
         secondStack.axis = .vertical
         secondStack.spacing = 1
         
@@ -250,6 +265,10 @@ final class AddController: UIViewController {
         view.addSubview(timerLabel)
         timerLabel.centerY(inView: timerTextField)
         timerLabel.anchor(right: view.rightAnchor, paddingRight: 32+16)
+        
+        view.addSubview(notificationSwitch)
+        notificationSwitch.centerY(inView: notificationLabel)
+        notificationSwitch.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
         view.addSubview(freezeSwitch)
         freezeSwitch.centerY(inView: freezeLabel)
@@ -303,6 +322,7 @@ final class AddController: UIViewController {
             deleteButton.isHidden = false
             
             configureBarButton()
+            
             if routine.isFrozen {
                 freezeSwitch.isOn = routine.isFrozen
                 titleTextField.isEnabled = false
@@ -315,6 +335,9 @@ final class AddController: UIViewController {
                 timerTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 soundTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                notificationLabel.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
+                notificationSwitch.isEnabled = false
+                notificationSwitch.isOn = false
                 colorButton.setTitleColor(Colors.labelColor, for: .normal)
                 clearColorButton.isHidden = true
             } else {
@@ -327,12 +350,17 @@ final class AddController: UIViewController {
                 titleTextField.backgroundColor = Colors.viewColor
                 timerTextField.backgroundColor = Colors.viewColor
                 soundTextField.backgroundColor = Colors.viewColor
+                notificationLabel.backgroundColor = Colors.viewColor
+                notificationSwitch.isEnabled = true
+                notificationSwitch.isOn = true
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
             }
         } else {
             title = "New Routine"
             clearColorButton.isHidden = true
             deleteButton.isHidden = true
+            notificationLabel.isHidden = true
+            notificationSwitch.isHidden = true
             freezeLabel.isHidden = true
             freezeSwitch.isHidden = true
             soundTextField.layer.cornerRadius = 8
@@ -346,6 +374,8 @@ final class AddController: UIViewController {
         soundLabel.isHidden = bool
         timerLabel.isHidden = bool
         guard let _ = routine else { return }
+        notificationLabel.isHidden = bool
+        notificationSwitch.isHidden = bool
         freezeLabel.isHidden = bool
         freezeSwitch.isHidden = bool
         deleteButton.isHidden = bool
@@ -403,7 +433,7 @@ final class AddController: UIViewController {
 
 //MARK: - UICollectionViewDelegate/DataSource
 
-extension AddController: UICollectionViewDataSource {
+extension AddEditController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
     }
@@ -427,7 +457,7 @@ extension AddController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension AddController: UICollectionViewDelegateFlowLayout {
+extension AddEditController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.bounds.width-64)/6, height: view.frame.height)
     }
@@ -435,7 +465,7 @@ extension AddController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - UIPickerViewDataSource/Delegate
 
-extension AddController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         let customPickerView = pickerView as? CustomPickerView

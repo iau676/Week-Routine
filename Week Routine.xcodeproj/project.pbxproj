@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */; };
-		702BA40528EE105800BB7EDB /* AddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddController.swift */; };
+		702BA40528EE105800BB7EDB /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddEditController.swift */; };
 		70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */; };
 		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
 		705221A129F561930010D327 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A029F561930010D327 /* Factories.swift */; };
@@ -54,7 +54,7 @@
 
 /* Begin PBXFileReference section */
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
-		702BA40428EE105800BB7EDB /* AddController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddController.swift; sourceTree = "<group>"; };
+		702BA40428EE105800BB7EDB /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		703E5A602A19A6E500496771 /* Week Routine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Week Routine.entitlements"; sourceTree = "<group>"; };
 		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
-				702BA40428EE105800BB7EDB /* AddController.swift */,
+				702BA40428EE105800BB7EDB /* AddEditController.swift */,
 				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
 				706D66DA2A361FA4003BE508 /* TimerController.swift */,
 				70A76A5629FECE80003D72D6 /* CompleteController.swift */,
@@ -338,7 +338,7 @@
 				706D66E12A386114003BE508 /* NotificationManager.swift in Sources */,
 				70A76A5529FEB69C003D72D6 /* LogCell.swift in Sources */,
 				70B416652A394355009389F5 /* Player.swift in Sources */,
-				702BA40528EE105800BB7EDB /* AddController.swift in Sources */,
+				702BA40528EE105800BB7EDB /* AddEditController.swift in Sources */,
 				705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */,
 				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
 				70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */,

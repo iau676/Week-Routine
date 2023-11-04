@@ -23,6 +23,7 @@ extension Routine {
     @NSManaged public var hour: Int16
     @NSManaged public var isDone: Bool
     @NSManaged public var isFrozen: Bool
+    @NSManaged public var isNotify: Bool
     @NSManaged public var minute: Int16
     @NSManaged public var timerSeconds: Int64
     @NSManaged public var soundInt: Int64
