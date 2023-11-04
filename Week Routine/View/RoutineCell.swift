@@ -28,9 +28,17 @@ final class RoutineCell: UICollectionViewCell {
         return view
     }()
     
-    private let imageView: UIImageView = {
+    private let snowflakeImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = Images.snowflake?.withTintColor(Colors.iceColor)
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        return iv
+    }()
+    
+    private let notificationImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = Images.notificationClosed?.withTintColor(.darkGray)
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
@@ -80,10 +88,15 @@ final class RoutineCell: UICollectionViewCell {
                           paddingTop: 0, paddingLeft: 16,
                           paddingBottom: 0, paddingRight: 16)
         
-        addSubview(imageView)
-        imageView.setDimensions(width: 40, height: 40)
-        imageView.centerX(inView: self)
-        imageView.centerY(inView: self)
+        addSubview(snowflakeImageView)
+        snowflakeImageView.setDimensions(width: 40, height: 40)
+        snowflakeImageView.centerX(inView: self)
+        snowflakeImageView.centerY(inView: self)
+        
+        addSubview(notificationImageView)
+        notificationImageView.setDimensions(width: 16, height: 16)
+        notificationImageView.anchor(left: borderView.leftAnchor, bottom: borderView.bottomAnchor,
+                                     paddingLeft: 16, paddingBottom: 8)
         
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
@@ -140,7 +153,7 @@ final class RoutineCell: UICollectionViewCell {
         dateText.append(timerText)
         dateLabel.text = dateText
         
-        imageView.isHidden = true
+        snowflakeImageView.isHidden = true
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
         
@@ -151,9 +164,11 @@ final class RoutineCell: UICollectionViewCell {
         }
         
         if routine.isFrozen {
-            imageView.isHidden = false
+            snowflakeImageView.isHidden = false
             borderView.backgroundColor = Colors.iceColor.withAlphaComponent(0.6)
             borderView.layer.borderColor = Colors.iceColor.cgColor
         }
+        
+        notificationImageView.isHidden = routine.isNotify
     }
 }

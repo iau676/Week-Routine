@@ -73,6 +73,7 @@ enum Images {
     
     static let snowflake                 = UIImage(named: "snowflake")
     static let notification              = UIImage(named: "notification")
+    static let notificationClosed        = UIImage(named: "notificationClosed")
     static let plus                      = UIImage(named: "plus")
 }
 

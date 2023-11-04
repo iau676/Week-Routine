@@ -323,6 +323,8 @@ final class AddEditController: UIViewController {
             
             configureBarButton()
             
+            notificationSwitch.isOn = routine.isNotify
+            
             if routine.isFrozen {
                 freezeSwitch.isOn = routine.isFrozen
                 titleTextField.isEnabled = false
@@ -337,7 +339,6 @@ final class AddEditController: UIViewController {
                 soundTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 notificationLabel.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 notificationSwitch.isEnabled = false
-                notificationSwitch.isOn = false
                 colorButton.setTitleColor(Colors.labelColor, for: .normal)
                 clearColorButton.isHidden = true
             } else {
@@ -352,7 +353,6 @@ final class AddEditController: UIViewController {
                 soundTextField.backgroundColor = Colors.viewColor
                 notificationLabel.backgroundColor = Colors.viewColor
                 notificationSwitch.isEnabled = true
-                notificationSwitch.isOn = true
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
             }
         } else {
