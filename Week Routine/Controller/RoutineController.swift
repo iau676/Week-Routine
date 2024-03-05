@@ -234,14 +234,6 @@ extension RoutineController: RoutineCellDelegate {
     }
 }
 
-//MARK: - CompleteControllerDelegate
-
-extension RoutineController: CompleteControllerDelegate {
-    func updateTableView() {
-        collectionView.reloadData()
-    }
-}
-
 //MARK: - FilterViewDelegate
 
 extension RoutineController: FilterViewDelegate {

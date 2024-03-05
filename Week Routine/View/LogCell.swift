@@ -20,14 +20,6 @@ final class LogCell: UITableViewCell {
         return label
     }()
     
-    private let contentLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 17)
-        label.textColor = .label
-        label.numberOfLines = 0
-        return label
-    }()
-    
     private let timerLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
@@ -42,13 +34,9 @@ final class LogCell: UITableViewCell {
         
         backgroundColor = Colors.viewColor
         
-        let stack = UIStackView(arrangedSubviews: [dateLabel, contentLabel])
-        stack.axis = .vertical
-        stack.spacing = 1
-        
-        addSubview(stack)
-        stack.centerY(inView: self)
-        stack.anchor(left: leftAnchor, right: rightAnchor,
+        addSubview(dateLabel)
+        dateLabel.centerY(inView: self)
+        dateLabel.anchor(left: leftAnchor, right: rightAnchor,
                      paddingLeft: 16, paddingRight: 16)
         
         addSubview(timerLabel)
@@ -67,9 +55,6 @@ final class LogCell: UITableViewCell {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm・E, d MMM y"
-        
         dateLabel.text = "\(dateFormatter.string(from: log.date ?? Date()))"
-        contentLabel.text = log.content
-        if log.timerSeconds > 0 { timerLabel.text = "Timer: \(brain.getTimerString(for: Int(log.timerSeconds)))" }
     }
 }

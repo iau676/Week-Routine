@@ -16,9 +16,7 @@ extension Log {
         return NSFetchRequest<Log>(entityName: "Log")
     }
 
-    @NSManaged public var content: String?
     @NSManaged public var date: Date?
-    @NSManaged public var timerSeconds: Int64
     @NSManaged public var title: String?
     @NSManaged public var uuid: String?
     @NSManaged public var routine: Routine?

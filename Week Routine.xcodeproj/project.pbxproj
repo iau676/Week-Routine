@@ -32,7 +32,6 @@
 		70A76A5129FEACF4003D72D6 /* Routine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4D29FEACF4003D72D6 /* Routine+CoreDataProperties.swift */; };
 		70A76A5329FEB0C4003D72D6 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A5229FEB0C4003D72D6 /* LogController.swift */; };
 		70A76A5529FEB69C003D72D6 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A5429FEB69C003D72D6 /* LogCell.swift */; };
-		70A76A5729FECE80003D72D6 /* CompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A5629FECE80003D72D6 /* CompleteController.swift */; };
 		70A76A5929FED9DF003D72D6 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A5829FED9DF003D72D6 /* InputTextView.swift */; };
 		70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */; };
 		70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */; };
@@ -80,7 +79,6 @@
 		70A76A4D29FEACF4003D72D6 /* Routine+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routine+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		70A76A5229FEB0C4003D72D6 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		70A76A5429FEB69C003D72D6 /* LogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
-		70A76A5629FECE80003D72D6 /* CompleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteController.swift; sourceTree = "<group>"; };
 		70A76A5829FED9DF003D72D6 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		70A92CC828EEE3C5004D5419 /* UIColor+HexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexValue.swift"; sourceTree = "<group>"; };
 		70A92CCA28EEE50C004D5419 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
 				702BA40428EE105800BB7EDB /* AddEditController.swift */,
 				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
-				70A76A5629FECE80003D72D6 /* CompleteController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -316,7 +313,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70A76A5729FECE80003D72D6 /* CompleteController.swift in Sources */,
 				70A76A5029FEACF4003D72D6 /* Routine+CoreDataClass.swift in Sources */,
 				705221A129F561930010D327 /* Factories.swift in Sources */,
 				707168BE28EE0C7B008B1D69 /* RoutineController.swift in Sources */,

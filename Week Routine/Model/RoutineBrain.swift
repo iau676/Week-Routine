@@ -43,7 +43,6 @@ struct RoutineBrain {
         newLog.date = Date()
         newLog.uuid = UUID().uuidString
         newLog.title = routine.title
-        newLog.content = content
         
         routine.addToLogs(newLog)
         saveContext()

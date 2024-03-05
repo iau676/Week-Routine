@@ -7,15 +7,9 @@
 
 import UIKit
 
-protocol LogHeaderDelegate: AnyObject {
-    func routineChanged()
-}
-
 final class LogHeader: UIView {
     
     //MARK: - Properties
-    
-    weak var delegate: LogHeaderDelegate?
     
     var routine: Routine? {
         didSet { configure() }
