@@ -23,7 +23,6 @@ final class RoutineController: UICollectionViewController {
         super.viewDidLoad()
         style()
         updateCV()
-        addObserver()
         addGestureRecognizer()
     }
     
@@ -39,35 +38,6 @@ final class RoutineController: UICollectionViewController {
     @objc private func leftBarButtonPressed() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
-        }
-    }
-    
-    @objc private func checkTimer() {
-        configureBarButton()
-        let routineUUID = UDM.routineUUID.getString()
-        brain.findRoutine(uuid: routineUUID) { routine in
-            guard let currentNotificationDate = UDM.currentNotificationDate.getDateValue() else { return }
-            let dateComponents = Calendar.current.dateComponents([.second], from: currentNotificationDate, to: Date())
-            guard let passedSeconds = dateComponents.second else { return }
-            let lastTimerCounter = UDM.lastTimerCounter.getInt()
-            let timerSeconds = Int(routine.timerSeconds)
-            
-            //timer working
-            if timerSeconds - lastTimerCounter - passedSeconds > 0 {
-                let controller = TimerController(routine: routine)
-                controller.timerCounter = CGFloat(lastTimerCounter + passedSeconds)
-                controller.modalPresentationStyle = .overCurrentContext
-                controller.delegate = self
-                self.present(controller, animated: false)
-            } else {
-                if !UDM.isTimerCompleted.getBool() {
-                    let controller = CompleteController(routine: routine)
-                    controller.delegate = self
-                    let nav = UINavigationController(rootViewController: controller)
-                    nav.modalPresentationStyle = .formSheet
-                    self.present(nav, animated: true)
-                }
-            }
         }
     }
 
@@ -122,11 +92,6 @@ final class RoutineController: UICollectionViewController {
         tempArray = brain.findRoutines(for: currrentIndex-1)
         updatePlaceholderViewVisibility()
     }
-    
-    private func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.checkTimer),
-                                               name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
 }
 
 //MARK: - UICollectionViewDataSource
@@ -171,19 +136,20 @@ extension RoutineController {
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
             } else {
-                if let cell: RoutineCell = collectionView.cellForItem(at: indexPath) as? RoutineCell { cell.bounce() }
-                if routine.timerSeconds > 0 {
-                    let controller = TimerController(routine: routine)
-                    controller.delegate = self
-                    controller.modalPresentationStyle = .overCurrentContext
-                    self.present(controller, animated: true)
-                } else {
-                    let controller = CompleteController(routine: routine)
-                    controller.delegate = self
-                    let nav = UINavigationController(rootViewController: controller)
-                    nav.modalPresentationStyle = .formSheet
-                    self.present(nav, animated: true)
-                }
+//                if let cell: RoutineCell = collectionView.cellForItem(at: indexPath) as? RoutineCell { cell.bounce() }
+//                if routine.timerSeconds > 0 {
+//                    let controller = TimerController(routine: routine)
+//                    controller.delegate = self
+//                    controller.modalPresentationStyle = .overCurrentContext
+//                    self.present(controller, animated: true)
+//                } else {
+//                    let controller = CompleteController(routine: routine)
+//                    controller.delegate = self
+//                    let nav = UINavigationController(rootViewController: controller)
+//                    nav.modalPresentationStyle = .formSheet
+//                    self.present(nav, animated: true)
+//                }
+                self.showAlertWithTimer(title: "Not Yet")
             }
         } else {
             self.showAlertWithTimer(title: "Not Today")
@@ -282,18 +248,6 @@ extension RoutineController: FilterViewDelegate {
     func filterView(_ view: FilterView, didSelect index: Int) {
         currrentIndex = index
         findWhichRoutinesShouldShow()
-    }
-}
-
-//MARK: - TimerControllerDelegate
-
-extension RoutineController: TimerControllerDelegate {
-    func timerCompleted(routine: Routine) {
-        let controller = CompleteController(routine: routine)
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .formSheet
-        self.present(nav, animated: true)
     }
 }
 

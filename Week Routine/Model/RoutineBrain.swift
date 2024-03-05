@@ -17,7 +17,7 @@ struct RoutineBrain {
     
     //MARK: - Model Manupulation Methods
     
-    mutating func addRoutine(title: String, day: Int, hour: Int, minute: Int, color: String, timerHour: Int, timerMin: Int, timerSec: Int, soundInt: Int){
+    mutating func addRoutine(title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int){
         let newRoutine = Routine(context: self.context)
         newRoutine.title = title
         newRoutine.day = Int16(day)
@@ -25,7 +25,6 @@ struct RoutineBrain {
         newRoutine.minute = Int16(minute)
         newRoutine.color = color
         newRoutine.ascending = Int16(hour * 66 + minute)
-        newRoutine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
         newRoutine.soundInt = Int64(soundInt)
         newRoutine.date = Date()
         newRoutine.isNotify = true
@@ -45,20 +44,18 @@ struct RoutineBrain {
         newLog.uuid = UUID().uuidString
         newLog.title = routine.title
         newLog.content = content
-        newLog.timerSeconds = routine.timerSeconds
         
         routine.addToLogs(newLog)
         saveContext()
     }
     
-    mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, timerHour: Int, timerMin: Int, timerSec: Int, soundInt: Int) {
+    mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int) {
         routine.title = title
         routine.day = Int16(day)
         routine.hour = Int16(hour)
         routine.minute = Int16(minute)
         routine.color = color
         routine.ascending = Int16(hour * 66 + minute)
-        routine.timerSeconds = Int64((timerHour * 3600) + (timerMin * 60) + timerSec)
         routine.soundInt = Int64(soundInt)
         NotificationManager.shared.updateRoutineNotification(routine: routine)
         saveContext()

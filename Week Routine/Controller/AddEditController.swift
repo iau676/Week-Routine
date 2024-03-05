@@ -24,12 +24,9 @@ final class AddEditController: UIViewController {
     private let colorButton = UIButton()
     private let clearColorButton = UIButton()
     private let colorCV = makeCollectionView()
-    private let timerTextField = UITextField()
-    private let timerLabel = UILabel()
     private let deleteButton = UIButton()
     
     private let datePickerView = CustomPickerView(type: .date)
-    private let timerPickerView = CustomPickerView(type: .timer)
     private let soundPickerView = CustomPickerView(type: .sound)
     
     private let soundTextField = UITextField()
@@ -46,10 +43,6 @@ final class AddEditController: UIViewController {
     private var hour = hours[brain.getHour()]
     private var minute = minutesWithZero[brain.getMinute()]
     private var colorName = ColorName.defaultt
-    
-    private var timerHour = "00"
-    private var timerMin = "00"
-    private var timerSec = "00"
     
     private var soundInt = 0
     
@@ -79,23 +72,16 @@ final class AddEditController: UIViewController {
         let hour = Int(hour) ?? 0
         let minute = Int(minute) ?? 0
         
-        let tHour = Int(timerHour) ?? 0
-        let tMin = Int(timerMin) ?? 0
-        let tSec = Int(timerSec) ?? 0
-        
         if titleText.count > 0 {
             if let routine = routine {
                 brain.updateRoutine(routine: routine, title: titleText,
                                     day: dayInt, hour: hour,
                                     minute: minute, color: colorName,
-                                    timerHour: tHour, timerMin: tMin,
-                                    timerSec: tSec, soundInt: soundInt)
+                                    soundInt: soundInt)
             } else {
                 brain.addRoutine(title: titleText, day: dayInt,
                                  hour: hour, minute: minute,
-                                 color: colorName, timerHour: tHour,
-                                 timerMin: tMin, timerSec: tSec,
-                                 soundInt: soundInt)
+                                 color: colorName, soundInt: soundInt)
             }
             delegate?.updateCV()
             self.dismiss(animated: true, completion: nil)
@@ -168,21 +154,6 @@ final class AddEditController: UIViewController {
         dateTextField.setLeftPaddingPoints(10)
         configureDatePickerView()
         
-        timerPickerView.delegate = self
-        timerPickerView.dataSource = self
-        timerTextField.inputView = timerPickerView
-        timerTextField.text = "Timer"
-        timerTextField.backgroundColor = Colors.viewColor
-        timerTextField.layer.cornerRadius = 8
-        timerTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        timerTextField.tintColor = .clear
-        timerTextField.setHeight(50)
-        timerTextField.setLeftPaddingPoints(10)
-        
-        timerLabel.text = "Not Set"
-        timerLabel.textColor = .darkGray
-        timerLabel.textAlignment = .right
-        
         colorButton.setHeight(50)
         colorButton.layer.cornerRadius = 8
         colorButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -210,6 +181,8 @@ final class AddEditController: UIViewController {
         soundTextField.text = "Notification Sound"
         soundTextField.backgroundColor = Colors.viewColor
         soundTextField.tintColor = .clear
+        soundTextField.layer.cornerRadius = 8
+        soundTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         soundTextField.setHeight(50)
         soundTextField.setLeftPaddingPoints(10)
         
@@ -245,8 +218,7 @@ final class AddEditController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 1
         
-        let secondStack = UIStackView(arrangedSubviews: [timerTextField, soundTextField,
-                                                         notificationLabel, freezeLabel])
+        let secondStack = UIStackView(arrangedSubviews: [soundTextField, notificationLabel, freezeLabel])
         secondStack.axis = .vertical
         secondStack.spacing = 1
         
@@ -267,10 +239,6 @@ final class AddEditController: UIViewController {
         colorCV.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
                        bottom: view.bottomAnchor, right: view.rightAnchor,
                        paddingTop: -32, paddingLeft: 32, paddingRight: 32)
-        
-        view.addSubview(timerLabel)
-        timerLabel.centerY(inView: timerTextField)
-        timerLabel.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
         view.addSubview(notificationSwitch)
         notificationSwitch.centerY(inView: notificationLabel)
@@ -313,10 +281,6 @@ final class AddEditController: UIViewController {
             configureDatePickerView()
             dateTextField.text = "\(day), \(hour):\(minute)"
             
-            congifureTimerValues(routine: routine)
-            configureTimerPickerView()
-            timerLabel.text = getTimerString()
-            
             soundInt = Int(routine.soundInt)
             soundLabel.text = sounds[soundInt]
             configureSoundPickerView()
@@ -335,12 +299,10 @@ final class AddEditController: UIViewController {
                 freezeSwitch.isOn = routine.isFrozen
                 titleTextField.isEnabled = false
                 dateTextField.isEnabled = false
-                timerTextField.isEnabled = false
                 colorButton.isEnabled = false
                 soundTextField.isEnabled = false
                 dateTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 titleTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
-                timerTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 colorButton.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 soundTextField.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
                 notificationLabel.backgroundColor = Colors.iceColor.withAlphaComponent(0.5)
@@ -350,12 +312,10 @@ final class AddEditController: UIViewController {
             } else {
                 titleTextField.isEnabled = true
                 dateTextField.isEnabled = true
-                timerTextField.isEnabled = true
                 colorButton.isEnabled = true
                 soundTextField.isEnabled = true
                 dateTextField.backgroundColor = Colors.viewColor
                 titleTextField.backgroundColor = Colors.viewColor
-                timerTextField.backgroundColor = Colors.viewColor
                 soundTextField.backgroundColor = Colors.viewColor
                 notificationLabel.backgroundColor = Colors.viewColor
                 notificationSwitch.isEnabled = true
@@ -370,15 +330,14 @@ final class AddEditController: UIViewController {
             freezeLabel.isHidden = true
             freezeSwitch.isHidden = true
             soundTextField.layer.cornerRadius = 8
-            soundTextField.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            soundTextField.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner,
+                                                  .layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
     }
     
     private func updateViewsVisibility(bool: Bool) {
-        timerTextField.isHidden = bool
         soundTextField.isHidden = bool
         soundLabel.isHidden = bool
-        timerLabel.isHidden = bool
         guard let _ = routine else { return }
         notificationLabel.isHidden = bool
         notificationSwitch.isHidden = bool
@@ -394,42 +353,12 @@ final class AddEditController: UIViewController {
         minute = minutesWithZero[Int(routine.minute)]
     }
     
-    private func congifureTimerValues(routine: Routine) {
-        let totalSeconds = routine.timerSeconds
-        let hour = totalSeconds / 3600
-        let min = (totalSeconds - (hour*3600)) / 60
-        let sec = totalSeconds - ((hour*3600)+(min*60))
-        
-        timerHour = "\(hours[Int(hour)])"
-        timerMin = "\(minutesWithoutZero[Int(min)])"
-        timerSec = "\(minutesWithoutZero[Int(sec)])"
-    }
-    
-    private func getTimerString() -> String {
-        var hStr = Int(timerHour) ?? 0 > 0 ? "\(timerHour)\'" : ""
-        let mStr = Int(timerMin) ?? 0 > 0 ? "\(timerMin)\"" : ""
-        let sStr = Int(timerSec) ?? 0 > 0 ? timerSec : ""
-        
-        hStr.append(mStr)
-        hStr.append(sStr)
-        return hStr.count > 0 ? hStr : "Not Set"
-    }
-    
     private func configureDatePickerView() {
         let hour = Int(hour) ?? 0
         let min = Int(minute) ?? 0
         datePickerView.selectRow(dayInt, inComponent: 0, animated: true)
         datePickerView.selectRow(hour, inComponent: 1, animated: true)
         datePickerView.selectRow(min, inComponent: 2, animated: true)
-    }
-    
-    private func configureTimerPickerView() {
-        let hour = Int(timerHour) ?? 0
-        let min = Int(timerMin) ?? 0
-        let sec = Int(timerSec) ?? 0
-        timerPickerView.selectRow(hour, inComponent: 0, animated: true)
-        timerPickerView.selectRow(min, inComponent: 1, animated: true)
-        timerPickerView.selectRow(sec, inComponent: 2, animated: true)
     }
     
     private func configureSoundPickerView() {
@@ -456,7 +385,6 @@ extension AddEditController: UICollectionViewDataSource {
         colorButton.backgroundColor = color
         colorCV.isHidden = true
         clearColorButton.isHidden = false
-        timerTextField.isHidden = false
         updateViewsVisibility(bool: false)
     }
 }
@@ -494,12 +422,6 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 1:  return hours.count
             default: return minutesWithZero.count
             }
-        case .timer:
-            switch component {
-            case 0:  return hours.count
-            case 1:  return minutesWithoutZero.count
-            default: return minutesWithoutZero.count
-            }
         case .sound:
             return sounds.count
         default: break
@@ -516,12 +438,6 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 0:  return days[row]
             case 1:  return hours[row]
             default: return minutesWithZero[row]
-            }
-        case .timer:
-            switch component {
-            case 0:  return "\(hours[row]) hour"
-            case 1:  return "\(minutesWithoutZero[row]) min"
-            default: return "\(minutesWithoutZero[row]) sec"
             }
         case .sound:
             return sounds[row]
@@ -542,13 +458,6 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             default: minute = minutesWithZero[row]
             }
             dateTextField.text = "\(day), \(hour):\(minute)"
-        case .timer:
-            switch component {
-            case 0:  timerHour = hours[row]
-            case 1:  timerMin = minutesWithoutZero[row]
-            default: timerSec = minutesWithoutZero[row]
-            }
-            timerLabel.text = getTimerString()
         case .sound:
             soundInt = row
             Player.shared.play(soundInt: row)

@@ -9,7 +9,6 @@ import UIKit
 
 enum CustomPickerViewType {
     case date
-    case timer
     case sound
 }
 

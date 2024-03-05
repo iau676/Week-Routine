@@ -147,11 +147,7 @@ final class RoutineCell: UICollectionViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        
-        var dateText = "\(hour):\(minute)・\(day)"
-        let  timerText = routine.timerSeconds > 0 ? "・Timer: \(brain.getTimerString(for: Int(routine.timerSeconds)))" : ""
-        dateText.append(timerText)
-        dateLabel.text = dateText
+        dateLabel.text = "\(hour):\(minute)・\(day)"
         
         snowflakeImageView.isHidden = true
         borderView.layer.borderColor = color.cgColor

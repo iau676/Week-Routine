@@ -16,7 +16,6 @@
 		706D66D32A34942E003BE508 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D22A34942E003BE508 /* FilterCell.swift */; };
 		706D66D52A349440003BE508 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D42A349440003BE508 /* FilterView.swift */; };
 		706D66D92A353270003BE508 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D82A353270003BE508 /* CustomPickerView.swift */; };
-		706D66DB2A361FA4003BE508 /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66DA2A361FA4003BE508 /* TimerController.swift */; };
 		706D66E12A386114003BE508 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66E02A386114003BE508 /* NotificationManager.swift */; };
 		706D66E32A3882AB003BE508 /* LogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66E22A3882AB003BE508 /* LogHeader.swift */; };
 		707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707168B928EE0C7B008B1D69 /* AppDelegate.swift */; };
@@ -63,7 +62,6 @@
 		706D66D22A34942E003BE508 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		706D66D42A349440003BE508 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		706D66D82A353270003BE508 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
-		706D66DA2A361FA4003BE508 /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
 		706D66E02A386114003BE508 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		706D66E22A3882AB003BE508 /* LogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHeader.swift; sourceTree = "<group>"; };
 		707168B628EE0C7B008B1D69 /* Week Routine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Week Routine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +141,6 @@
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
 				702BA40428EE105800BB7EDB /* AddEditController.swift */,
 				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
-				706D66DA2A361FA4003BE508 /* TimerController.swift */,
 				70A76A5629FECE80003D72D6 /* CompleteController.swift */,
 			);
 			path = Controller;
@@ -321,7 +318,6 @@
 			files = (
 				70A76A5729FECE80003D72D6 /* CompleteController.swift in Sources */,
 				70A76A5029FEACF4003D72D6 /* Routine+CoreDataClass.swift in Sources */,
-				706D66DB2A361FA4003BE508 /* TimerController.swift in Sources */,
 				705221A129F561930010D327 /* Factories.swift in Sources */,
 				707168BE28EE0C7B008B1D69 /* RoutineController.swift in Sources */,
 				707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */,
