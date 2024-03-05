@@ -38,7 +38,7 @@ struct RoutineBrain {
         saveContext()
     }
     
-    mutating func addLog(routine: Routine, content: String) {
+    mutating func addLog(routine: Routine) {
         let newLog = Log(context: self.context)
         newLog.date = Date()
         newLog.uuid = UUID().uuidString

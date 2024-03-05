@@ -136,20 +136,9 @@ extension RoutineController {
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
             } else {
-//                if let cell: RoutineCell = collectionView.cellForItem(at: indexPath) as? RoutineCell { cell.bounce() }
-//                if routine.timerSeconds > 0 {
-//                    let controller = TimerController(routine: routine)
-//                    controller.delegate = self
-//                    controller.modalPresentationStyle = .overCurrentContext
-//                    self.present(controller, animated: true)
-//                } else {
-//                    let controller = CompleteController(routine: routine)
-//                    controller.delegate = self
-//                    let nav = UINavigationController(rootViewController: controller)
-//                    nav.modalPresentationStyle = .formSheet
-//                    self.present(nav, animated: true)
-//                }
-                self.showAlertWithTimer(title: "Not Yet")
+                self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Completed") {
+                    brain.addLog(routine: routine)
+                }
             }
         } else {
             self.showAlertWithTimer(title: "Not Today")
