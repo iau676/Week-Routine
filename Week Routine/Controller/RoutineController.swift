@@ -16,6 +16,13 @@ final class RoutineController: UICollectionViewController {
     private let placeholderView = PlaceholderView(text: "No Routine")
     private var tempArray = [Int]() { didSet { collectionView.reloadData() } }
     private var currrentIndex: Int = 0
+    
+    private lazy var celebrateAnimationView: CelebrationAnimationView = {
+        let v = CelebrationAnimationView(fileName: "99582-site-app-pro-celebrate")
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.isHidden = true
+        return v
+    }()
         
     //MARK: - Life Cycle
     
@@ -58,6 +65,9 @@ final class RoutineController: UICollectionViewController {
         collectionView.register(RoutineFooter.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: footerIdentifier)
+        
+        view.addSubview(celebrateAnimationView)
+        celebrateAnimationView.fillSuperview()
     }
     
     private func updatePlaceholderViewVisibility(){
@@ -138,6 +148,11 @@ extension RoutineController {
             } else {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Completed") {
                     brain.addLog(routine: routine)
+                    self.collectionView.reloadData()
+                    self.celebrateAnimationView.isHidden = false
+                    self.celebrateAnimationView.play { finished in
+                        self.celebrateAnimationView.isHidden = finished
+                    }
                 }
             }
         } else {

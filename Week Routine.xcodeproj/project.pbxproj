@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */; };
+		70208F052B98DDA200D6E8D0 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70208F042B98DDA200D6E8D0 /* Lottie */; };
+		70208F072B98DDCB00D6E8D0 /* CelebrationAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */; };
+		70208F0A2B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json in Resources */ = {isa = PBXBuildFile; fileRef = 70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */; };
 		702BA40528EE105800BB7EDB /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddEditController.swift */; };
 		70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */; };
 		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
@@ -52,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationAnimationView.swift; sourceTree = "<group>"; };
+		70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "99582-site-app-pro-celebrate.json"; sourceTree = "<group>"; };
 		702BA40428EE105800BB7EDB /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		703E5A602A19A6E500496771 /* Week Routine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Week Routine.entitlements"; sourceTree = "<group>"; };
 		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -102,12 +107,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70208F052B98DDA200D6E8D0 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70208F082B98DE2800D6E8D0 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		7052219729F55F720010D327 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +143,7 @@
 				706D66D42A349440003BE508 /* FilterView.swift */,
 				706D66D82A353270003BE508 /* CustomPickerView.swift */,
 				70B416662A3A734F009389F5 /* RoutineFooter.swift */,
+				70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -203,6 +218,7 @@
 		707168B828EE0C7B008B1D69 /* Week Routine */ = {
 			isa = PBXGroup;
 			children = (
+				70208F082B98DE2800D6E8D0 /* Resource */,
 				7052219C29F55F940010D327 /* Files */,
 				7052219A29F55F850010D327 /* Extensions */,
 				70F9D49F2A392CB700D659EC /* Sounds */,
@@ -254,6 +270,9 @@
 			dependencies = (
 			);
 			name = "Week Routine";
+			packageProductDependencies = (
+				70208F042B98DDA200D6E8D0 /* Lottie */,
+			);
 			productName = "Week Routine";
 			productReference = 707168B628EE0C7B008B1D69 /* Week Routine.app */;
 			productType = "com.apple.product-type.application";
@@ -282,6 +301,9 @@
 				Base,
 			);
 			mainGroup = 707168AD28EE0C7B008B1D69;
+			packageReferences = (
+				70208F032B98DDA200D6E8D0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 707168B728EE0C7B008B1D69 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,6 +322,7 @@
 				70F9D4B92A392E4300D659EC /* Piouh.m4a in Resources */,
 				70F9D4BB2A392E4300D659EC /* Multiverse.m4a in Resources */,
 				70F9D4B72A392E4300D659EC /* Train.m4a in Resources */,
+				70208F0A2B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json in Resources */,
 				70F9D4B52A392E4300D659EC /* Cardinal.m4a in Resources */,
 				70F9D4B82A392E4300D659EC /* Divinity.m4a in Resources */,
 				707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */,
@@ -337,6 +360,7 @@
 				70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */,
 				70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */,
 				706D66D32A34942E003BE508 /* FilterCell.swift in Sources */,
+				70208F072B98DDCB00D6E8D0 /* CelebrationAnimationView.swift in Sources */,
 				707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */,
 				70A76A5329FEB0C4003D72D6 /* LogController.swift in Sources */,
 				7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */,
@@ -562,6 +586,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		70208F032B98DDA200D6E8D0 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70208F042B98DDA200D6E8D0 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70208F032B98DDA200D6E8D0 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		707168C228EE0C7B008B1D69 /* Week_Routine.xcdatamodeld */ = {
