@@ -104,14 +104,24 @@ extension UIView {
 //MARK: - Animate
 
 extension UIView {
-    func bounce() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) { [weak self] in
-            self?.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+    func bounce(withDuration: CGFloat = 0.1, scaleX: CGFloat = 0.85) {
+        UIView.animate(withDuration: withDuration, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: scaleX, y: scaleX)
         } completion: { _ in
-            UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [weak self] in
+            UIView.animate(withDuration: withDuration + 0.05, delay: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [weak self] in
                 self?.transform = CGAffineTransform.identity
             } completion: { _ in
                 
+            }
+        }
+    }
+    
+    func bounceTriple() {
+        self.bounce(withDuration: 0.3, scaleX: 1.50)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+            self.bounce(withDuration: 0.3, scaleX: 1.50)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                self.bounce(withDuration: 0.3, scaleX: 1.50)
             }
         }
     }
