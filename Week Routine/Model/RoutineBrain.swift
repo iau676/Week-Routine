@@ -48,6 +48,19 @@ struct RoutineBrain {
         saveContext()
     }
     
+    func checkCompletedToday(routine: Routine, selectedSegmentIndex: Int) -> Bool {
+        if let lastLogDate = routine.logArray.first?.date {
+            if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
+                routine.isDone = true
+                saveContext()
+                return true
+            }
+        }
+        routine.isDone = false
+        saveContext()
+        return false
+    }
+    
     mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int) {
         routine.title = title
         routine.day = Int16(day)

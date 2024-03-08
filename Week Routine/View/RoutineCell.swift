@@ -153,10 +153,8 @@ final class RoutineCell: UICollectionViewCell {
         borderView.layer.borderColor = color.cgColor
         borderView.backgroundColor = .clear
         
-        if let lastLogDate = routine.logArray.first?.date {
-            if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
-                borderView.backgroundColor = color.withAlphaComponent(0.3)
-            }
+        if brain.checkCompletedToday(routine: routine, selectedSegmentIndex: selectedSegmentIndex ?? 0) {
+            borderView.backgroundColor = color.withAlphaComponent(0.3)
         }
         
         if routine.isFrozen {

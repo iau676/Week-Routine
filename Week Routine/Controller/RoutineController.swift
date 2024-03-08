@@ -146,6 +146,8 @@ extension RoutineController {
             
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
+            } else if routine.isDone {
+                self.showAlertWithTimer(title: "Completed")
             } else {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Completed") {
                     brain.addLog(routine: routine)
