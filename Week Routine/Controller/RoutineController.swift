@@ -148,8 +148,10 @@ extension RoutineController {
                 self.showAlertWithTimer(title: "Frozen")
             } else if routine.isDone {
                 self.showAlertWithTimer(title: "Completed")
+            } else if brain.checkTimePassed(routine: routine) {
+                self.showAlertWithTimer(title: "Not yet")
             } else {
-                self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Completed") {
+                self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Complete") {
                     brain.addLog(routine: routine)
                     self.collectionView.reloadData()
                     self.celebrateAnimationView.isHidden = false

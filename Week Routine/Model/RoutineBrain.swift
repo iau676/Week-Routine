@@ -61,6 +61,19 @@ struct RoutineBrain {
         return false
     }
     
+    func checkTimePassed(routine: Routine) -> Bool {
+        let routineHour = routine.hour
+        let routineMin = routine.minute
+        
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let currentMin = Calendar.current.component(.minute, from: Date())
+        
+        let routineS = routineHour * 66 + routineMin
+        let currentS = currentHour * 66 + currentMin
+
+        return routineS > currentS
+    }
+    
     mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int) {
         routine.title = title
         routine.day = Int16(day)
