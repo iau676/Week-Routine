@@ -47,12 +47,14 @@ final class LogController: UIViewController {
         view.backgroundColor = Colors.backgroundColor
         
         headerView.routine = routine
+        headerView.delegate = self
         tableView.tableHeaderView = headerView
         tableView.allowsSelection = false
         tableView.backgroundColor = .systemGroupedBackground
         tableView.tableFooterView = UIView()
         tableView.register(LogCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func layout() {
@@ -84,5 +86,35 @@ extension LogController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension LogController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView,
+                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            self.showDeleteAlert(title: "Data will be deleted", message: "This action cannot be undone") { _ in
+                brain.deleteLog(self.routine, indexPath.row)
+                self.routineChanged()
+                self.delegate?.updateCV()
+                tableView.reloadData()
+            }
+            success(true)
+        })
+        deleteAction.setImage(image: Images.bin, width: 25, height: 25)
+        deleteAction.setBackgroundColor(.systemRed)
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+//MARK: - LogHeaderDelegate
+
+extension LogController: LogHeaderDelegate {
+    func routineChanged() {
+        headerView.routine = routine
     }
 }
