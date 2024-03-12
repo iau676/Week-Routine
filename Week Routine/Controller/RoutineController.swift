@@ -18,7 +18,7 @@ final class RoutineController: UICollectionViewController {
     private var currrentIndex: Int = 0
     
     private lazy var celebrateAnimationView: CelebrationAnimationView = {
-        let v = CelebrationAnimationView(fileName: "99582-site-app-pro-celebrate")
+        let v = CelebrationAnimationView(fileName: AnimationName.blueBalloon)
         v.translatesAutoresizingMaskIntoConstraints = false
         v.isHidden = true
         return v
@@ -67,7 +67,9 @@ final class RoutineController: UICollectionViewController {
                                 withReuseIdentifier: footerIdentifier)
         
         view.addSubview(celebrateAnimationView)
-        celebrateAnimationView.fillSuperview()
+        celebrateAnimationView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                      right: view.rightAnchor)
+        celebrateAnimationView.setHeight(view.frame.width)
     }
     
     private func updatePlaceholderViewVisibility(){
@@ -146,14 +148,15 @@ extension RoutineController {
             
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
-            } else if routine.isDone {
-                self.showAlertWithTimer(title: "Completed")
-            } else if brain.checkTimePassed(routine: routine) {
-                self.showAlertWithTimer(title: "Not yet")
+//            } else if routine.isDone {
+//                self.showAlertWithTimer(title: "Completed")
+//            } else if brain.checkTimePassed(routine: routine) {
+//                self.showAlertWithTimer(title: "Not yet")
             } else {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Complete") {
                     brain.addLog(routine: routine)
                     self.collectionView.reloadData()
+                    self.celebrateAnimationView.selectAnimation(withColorName: routine.color)
                     self.celebrateAnimationView.isHidden = false
                     self.celebrateAnimationView.play { finished in
                         self.celebrateAnimationView.isHidden = finished

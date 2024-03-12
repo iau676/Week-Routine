@@ -52,6 +52,17 @@ enum ColorName {
     static let purple                    = "purple"
 }
 
+enum AnimationName {
+    static let redBalloon                = "redBalloon"
+    static let orangeBalloon             = "orangeBalloon"
+    static let yellowBalloon             = "yellowBalloon"
+    static let greenBalloon              = "greenBalloon"
+    static let blueBalloon               = "blueBalloon"
+    static let purpleBalloon             = "purpleBalloon"
+    static let blackBalloon              = "blackBalloon"
+    static let whiteBalloon              = "whiteBalloon"
+}
+
 enum UDM {
     static var version12                 = UserDefaultsManager(key: "version12")
     static var currentNotificationDate   = UserDefaultsManager(key: "currentNotificationDate")

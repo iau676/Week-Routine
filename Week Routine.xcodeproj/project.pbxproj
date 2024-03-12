@@ -10,9 +10,16 @@
 		70042FA628F5E46C00E3AB49 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */; };
 		70208F052B98DDA200D6E8D0 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70208F042B98DDA200D6E8D0 /* Lottie */; };
 		70208F072B98DDCB00D6E8D0 /* CelebrationAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */; };
-		70208F0A2B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json in Resources */ = {isa = PBXBuildFile; fileRef = 70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */; };
 		702BA40528EE105800BB7EDB /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702BA40428EE105800BB7EDB /* AddEditController.swift */; };
 		70507EEB293969C200BBC6B9 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */; };
+		7051A4BF2BA0C79900879420 /* redBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4BE2BA0C79800879420 /* redBalloon.json */; };
+		7051A4C12BA0CB8F00879420 /* orangeBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4C02BA0CB8F00879420 /* orangeBalloon.json */; };
+		7051A4C32BA0CB9500879420 /* yellowBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4C22BA0CB9500879420 /* yellowBalloon.json */; };
+		7051A4C52BA0CBA500879420 /* greenBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4C42BA0CBA500879420 /* greenBalloon.json */; };
+		7051A4C72BA0CBAC00879420 /* blueBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4C62BA0CBAC00879420 /* blueBalloon.json */; };
+		7051A4C92BA0CBB200879420 /* purpleBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4C82BA0CBB200879420 /* purpleBalloon.json */; };
+		7051A4CB2BA0CC9300879420 /* blackBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4CA2BA0CC9200879420 /* blackBalloon.json */; };
+		7051A4CD2BA0CC9900879420 /* whiteBalloon.json in Resources */ = {isa = PBXBuildFile; fileRef = 7051A4CC2BA0CC9800879420 /* whiteBalloon.json */; };
 		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
 		705221A129F561930010D327 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A029F561930010D327 /* Factories.swift */; };
 		705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A229F57A170010D327 /* UIViewController+Extensions.swift */; };
@@ -56,10 +63,17 @@
 /* Begin PBXFileReference section */
 		70042FA528F5E46C00E3AB49 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationAnimationView.swift; sourceTree = "<group>"; };
-		70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "99582-site-app-pro-celebrate.json"; sourceTree = "<group>"; };
 		702BA40428EE105800BB7EDB /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		703E5A602A19A6E500496771 /* Week Routine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Week Routine.entitlements"; sourceTree = "<group>"; };
 		70507EEA293969C200BBC6B9 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		7051A4BE2BA0C79800879420 /* redBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = redBalloon.json; sourceTree = "<group>"; };
+		7051A4C02BA0CB8F00879420 /* orangeBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orangeBalloon.json; sourceTree = "<group>"; };
+		7051A4C22BA0CB9500879420 /* yellowBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yellowBalloon.json; sourceTree = "<group>"; };
+		7051A4C42BA0CBA500879420 /* greenBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = greenBalloon.json; sourceTree = "<group>"; };
+		7051A4C62BA0CBAC00879420 /* blueBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = blueBalloon.json; sourceTree = "<group>"; };
+		7051A4C82BA0CBB200879420 /* purpleBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = purpleBalloon.json; sourceTree = "<group>"; };
+		7051A4CA2BA0CC9200879420 /* blackBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = blackBalloon.json; sourceTree = "<group>"; };
+		7051A4CC2BA0CC9800879420 /* whiteBalloon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = whiteBalloon.json; sourceTree = "<group>"; };
 		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		705221A029F561930010D327 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		705221A229F57A170010D327 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -117,7 +131,14 @@
 		70208F082B98DE2800D6E8D0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				70208F092B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json */,
+				7051A4BE2BA0C79800879420 /* redBalloon.json */,
+				7051A4C02BA0CB8F00879420 /* orangeBalloon.json */,
+				7051A4C22BA0CB9500879420 /* yellowBalloon.json */,
+				7051A4C42BA0CBA500879420 /* greenBalloon.json */,
+				7051A4C62BA0CBAC00879420 /* blueBalloon.json */,
+				7051A4C82BA0CBB200879420 /* purpleBalloon.json */,
+				7051A4CA2BA0CC9200879420 /* blackBalloon.json */,
+				7051A4CC2BA0CC9800879420 /* whiteBalloon.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -319,13 +340,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */,
+				7051A4C52BA0CBA500879420 /* greenBalloon.json in Resources */,
+				7051A4BF2BA0C79900879420 /* redBalloon.json in Resources */,
+				7051A4CB2BA0CC9300879420 /* blackBalloon.json in Resources */,
 				70F9D4B92A392E4300D659EC /* Piouh.m4a in Resources */,
 				70F9D4BB2A392E4300D659EC /* Multiverse.m4a in Resources */,
 				70F9D4B72A392E4300D659EC /* Train.m4a in Resources */,
-				70208F0A2B98DE3400D6E8D0 /* 99582-site-app-pro-celebrate.json in Resources */,
 				70F9D4B52A392E4300D659EC /* Cardinal.m4a in Resources */,
+				7051A4C72BA0CBAC00879420 /* blueBalloon.json in Resources */,
 				70F9D4B82A392E4300D659EC /* Divinity.m4a in Resources */,
+				7051A4C12BA0CB8F00879420 /* orangeBalloon.json in Resources */,
 				707168C628EE0C7E008B1D69 /* Assets.xcassets in Resources */,
+				7051A4CD2BA0CC9900879420 /* whiteBalloon.json in Resources */,
+				7051A4C92BA0CBB200879420 /* purpleBalloon.json in Resources */,
+				7051A4C32BA0CB9500879420 /* yellowBalloon.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

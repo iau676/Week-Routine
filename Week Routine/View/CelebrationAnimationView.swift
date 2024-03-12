@@ -39,6 +39,37 @@ class CelebrationAnimationView: UIView {
         ])
     }
     
+    func selectAnimation(withColorName colorName: String?) {
+        
+        var animationName = ""
+        
+        switch colorName {
+        case ColorName.red:
+            animationName = AnimationName.redBalloon
+        case ColorName.orange:
+            animationName = AnimationName.orangeBalloon
+        case ColorName.yellow:
+            animationName = AnimationName.yellowBalloon
+        case ColorName.green:
+            animationName = AnimationName.greenBalloon
+        case ColorName.blue:
+            animationName = AnimationName.blueBalloon
+        case ColorName.purple:
+            animationName = AnimationName.purpleBalloon
+        default:
+            switch traitCollection.userInterfaceStyle {
+                case .light, .unspecified:
+                    animationName = AnimationName.blackBalloon
+                case .dark:
+                    animationName = AnimationName.whiteBalloon
+            @unknown default:
+                print("DEBUG::@unknown default")
+            }
+        }
+        
+        self.animationView.animation = LottieAnimation.named(animationName)
+    }
+    
     func play(completion: @escaping (Bool) -> Void) {
         animationView.play(completion: completion)
     }
