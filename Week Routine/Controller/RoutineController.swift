@@ -166,6 +166,9 @@ extension RoutineController {
         } else {
             self.showAlertWithTimer(title: "Not Today")
         }
+        
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.bounce(scaleX: 0.95)
     }
 }
 
