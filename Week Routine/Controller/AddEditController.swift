@@ -118,6 +118,8 @@ final class AddEditController: UIViewController {
     @objc private func notificationChanged(sender: UISwitch) {
         guard let routine = self.routine else { return }
         RoutineBrain.shareInstance.updateNotification(routine: routine)
+        soundTextField.isEnabled = sender.isOn
+        soundTextField.backgroundColor = sender.isOn ? Colors.viewColor : UIColor.darkGray.withAlphaComponent(0.2)
         delegate?.updateCV()
     }
     
@@ -293,10 +295,9 @@ final class AddEditController: UIViewController {
             
             configureBarButton()
             
-            notificationSwitch.isOn = routine.isNotify
-            
             if routine.isFrozen {
                 freezeSwitch.isOn = routine.isFrozen
+                notificationSwitch.isOn = !routine.isFrozen
                 titleTextField.isEnabled = false
                 dateTextField.isEnabled = false
                 colorButton.isEnabled = false
@@ -313,13 +314,16 @@ final class AddEditController: UIViewController {
                 titleTextField.isEnabled = true
                 dateTextField.isEnabled = true
                 colorButton.isEnabled = true
-                soundTextField.isEnabled = true
                 dateTextField.backgroundColor = Colors.viewColor
                 titleTextField.backgroundColor = Colors.viewColor
-                soundTextField.backgroundColor = Colors.viewColor
                 notificationLabel.backgroundColor = Colors.viewColor
                 notificationSwitch.isEnabled = true
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
+                
+                let isNotify = routine.isNotify
+                notificationSwitch.isOn = isNotify
+                soundTextField.isEnabled = isNotify
+                soundTextField.backgroundColor = isNotify ? Colors.viewColor : UIColor.darkGray.withAlphaComponent(0.2)
             }
         } else {
             title = "New Routine"
