@@ -204,23 +204,6 @@ struct RoutineBrain {
         }
     }
     
-    func getTimerString(for second: Int) -> String {
-        var str = ""
-    
-        let hour = second / 3600
-        let min = (second - (hour*3600)) / 60
-        let sec = second - ((hour*3600)+(min*60))
-    
-        let hStr = hour > 0 ? "\(hours[Int(hour)])\'" : ""
-        let mStr = min > 0 ? "\(minutesWithoutZero[Int(min)])\"" : ""
-        let sStr = sec > 0 ? "\(minutesWithoutZero[Int(sec)])" : ""
-
-        str.append(hStr)
-        str.append(mStr)
-        str.append(sStr)
-        return str
-    }
-    
     func getTodayDate() -> String{
         return Date().getFormattedDate(format: "yyyy-MM-dd")
     }

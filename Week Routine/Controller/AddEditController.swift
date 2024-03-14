@@ -41,7 +41,7 @@ final class AddEditController: UIViewController {
     private lazy var dayInt = currrentIndex-1
     private lazy var day = days[currrentIndex-1]
     private var hour = hours[brain.getHour()]
-    private var minute = minutesWithZero[brain.getMinute()]
+    private var minute = minutes[brain.getMinute()]
     private var colorName = ColorName.defaultt
     
     private var soundInt = 0
@@ -350,7 +350,7 @@ final class AddEditController: UIViewController {
         dayInt = Int(routine.day)
         day = brain.getDayName(Int16(dayInt))
         hour = hours[Int(routine.hour)]
-        minute = minutesWithZero[Int(routine.minute)]
+        minute = minutes[Int(routine.minute)]
     }
     
     private func configureDatePickerView() {
@@ -420,7 +420,7 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             switch component {
             case 0:  return days.count
             case 1:  return hours.count
-            default: return minutesWithZero.count
+            default: return minutes.count
             }
         case .sound:
             return sounds.count
@@ -437,7 +437,7 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             switch component {
             case 0:  return days[row]
             case 1:  return hours[row]
-            default: return minutesWithZero[row]
+            default: return minutes[row]
             }
         case .sound:
             return sounds[row]
@@ -455,7 +455,7 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             case 0:  day = days[row]
                      dayInt = row
             case 1:  hour = hours[row]
-            default: minute = minutesWithZero[row]
+            default: minute = minutes[row]
             }
             dateTextField.text = "\(day), \(hour):\(minute)"
         case .sound:
