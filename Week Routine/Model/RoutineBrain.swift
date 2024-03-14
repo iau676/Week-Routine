@@ -118,7 +118,6 @@ struct RoutineBrain {
     
     func updateFrozen(routine: Routine) {
         let currentFrozen = routine.isFrozen
-        let currentNotify = routine.isNotify
         
         if currentFrozen {
             if let title = routine.title,
@@ -134,14 +133,14 @@ struct RoutineBrain {
         }
         
         routine.isFrozen = !currentFrozen
-        routine.isNotify = !currentNotify
+        routine.isNotify = currentFrozen
         saveContext()
     }
     
     func updateNotification(routine: Routine) {
         let currentNotify = routine.isNotify
         
-        if currentNotify {
+        if !currentNotify {
             if let title = routine.title,
                 let color = routine.color,
                 let uuid = routine.uuid {
@@ -155,7 +154,6 @@ struct RoutineBrain {
         }
         
         routine.isNotify = !currentNotify
-        print("DEBUG::routine.isNotify::\(routine.isNotify)")
         saveContext()
     }
     
