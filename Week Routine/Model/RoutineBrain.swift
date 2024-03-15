@@ -74,6 +74,27 @@ struct RoutineBrain {
         return routineS > currentS
     }
     
+    func getRemindHour(routine: Routine) -> String {
+        let routineHour = routine.hour
+        let routineMin = routine.minute
+        
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let currentMin = Calendar.current.component(.minute, from: Date())
+        
+        let routineS = Int(routineHour * 60 + routineMin)
+        let currentS = Int(currentHour * 60 + currentMin)
+        
+        let remindMin = routineS - currentS
+        
+        let hour = remindMin / 60
+        let min = remindMin % 60
+        
+        let hourStr = hour > 9 ? "\(hour)" : "0\(hour)"
+        let minStr = min > 9 ? "\(min)" : "0\(min)"
+        
+        return "\(hourStr):\(minStr)"
+    }
+    
     mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int) {
         routine.title = title
         routine.day = Int16(day)

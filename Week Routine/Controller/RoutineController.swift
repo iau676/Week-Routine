@@ -148,10 +148,11 @@ extension RoutineController {
             
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
-//            } else if routine.isDone {
-//                self.showAlertWithTimer(title: "Completed")
-//            } else if brain.checkTimePassed(routine: routine) {
-//                self.showAlertWithTimer(title: "Not yet")
+            } else if routine.isDone {
+                self.showAlertWithTimer(title: "Completed")
+            } else if brain.checkTimePassed(routine: routine) {
+                let remind = brain.getRemindHour(routine: routine)
+                self.showAlertWithTimer(title: "Not yet\n\nRemind: \(remind)")
             } else {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Complete") {
                     brain.addLog(routine: routine)
