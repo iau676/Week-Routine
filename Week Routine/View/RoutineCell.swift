@@ -93,11 +93,6 @@ final class RoutineCell: UICollectionViewCell {
         snowflakeImageView.centerX(inView: self)
         snowflakeImageView.centerY(inView: self)
         
-        addSubview(notificationImageView)
-        notificationImageView.setDimensions(width: 16, height: 16)
-        notificationImageView.anchor(left: borderView.leftAnchor, bottom: borderView.bottomAnchor,
-                                     paddingLeft: 16, paddingBottom: 8)
-        
         let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
         buttonStack.distribution = .fillEqually
         buttonStack.axis = .horizontal
@@ -107,7 +102,12 @@ final class RoutineCell: UICollectionViewCell {
         buttonStack.centerY(inView: borderView)
         buttonStack.anchor(right: borderView.rightAnchor, paddingRight: 16)
         
-        let labelStack = UIStackView(arrangedSubviews: [dateLabel, routineLabel])
+        notificationImageView.setDimensions(width: 16, height: 16)
+        let infoStack = UIStackView(arrangedSubviews: [notificationImageView, dateLabel])
+        infoStack.axis = .horizontal
+        infoStack.spacing = 0
+        
+        let labelStack = UIStackView(arrangedSubviews: [infoStack, routineLabel])
         labelStack.axis = .vertical
         labelStack.spacing = 0
 
@@ -147,7 +147,7 @@ final class RoutineCell: UICollectionViewCell {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString
-        dateLabel.text = "\(hour):\(minute)・\(day)"
+        dateLabel.text = routine.isNotify ? "\(hour):\(minute)・\(day)" : "・\(hour):\(minute)・\(day)"
         
         snowflakeImageView.isHidden = true
         borderView.layer.borderColor = color.cgColor
