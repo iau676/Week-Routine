@@ -154,7 +154,7 @@ final class RoutineCell: UICollectionViewCell {
         borderView.backgroundColor = .clear
         
         if brain.checkCompletedToday(routine: routine, selectedSegmentIndex: selectedSegmentIndex ?? 0) {
-            borderView.backgroundColor = color.withAlphaComponent(0.3)
+            borderView.backgroundColor = color.withAlphaComponent(0.5)
         }
         
         if routine.isFrozen {
