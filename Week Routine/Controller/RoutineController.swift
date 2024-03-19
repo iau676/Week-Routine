@@ -76,7 +76,6 @@ final class RoutineController: UICollectionViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.layer.cornerRadius = 8
-        collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = Colors.viewColor
         collectionView.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(FilterView.self,
@@ -109,6 +108,10 @@ final class RoutineController: UICollectionViewController {
     private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.configureBarButton),
                                                name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        collectionView.bounces = collectionView.contentOffset.y > 0 //disable bounce from top
     }
 }
 
