@@ -30,6 +30,7 @@ final class RoutineController: UICollectionViewController {
         super.viewDidLoad()
         style()
         updateCV()
+        addObserver()
         addGestureRecognizer()
     }
     
@@ -41,6 +42,25 @@ final class RoutineController: UICollectionViewController {
     }
     
     //MARK: - Selectors
+    
+    @objc private func configureBarButton() {
+        title = "Week Routine"
+        
+        let leftBarIV = UIImageView()
+        leftBarIV.setDimensions(width: 20, height: 20)
+        leftBarIV.layer.masksToBounds = true
+        leftBarIV.isUserInteractionEnabled = true
+        
+        leftBarIV.image = Images.notification?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
+        let tapLeft = UITapGestureRecognizer(target: self, action: #selector(leftBarButtonPressed))
+        leftBarIV.addGestureRecognizer(tapLeft)
+       
+       UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+           DispatchQueue.main.async {
+               self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized && UDM.version12.getBool() ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
+           }
+       }
+    }
     
     @objc private func leftBarButtonPressed() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -78,31 +98,17 @@ final class RoutineController: UICollectionViewController {
         placeholderView.centerY(inView: collectionView)
         placeholderView.isHidden = tempArray.count != 0
     }
-        
-    private func configureBarButton() {
-        title = "Week Routine"
-        
-        let leftBarIV = UIImageView()
-        leftBarIV.setDimensions(width: 20, height: 20)
-        leftBarIV.layer.masksToBounds = true
-        leftBarIV.isUserInteractionEnabled = true
-        
-        leftBarIV.image = Images.notification?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
-        let tapLeft = UITapGestureRecognizer(target: self, action: #selector(leftBarButtonPressed))
-        leftBarIV.addGestureRecognizer(tapLeft)
-       
-       UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-           DispatchQueue.main.async {
-               self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized && UDM.version12.getBool() ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
-           }
-       }
-    }
     
     private func findWhichRoutinesShouldShow() {
         currrentIndex = (currrentIndex > 7) ? 1 : (currrentIndex < 1) ? 7 : currrentIndex
         tempArray.removeAll()
         tempArray = brain.findRoutines(for: currrentIndex-1)
         updatePlaceholderViewVisibility()
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.configureBarButton),
+                                               name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
 
