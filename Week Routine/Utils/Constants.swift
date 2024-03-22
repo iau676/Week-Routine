@@ -91,3 +91,8 @@ enum Fonts {
     static var AvenirNextDemiBold        = "AvenirNext-DemiBold"
     static var AvenirNextMedium          = "AvenirNext-Medium"
 }
+
+enum DateFormat {
+    static let LogCell                   = "HH:mm・E, d MMM y"
+    static var LogDelete                 = "E, d MMM y"
+}

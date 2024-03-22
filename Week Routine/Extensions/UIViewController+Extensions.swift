@@ -59,9 +59,9 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showActionSheet(title: String, message: String = "",  actionTitle: String, completion: @escaping()-> Void) {
+    func showActionSheet(title: String, message: String = "",  actionTitle: String, style: UIAlertAction.Style = .default, completion: @escaping()-> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        let actionOK = UIAlertAction(title: actionTitle, style: .default) { (action) in
+        let actionOK = UIAlertAction(title: actionTitle, style: style) { (action) in
             alert.dismiss(animated: false, completion: nil)
             completion()
         }

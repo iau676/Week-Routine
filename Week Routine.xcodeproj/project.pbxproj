@@ -128,7 +128,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		70208F082B98DE2800D6E8D0 /* Resource */ = {
+		70208F082B98DE2800D6E8D0 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
 				7051A4BE2BA0C79800879420 /* redBalloon.json */,
@@ -140,7 +140,7 @@
 				7051A4CA2BA0CC9200879420 /* blackBalloon.json */,
 				7051A4CC2BA0CC9800879420 /* whiteBalloon.json */,
 			);
-			path = Resource;
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		7052219729F55F720010D327 /* Model */ = {
@@ -239,7 +239,7 @@
 		707168B828EE0C7B008B1D69 /* Week Routine */ = {
 			isa = PBXGroup;
 			children = (
-				70208F082B98DE2800D6E8D0 /* Resource */,
+				70208F082B98DE2800D6E8D0 /* Animations */,
 				7052219C29F55F940010D327 /* Files */,
 				7052219A29F55F850010D327 /* Extensions */,
 				70F9D49F2A392CB700D659EC /* Sounds */,

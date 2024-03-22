@@ -52,9 +52,7 @@ final class LogCell: UITableViewCell {
     
     private func configure() {
         guard let log = log else { return }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm・E, d MMM y"
-        dateLabel.text = "\(dateFormatter.string(from: log.date ?? Date()))"
+        guard let date = log.date else { return }
+        dateLabel.text = "\(date.getFormattedDate(format: DateFormat.LogCell))"
     }
 }

@@ -96,13 +96,16 @@ extension LogController: UITableViewDelegate {
                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.showDeleteAlert(title: "Data will be deleted", message: "This action cannot be undone") { _ in
-                brain.deleteLog(self.routine, indexPath.row)
-                self.routineChanged()
-                self.delegate?.updateCV()
-                tableView.reloadData()
+            let log = self.routine.logArray[indexPath.row]
+            if let date = log.date {
+                self.showActionSheet(title: "'\(date.getFormattedDate(format: DateFormat.LogDelete))' will be deleted", message: "This action cannot be undone", actionTitle: "Delete", style: .destructive) {
+                    brain.deleteLog(self.routine, indexPath.row)
+                    self.routineChanged()
+                    self.delegate?.updateCV()
+                    tableView.reloadData()
+                }
+                success(true)
             }
-            success(true)
         })
         deleteAction.setImage(image: Images.bin, width: 25, height: 25)
         deleteAction.setBackgroundColor(.systemRed)
