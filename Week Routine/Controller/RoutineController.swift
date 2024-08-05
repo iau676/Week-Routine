@@ -145,7 +145,6 @@ extension RoutineController {
         default:
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerIdentifier, for: indexPath) as! RoutineFooter
             footer.delegate = self
-            if tempArray.count == 0 { footer.bounceTriple() }
             return footer
         }
         

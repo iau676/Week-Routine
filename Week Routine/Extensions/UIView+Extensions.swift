@@ -115,14 +115,4 @@ extension UIView {
             }
         }
     }
-    
-    func bounceTriple() {
-        self.bounce(withDuration: 0.3, scaleX: 1.50)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
-            self.bounce(withDuration: 0.3, scaleX: 1.50)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
-                self.bounce(withDuration: 0.3, scaleX: 1.50)
-            }
-        }
-    }
 }
