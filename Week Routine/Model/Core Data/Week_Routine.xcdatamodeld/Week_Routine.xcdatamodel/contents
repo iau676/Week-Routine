@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21H1015" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21H1320" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Log" representedClassName=".Log" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" allowsCloudEncryption="YES" usesScalarValueType="NO"/>
-        <attribute name="title" optional="YES" attributeType="String" allowsCloudEncryption="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="logs" inverseEntity="Routine"/>
     </entity>
@@ -17,7 +17,7 @@
         <attribute name="isNotify" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="minute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="soundInt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" allowsCloudEncryption="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Log" inverseName="routine" inverseEntity="Log"/>
     </entity>
