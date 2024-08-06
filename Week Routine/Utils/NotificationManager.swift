@@ -8,14 +8,10 @@
 import UIKit
 
 struct NotificationManager {
-    
-    //MARK: -
-    
+        
     static var shared = NotificationManager()
     private let notificationCenter = UNUserNotificationCenter.current()
-    
-    //MARK: -
-    
+        
     func askNotificationPermission(){
         notificationCenter.requestAuthorization(options: [.alert, .sound]) {
             (permissionGranted, error) in
@@ -26,7 +22,6 @@ struct NotificationManager {
         }
     }
     
-
     func getColorEmoji(_ colorName: String) -> String {
         switch colorName {
         case ColorName.red:    return "🔴 "
@@ -115,6 +110,24 @@ struct NotificationManager {
                             hour: Int(routine.hour), minute: Int(routine.minute),
                             color: routine.color ?? "", soundInt: Int(routine.soundInt),
                             id: uuid)
+        }
+    }
+    
+    func deleteNotification(routine: Routine) {
+        guard let uuid = routine.uuid else { return }
+        let dayInt = routine.day
+        switch dayInt {
+            case 8:
+            removeNotification(id: "\(uuid)wr2")
+            removeNotification(id: "\(uuid)wr3")
+            removeNotification(id: "\(uuid)wr4")
+            removeNotification(id: "\(uuid)wr5")
+            removeNotification(id: "\(uuid)wr6")
+            case 9:
+            removeNotification(id: "\(uuid)wr7")
+            removeNotification(id: "\(uuid)wr1")
+            default:
+            removeNotification(id: uuid)
         }
     }
 }

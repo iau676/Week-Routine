@@ -118,7 +118,7 @@ final class AddEditController: UIViewController {
     
     @objc private func notificationChanged(sender: UISwitch) {
         guard let routine = self.routine else { return }
-        RoutineBrain.shareInstance.updateNotification(routine: routine)
+        CoreDataManager.shared.updateNotificationOption(routine: routine)
         soundTextField.isEnabled = sender.isOn
         soundTextField.backgroundColor = sender.isOn ? Colors.viewColor : UIColor.darkGray.withAlphaComponent(0.2)
         delegate?.updateCV()

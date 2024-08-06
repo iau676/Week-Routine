@@ -25,7 +25,6 @@ struct RoutineBrain {
     }
     
     mutating func deleteRoutine(_ routine: Routine) {
-        deleteNotification(routine: routine)
         CoreDataManager.shared.deleteRoutine(routine)
     }
     
@@ -41,53 +40,10 @@ struct RoutineBrain {
         routineArray = CoreDataManager.shared.loadRoutineArray()
     }
     
-    //MARK: - Notification
-    
-    func deleteNotification(routine: Routine) {
-        guard let uuid = routine.uuid else { return }
-        let dayInt = routine.day
-        switch dayInt {
-            case 8:
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr2")
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr3")
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr4")
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr5")
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr6")
-            case 9:
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr7")
-            NotificationManager.shared.removeNotification(id: "\(uuid)wr1")
-            default:
-            NotificationManager.shared.removeNotification(id: uuid)
-        }
-//        saveContext()
-    }
-    
-    func updateNotification(routine: Routine) {
-        let currentNotify = routine.isNotify
-        
-        if !currentNotify {
-            if let title = routine.title,
-                let color = routine.color,
-                let uuid = routine.uuid {
-                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day),
-                                                           hour: Int(routine.hour), minute: Int(routine.minute),
-                                                           color: color, soundInt: Int(routine.soundInt),
-                                                           id: uuid)
-            }
-        } else {
-            deleteNotification(routine: routine)
-        }
-        
-        routine.isNotify = !currentNotify
-//        saveContext()
-    }
-    
     //MARK: - Freeze
     
     mutating func updateFrozen(routine: Routine) {
         CoreDataManager.shared.updateFrozen(routine: routine)
-//        saveContext()
-        loadRoutineArray()
     }
     
     //MARK: - Helpers
@@ -115,7 +71,7 @@ struct RoutineBrain {
     mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
         loadRoutineArray()
         if let routine = routineArray.first(where: {$0.uuid == uuid}) {
-            deleteNotification(routine: routine)
+            NotificationManager.shared.deleteNotification(routine: routine)
             completion(routine)
         }
     }

@@ -50,7 +50,6 @@ class CoreDataManager {
         newRoutine.isNotify = true
         let uuid = UUID().uuidString
         newRoutine.uuid = uuid
-//        self.routineArray.append(newRoutine)
         NotificationManager.shared.addNotification(title: title, dayInt: Int(day),
                                                    hour: Int(hour), minute: Int(minute),
                                                    color: color, soundInt: soundInt,
@@ -71,7 +70,7 @@ class CoreDataManager {
     }
     
     func deleteRoutine(_ routine: Routine) {
-//        deleteNotification(routine: routine)
+        NotificationManager.shared.deleteNotification(routine: routine)
         context.delete(routine)
         saveContext()
     }
@@ -89,7 +88,7 @@ class CoreDataManager {
                                                            id: uuid)
             }
         } else {
-//            deleteNotification(routine: routine)
+            NotificationManager.shared.deleteNotification(routine: routine)
         }
         
         routine.isFrozen = !currentFrozen
@@ -108,6 +107,26 @@ class CoreDataManager {
         routine.isDone = false
         saveContext()
         return false
+    }
+    
+    func updateNotificationOption(routine: Routine) {
+        let currentNotify = routine.isNotify
+        
+        if !currentNotify {
+            if let title = routine.title,
+                let color = routine.color,
+                let uuid = routine.uuid {
+                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day),
+                                                           hour: Int(routine.hour), minute: Int(routine.minute),
+                                                           color: color, soundInt: Int(routine.soundInt),
+                                                           id: uuid)
+            }
+        } else {
+            NotificationManager.shared.deleteNotification(routine: routine)
+        }
+        
+        routine.isNotify = !currentNotify
+        saveContext()
     }
     
     
