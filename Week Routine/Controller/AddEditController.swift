@@ -25,6 +25,7 @@ final class AddEditController: UIViewController {
     private let clearColorButton = UIButton()
     private let colorCV = makeCollectionView()
     private let deleteButton = UIButton()
+    private let historyButton = UIButton()
     
     private let datePickerView = CustomPickerView(type: .date)
     private let soundPickerView = CustomPickerView(type: .sound)
@@ -123,6 +124,15 @@ final class AddEditController: UIViewController {
         delegate?.updateCV()
     }
     
+    @objc private func historyButtonPressed() {
+        guard let routine = self.routine else { return }
+        let controller = LogController(routine: routine)
+        controller.delegate = self
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        self.present(nav, animated: true)
+    }
+    
     @objc private func deleteButtonPressed() {
         showDeleteAlert(title: "Routine will be deleted", message: "This action cannot be undone") { _ in
             guard let routine = self.routine else { return }
@@ -206,8 +216,20 @@ final class AddEditController: UIViewController {
         freezeSwitch.onTintColor = Colors.iceColor.withAlphaComponent(0.5)
         freezeSwitch.addTarget(self, action: #selector(freezeChanged), for: .valueChanged)
         
+        historyButton.setTitle("History", for: .normal)
+        historyButton.setTitleColor(.label, for: .normal)
+        historyButton.backgroundColor = Colors.viewColor
+        historyButton.clipsToBounds = true
+        historyButton.layer.cornerRadius = 8
+        historyButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+        historyButton.addTarget(self, action: #selector(historyButtonPressed), for: .touchUpInside)
+        
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.setTitleColor(.systemRed, for: .normal)
+        deleteButton.backgroundColor = Colors.viewColor
+        deleteButton.clipsToBounds = true
+        deleteButton.layer.cornerRadius = 8
+        deleteButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         
         updateScreenByMode()
@@ -254,10 +276,15 @@ final class AddEditController: UIViewController {
         soundLabel.centerY(inView: soundTextField)
         soundLabel.anchor(right: view.rightAnchor, paddingRight: 32+16)
         
-        view.addSubview(deleteButton)
+        let bottomButtonStack = UIStackView(arrangedSubviews: [historyButton, deleteButton])
+        bottomButtonStack.axis = .horizontal
+        bottomButtonStack.spacing = 1
+        bottomButtonStack.distribution = .fillEqually
+        
+        view.addSubview(bottomButtonStack)
+        historyButton.setHeight(50)
         deleteButton.setHeight(50)
-        deleteButton.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                            right: stack.rightAnchor)
+        bottomButtonStack.anchor(left: stack.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: stack.rightAnchor)
     }
     
     private func configureBarButton() {
@@ -291,6 +318,7 @@ final class AddEditController: UIViewController {
             let color = brain.getColor(colorName)
             colorButton.backgroundColor = color
             clearColorButton.isHidden = false
+            historyButton.isHidden = false
             deleteButton.isHidden = false
             
             configureBarButton()
@@ -328,6 +356,7 @@ final class AddEditController: UIViewController {
         } else {
             title = "New Routine"
             clearColorButton.isHidden = true
+            historyButton.isHidden = true
             deleteButton.isHidden = true
             notificationLabel.isHidden = true
             notificationSwitch.isHidden = true
@@ -347,6 +376,7 @@ final class AddEditController: UIViewController {
         notificationSwitch.isHidden = bool
         freezeLabel.isHidden = bool
         freezeSwitch.isHidden = bool
+        historyButton.isHidden = bool
         deleteButton.isHidden = bool
     }
     
@@ -468,5 +498,13 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
             soundLabel.text = sounds[row]
         default: break
         }
+    }
+}
+
+//MARK: - LogControllerDelegate
+
+extension AddEditController: LogControllerDelegate {
+    func updateCV() {
+        delegate?.updateCV()
     }
 }

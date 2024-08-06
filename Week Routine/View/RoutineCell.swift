@@ -8,7 +8,6 @@
 import UIKit
 
 protocol RoutineCellDelegate: AnyObject {
-    func goLog(routine: Routine)
     func goEdit(routine: Routine)
 }
 
@@ -59,13 +58,6 @@ final class RoutineCell: UICollectionViewCell {
         return label
     }()
     
-    private let historyButton: UIButton = {
-        let button = UIButton()
-        button.setDimensions(width: 32, height: 32)
-        button.setImageWithRenderingMode(image: Images.history, width: 24, height: 24, color: .label)
-        return button
-    }()
-    
     private let editButton: UIButton = {
         let button = UIButton()
         button.setDimensions(width: 32, height: 32)
@@ -79,7 +71,6 @@ final class RoutineCell: UICollectionViewCell {
         super.init(frame: .zero)
         backgroundColor = .clear
         
-        historyButton.addTarget(self, action: #selector(historyPressed), for: .touchUpInside)
         editButton.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
         
         addSubview(borderView)
@@ -93,14 +84,9 @@ final class RoutineCell: UICollectionViewCell {
         snowflakeImageView.centerX(inView: self)
         snowflakeImageView.centerY(inView: self)
         
-        let buttonStack = UIStackView(arrangedSubviews: [historyButton, editButton])
-        buttonStack.distribution = .fillEqually
-        buttonStack.axis = .horizontal
-        buttonStack.spacing = 16
-        
-        addSubview(buttonStack)
-        buttonStack.centerY(inView: borderView)
-        buttonStack.anchor(right: borderView.rightAnchor, paddingRight: 16)
+        addSubview(editButton)
+        editButton.centerY(inView: borderView)
+        editButton.anchor(right: borderView.rightAnchor, paddingRight: 16)
         
         notificationImageView.setDimensions(width: 16, height: 16)
         let infoStack = UIStackView(arrangedSubviews: [notificationImageView, dateLabel])
@@ -113,8 +99,8 @@ final class RoutineCell: UICollectionViewCell {
 
         addSubview(labelStack)
         labelStack.centerY(inView: borderView)
-        labelStack.anchor(left: borderView.leftAnchor, right: buttonStack.leftAnchor,
-                     paddingLeft: 16, paddingRight: 16)
+        labelStack.anchor(left: borderView.leftAnchor, right: editButton.leftAnchor,
+                          paddingLeft: 16, paddingRight: 16)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,12 +108,6 @@ final class RoutineCell: UICollectionViewCell {
     }
     
     //MARK: - Selectors
-    
-    @objc private func historyPressed() {
-        guard let routine = routine else { return }
-        historyButton.bounce()
-        delegate?.goLog(routine: routine)
-    }
     
     @objc private func editPressed() {
         guard let routine = routine else { return }
