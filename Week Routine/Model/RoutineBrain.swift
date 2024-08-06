@@ -13,79 +13,32 @@ struct RoutineBrain {
     static var shareInstance = RoutineBrain()
     
     var routineArray = [Routine]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Model Manupulation Methods
     
     mutating func addRoutine(title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int){
-        let newRoutine = Routine(context: self.context)
-        newRoutine.title = title
-        newRoutine.day = Int16(day)
-        newRoutine.hour = Int16(hour)
-        newRoutine.minute = Int16(minute)
-        newRoutine.color = color
-        newRoutine.ascending = Int16(hour * 66 + minute)
-        newRoutine.soundInt = Int64(soundInt)
-        newRoutine.date = Date()
-        newRoutine.isNotify = true
-        let uuid = UUID().uuidString
-        newRoutine.uuid = uuid
-        self.routineArray.append(newRoutine)
-        NotificationManager.shared.addNotification(title: title, dayInt: Int(day),
-                                                   hour: Int(hour), minute: Int(minute),
-                                                   color: color, soundInt: soundInt,
-                                                   id: uuid)
-        saveContext()
+        CoreDataManager.shared.addRoutine(title: title, day: day, hour: hour, minute: minute, color: color, soundInt: soundInt)
     }
     
     mutating func updateRoutine(routine: Routine, title: String, day: Int, hour: Int, minute: Int, color: String, soundInt: Int) {
-        routine.title = title
-        routine.day = Int16(day)
-        routine.hour = Int16(hour)
-        routine.minute = Int16(minute)
-        routine.color = color
-        routine.ascending = Int16(hour * 66 + minute)
-        routine.soundInt = Int64(soundInt)
-        NotificationManager.shared.updateRoutineNotification(routine: routine)
-        saveContext()
+        CoreDataManager.shared.updateRoutine(routine: routine, title: title, day: day, hour: hour, minute: minute, color: color, soundInt: soundInt)
     }
     
     mutating func deleteRoutine(_ routine: Routine) {
         deleteNotification(routine: routine)
-        context.delete(routine)
-        saveContext()
+        CoreDataManager.shared.deleteRoutine(routine)
     }
     
     mutating func addLog(routine: Routine) {
-        let newLog = Log(context: self.context)
-        newLog.date = Date()
-        newLog.uuid = UUID().uuidString
-        newLog.title = routine.title
-        
-        routine.addToLogs(newLog)
-        saveContext()
+        CoreDataManager.shared.addLog(routine: routine)
     }
     
     mutating func deleteLog(_ routine: Routine, _ index: Int) {
-        context.delete(routine.logArray[index])
-        saveContext()
+        CoreDataManager.shared.deleteLog(routine, index)
     }
     
     mutating func loadRoutineArray(with request: NSFetchRequest<Routine> = Routine.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "ascending", ascending: true)]
-            routineArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    func saveContext() {
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
+        routineArray = CoreDataManager.shared.loadRoutineArray()
     }
     
     //MARK: - Notification
@@ -106,7 +59,7 @@ struct RoutineBrain {
             default:
             NotificationManager.shared.removeNotification(id: uuid)
         }
-        saveContext()
+//        saveContext()
     }
     
     func updateNotification(routine: Routine) {
@@ -126,30 +79,15 @@ struct RoutineBrain {
         }
         
         routine.isNotify = !currentNotify
-        saveContext()
+//        saveContext()
     }
     
     //MARK: - Freeze
     
-    func updateFrozen(routine: Routine) {
-        let currentFrozen = routine.isFrozen
-        
-        if currentFrozen {
-            if let title = routine.title,
-                let color = routine.color,
-                let uuid = routine.uuid {
-                NotificationManager.shared.addNotification(title: title, dayInt: Int(routine.day),
-                                                           hour: Int(routine.hour), minute: Int(routine.minute),
-                                                           color: color, soundInt: Int(routine.soundInt),
-                                                           id: uuid)
-            }
-        } else {
-            deleteNotification(routine: routine)
-        }
-        
-        routine.isFrozen = !currentFrozen
-        routine.isNotify = currentFrozen
-        saveContext()
+    mutating func updateFrozen(routine: Routine) {
+        CoreDataManager.shared.updateFrozen(routine: routine)
+//        saveContext()
+        loadRoutineArray()
     }
     
     //MARK: - Helpers
@@ -182,17 +120,9 @@ struct RoutineBrain {
         }
     }
     
-    func checkCompletedToday(routine: Routine, selectedSegmentIndex: Int) -> Bool {
-        if let lastLogDate = routine.logArray.first?.date {
-            if brain.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
-                routine.isDone = true
-                saveContext()
-                return true
-            }
-        }
-        routine.isDone = false
-        saveContext()
-        return false
+    mutating func checkCompletedToday(routine: Routine, selectedSegmentIndex: Int) -> Bool {
+        let result = CoreDataManager.shared.checkCompletedToday(routine: routine, selectedSegmentIndex: selectedSegmentIndex)
+        return result
     }
     
     func checkTimePassed(routine: Routine) -> Bool {
