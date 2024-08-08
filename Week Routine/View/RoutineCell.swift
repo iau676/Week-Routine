@@ -120,10 +120,10 @@ final class RoutineCell: UICollectionViewCell {
     private func configure() {
         guard let routine = routine else { return }
                 
-        let day = brain.getDayName(routine.day)
+        let day = getDayName(routine.day)
         let hour = routine.hour < 10 ? "0\(routine.hour)" : "\(routine.hour)"
         let minute = routine.minute < 10 ? "0\(routine.minute)" : "\(routine.minute)"
-        let color = brain.getColor(routine.color ?? ColorName.defaultt)
+        let color = getColor(routine.color ?? ColorName.defaultt)
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(routine.title ?? "")")
 
         routineLabel.attributedText = attributeString

@@ -37,7 +37,7 @@ final class RoutineController: UICollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationManager.shared.askNotificationPermission()
-        currrentIndex = brain.getDayInt()+1
+        currrentIndex = getDayInt()+1
         findWhichRoutinesShouldShow()
     }
     
@@ -148,7 +148,6 @@ extension RoutineController {
 
 extension RoutineController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! FilterView
@@ -160,19 +159,18 @@ extension RoutineController {
             footer.delegate = self
             return footer
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if currrentIndex == brain.getDayInt()+1 {
+        if currrentIndex == getDayInt()+1 {
             let routine = brain.routineArray[tempArray[indexPath.row]]
             
             if routine.isFrozen {
                 self.showAlertWithTimer(title: "Frozen")
             } else if routine.isDone {
                 self.showAlertWithTimer(title: "Completed")
-            } else if brain.checkTimePassed(routine: routine) {
-                let remind = brain.getRemindHour(routine: routine)
+            } else if checkTimePassed(routine: routine) {
+                let remind = getRemindHour(routine: routine)
                 self.showAlertWithTimer(title: "Not yet\n\nRemind: \(remind)")
             } else {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Complete") {

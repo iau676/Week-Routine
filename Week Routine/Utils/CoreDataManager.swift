@@ -98,7 +98,7 @@ class CoreDataManager {
     
     func checkCompletedToday(routine: Routine, selectedSegmentIndex: Int) -> Bool {
         if let lastLogDate = routine.logArray.first?.date {
-            if RoutineBrain.shareInstance.getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
+            if getDayInt() == selectedSegmentIndex && Calendar.current.isDateInToday(lastLogDate) {
                 routine.isDone = true
                 saveContext()
                 return true

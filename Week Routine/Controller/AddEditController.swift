@@ -41,8 +41,8 @@ final class AddEditController: UIViewController {
     
     private lazy var dayInt = currrentIndex-1
     private lazy var day = days[currrentIndex-1]
-    private var hour = hours[brain.getHour()]
-    private var minute = minutes[brain.getMinute()]
+    private var hour = hours[getHour()]
+    private var minute = minutes[getMinute()]
     private var colorName = ColorName.defaultt
     
     private var soundInt = 0
@@ -315,7 +315,7 @@ final class AddEditController: UIViewController {
             configureSoundPickerView()
             
             colorName = routine.color ?? ColorName.defaultt
-            let color = brain.getColor(colorName)
+            let color = getColor(colorName)
             colorButton.backgroundColor = color
             clearColorButton.isHidden = false
             historyButton.isHidden = false
@@ -382,7 +382,7 @@ final class AddEditController: UIViewController {
     
     private func configureDateValues(routine: Routine) {
         dayInt = Int(routine.day)
-        day = brain.getDayName(Int16(dayInt))
+        day = getDayName(Int16(dayInt))
         hour = hours[Int(routine.hour)]
         minute = minutes[Int(routine.minute)]
     }
