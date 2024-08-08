@@ -48,24 +48,36 @@ final class RoutineController: UICollectionViewController {
         
         let leftBarIV = UIImageView()
         leftBarIV.setDimensions(width: 20, height: 20)
-        leftBarIV.layer.masksToBounds = true
-        leftBarIV.isUserInteractionEnabled = true
-        
         leftBarIV.image = Images.notification?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
+        
         let tapLeft = UITapGestureRecognizer(target: self, action: #selector(leftBarButtonPressed))
         leftBarIV.addGestureRecognizer(tapLeft)
-       
-       UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
            DispatchQueue.main.async {
                self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized && UDM.version12.getBool() ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
            }
-       }
+        }
+        
+        let rightBarIV = UIImageView()
+        rightBarIV.setDimensions(width: 24, height: 24)
+        rightBarIV.image = Images.snowflake?.withTintColor(Colors.labelColor ?? .black, renderingMode: .alwaysOriginal)
+        
+        let tapRight = UITapGestureRecognizer(target: self, action: #selector(rightBarButtonPressed))
+        rightBarIV.addGestureRecognizer(tapRight)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarIV)
     }
     
     @objc private func leftBarButtonPressed() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
+    }
+    
+    @objc private func rightBarButtonPressed() {
+        let controller = FrozenController()
+        self.present(controller, animated: true)
     }
 
     //MARK: - Helpers

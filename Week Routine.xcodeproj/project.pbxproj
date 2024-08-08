@@ -23,6 +23,7 @@
 		7052219F29F55FE90010D327 /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052219E29F55FE90010D327 /* RoutineCell.swift */; };
 		705221A129F561930010D327 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A029F561930010D327 /* Factories.swift */; };
 		705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705221A229F57A170010D327 /* UIViewController+Extensions.swift */; };
+		7061EF982C6574220032A5F0 /* FrozenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061EF972C6574220032A5F0 /* FrozenController.swift */; };
 		706D66D32A34942E003BE508 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D22A34942E003BE508 /* FilterCell.swift */; };
 		706D66D52A349440003BE508 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D42A349440003BE508 /* FilterView.swift */; };
 		706D66D92A353270003BE508 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D66D82A353270003BE508 /* CustomPickerView.swift */; };
@@ -77,6 +78,7 @@
 		7052219E29F55FE90010D327 /* RoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		705221A029F561930010D327 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		705221A229F57A170010D327 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		7061EF972C6574220032A5F0 /* FrozenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrozenController.swift; sourceTree = "<group>"; };
 		706D66D22A34942E003BE508 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		706D66D42A349440003BE508 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		706D66D82A353270003BE508 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				707168BD28EE0C7B008B1D69 /* RoutineController.swift */,
 				702BA40428EE105800BB7EDB /* AddEditController.swift */,
 				70A76A5229FEB0C4003D72D6 /* LogController.swift */,
+				7061EF972C6574220032A5F0 /* FrozenController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				705221A129F561930010D327 /* Factories.swift in Sources */,
 				707168BE28EE0C7B008B1D69 /* RoutineController.swift in Sources */,
 				707168BA28EE0C7B008B1D69 /* AppDelegate.swift in Sources */,
+				7061EF982C6574220032A5F0 /* FrozenController.swift in Sources */,
 				706D66D92A353270003BE508 /* CustomPickerView.swift in Sources */,
 				70A92CCF28EF0C09004D5419 /* UISegmentedControl+Extensions.swift in Sources */,
 				70A92CC928EEE3C5004D5419 /* UIColor+HexValue.swift in Sources */,

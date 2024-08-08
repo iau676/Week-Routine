@@ -68,6 +68,17 @@ struct RoutineBrain {
         return tempArray
     }
     
+    func findFrozenRoutines() -> [Int] {
+        var tempArray = [Int]()
+        let array = brain.routineArray
+        
+        for i in 0..<array.count {
+            let routine = array[i]
+            if routine.isFrozen { tempArray.append(i) }
+        }
+        return tempArray
+    }
+    
     mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
         loadRoutineArray()
         if let routine = routineArray.first(where: {$0.uuid == uuid}) {

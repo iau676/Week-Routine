@@ -49,7 +49,7 @@ final class AddEditController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(currrentIndex: Int) {
+    init(currrentIndex: Int = 1) {
         self.currrentIndex = currrentIndex
         super.init(nibName: nil, bundle: nil)
     }
