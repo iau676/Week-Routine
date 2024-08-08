@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol AddControllerDelegate {
+private let reuseIdentifier = "ColorCell"
+
+protocol AddControllerDelegate: AnyObject {
     func updateCV()
 }
-
-private let reuseIdentifier = "ColorCell"
 
 final class AddEditController: UIViewController {
     
     private var currrentIndex: Int
     var routine: Routine?
-    var delegate: AddControllerDelegate?
+    weak var delegate: AddControllerDelegate?
     
     private let titleTextField = UITextField()
     private let dateTextField = UITextField()

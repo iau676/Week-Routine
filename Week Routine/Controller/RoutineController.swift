@@ -77,6 +77,7 @@ final class RoutineController: UICollectionViewController {
     
     @objc private func rightBarButtonPressed() {
         let controller = FrozenController()
+        controller.delegate = self
         self.present(controller, animated: true)
     }
 
@@ -248,6 +249,10 @@ extension RoutineController: AddControllerDelegate {
         findWhichRoutinesShouldShow()
     }
 }
+
+//MARK: - FrozenControllerDelegate
+
+extension RoutineController: FrozenControllerDelegate { }
 
 //MARK: - RoutineCellDelegate
 

@@ -9,9 +9,15 @@ import UIKit
 
 private let reuseIdentifier = "RoutineCell"
 
+protocol FrozenControllerDelegate: AnyObject {
+    func updateCV()
+}
+
 final class FrozenController: UIViewController {
     
     //MARK: - Properties
+    
+    weak var delegate: FrozenControllerDelegate?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -99,6 +105,7 @@ extension FrozenController: AddControllerDelegate {
     func updateCV() {
         brain.loadRoutineArray()
         findWhichRoutinesShouldShow()
+        delegate?.updateCV()
     }
 }
 
