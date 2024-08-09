@@ -38,10 +38,6 @@ final class FrozenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         findWhichRoutinesShouldShow()
     }
     
