@@ -66,7 +66,8 @@ final class RoutineController: UICollectionViewController {
         let tapRight = UITapGestureRecognizer(target: self, action: #selector(rightBarButtonPressed))
         rightBarIV.addGestureRecognizer(tapRight)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarIV)
+        let frozenRoutines = brain.findFrozenRoutines()
+        navigationItem.rightBarButtonItem = frozenRoutines.count > 0 ?  UIBarButtonItem(customView: rightBarIV) : UIBarButtonItem()
     }
     
     @objc private func leftBarButtonPressed() {
@@ -245,6 +246,7 @@ extension RoutineController: AddControllerDelegate {
     func updateCV() {
         brain.loadRoutineArray()
         findWhichRoutinesShouldShow()
+        configureBarButton()
     }
 }
 
