@@ -19,6 +19,9 @@ final class FrozenController: UIViewController {
     
     weak var delegate: FrozenControllerDelegate?
     
+    private lazy var tempArray = [Int]() { didSet { collectionView.reloadData() } }
+    private let placeholderView = PlaceholderView(text: "No Routine")
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -30,8 +33,6 @@ final class FrozenController: UIViewController {
         cv.register(RoutineCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         return cv
     }()
-    
-    private lazy var tempArray = [Int]() { didSet { collectionView.reloadData() } }
     
     //MARK: - Lifecycle
     
@@ -46,11 +47,20 @@ final class FrozenController: UIViewController {
     private func configureUI() {
         view.addSubview(collectionView)
         collectionView.fillSuperview()
+        
+        view.addSubview(placeholderView)
+        placeholderView.centerX(inView: collectionView)
+        placeholderView.centerY(inView: collectionView)
     }
     
     private func findWhichRoutinesShouldShow() {
         tempArray.removeAll()
         tempArray = brain.findFrozenRoutines()
+        updatePlaceholderViewVisibility()
+    }
+    
+    private func updatePlaceholderViewVisibility(){
+        placeholderView.isHidden = tempArray.count != 0
     }
 }
 
