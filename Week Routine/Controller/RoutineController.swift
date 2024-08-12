@@ -103,12 +103,13 @@ final class RoutineController: UICollectionViewController {
         celebrateAnimationView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                       right: view.rightAnchor)
         celebrateAnimationView.setHeight(view.frame.width)
-    }
-    
-    private func updatePlaceholderViewVisibility(){
+        
         view.addSubview(placeholderView)
         placeholderView.centerX(inView: collectionView)
         placeholderView.centerY(inView: collectionView)
+    }
+    
+    private func updatePlaceholderViewVisibility(){
         placeholderView.isHidden = tempArray.count != 0
     }
     
