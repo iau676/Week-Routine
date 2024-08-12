@@ -51,7 +51,6 @@
 		70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C38BF3294A120100961BBB /* Date+Extensions.swift */; };
 		70D5560428F1652600FE9C83 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5560328F1652600FE9C83 /* Constants.swift */; };
 		70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DAB4B629F1A71500957643 /* UIView+Extensions.swift */; };
-		70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB70E428F746D000710325 /* UserDefaultsManager.swift */; };
 		70EADD502C62821500D9CAED /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EADD4F2C62821500D9CAED /* CoreDataManager.swift */; };
 		70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECB52028F03465002B2483 /* RoutineBrain.swift */; };
 		70F9D4B52A392E4300D659EC /* Cardinal.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70F9D4AE2A392E4100D659EC /* Cardinal.m4a */; };
@@ -108,7 +107,6 @@
 		70C38BF3294A120100961BBB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		70D5560328F1652600FE9C83 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70DAB4B629F1A71500957643 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		70DB70E428F746D000710325 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		70EADD4F2C62821500D9CAED /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		70ECB52028F03465002B2483 /* RoutineBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBrain.swift; sourceTree = "<group>"; };
 		70F9D4AE2A392E4100D659EC /* Cardinal.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cardinal.m4a; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 				70D5560328F1652600FE9C83 /* Constants.swift */,
 				705221A029F561930010D327 /* Factories.swift */,
 				70B416642A394355009389F5 /* Player.swift */,
-				70DB70E428F746D000710325 /* UserDefaultsManager.swift */,
 				706D66E02A386114003BE508 /* NotificationManager.swift */,
 				70EADD4F2C62821500D9CAED /* CoreDataManager.swift */,
 			);
@@ -387,7 +384,6 @@
 				70B416652A394355009389F5 /* Player.swift in Sources */,
 				702BA40528EE105800BB7EDB /* AddEditController.swift in Sources */,
 				705221A329F57A170010D327 /* UIViewController+Extensions.swift in Sources */,
-				70DB70E528F746D000710325 /* UserDefaultsManager.swift in Sources */,
 				70C38BF4294A120100961BBB /* Date+Extensions.swift in Sources */,
 				70DAB4B729F1A71500957643 /* UIView+Extensions.swift in Sources */,
 				70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */,

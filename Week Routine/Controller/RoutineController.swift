@@ -55,7 +55,7 @@ final class RoutineController: UICollectionViewController {
 
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
            DispatchQueue.main.async {
-               self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized && UDM.version12.getBool() ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
+               self.navigationItem.leftBarButtonItem = settings.authorizationStatus != .authorized ?  UIBarButtonItem(customView: leftBarIV) : UIBarButtonItem()
            }
         }
         

@@ -61,10 +61,6 @@ enum AnimationName {
     static let whiteBalloon              = "whiteBalloon"
 }
 
-enum UDM {
-    static var version12                 = UserDefaultsManager(key: "version12")
-}
-
 enum Images {
     static let cross                     = UIImage(named: "cross")
     static let bin                       = UIImage(named: "bin")

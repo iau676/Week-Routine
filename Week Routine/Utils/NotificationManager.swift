@@ -15,7 +15,6 @@ struct NotificationManager {
     func askNotificationPermission(){
         notificationCenter.requestAuthorization(options: [.alert, .sound]) {
             (permissionGranted, error) in
-            UDM.version12.set(true)
             if(!permissionGranted){
                 print("Permission Denied")
             }
