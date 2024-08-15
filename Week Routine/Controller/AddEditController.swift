@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 private let reuseIdentifier = "ColorCell"
 
@@ -140,7 +141,10 @@ final class AddEditController: UIViewController {
         let title = "Routine will be deleted"
         let message = "\nThis action cannot be undone\n\nPlease answer the question to confirm"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addTextField { tf in tf.placeholder = " \(leftNumber) + \(rightNumber) = ?" }
+        alert.addTextField { tf in
+            tf.placeholder = " \(leftNumber) + \(rightNumber) = ?"
+            tf.keyboardType = .numberPad
+        }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let select = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             guard let text = alert.textFields?.first?.text else { return }
@@ -151,7 +155,7 @@ final class AddEditController: UIViewController {
                     self.delegate?.updateCV()
                     self.dismissView()
                 } else {
-                    print("DEBUG::FALSE")
+                    self.showMessageWith(type: .warning, title: "Wrong Answer")
                 }
             }
         }
@@ -415,6 +419,25 @@ final class AddEditController: UIViewController {
     
     private func configureSoundPickerView() {
         soundPickerView.selectRow(soundInt, inComponent: 0, animated: true)
+    }
+    
+    private func showMessageWith(type: MessageType, title: String = "", message: String = "") {
+        let hostingController = UIHostingController(rootView: MessageView(title: title, message: message, messageType: type))
+      
+        guard let messageView = hostingController.view else { return }
+        
+        view.addSubview(messageView)
+        messageView.translatesAutoresizingMaskIntoConstraints = false
+        addChild(hostingController)
+        hostingController.didMove(toParent: self)
+        
+        messageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        messageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        messageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            messageView.removeFromSuperview()
+        }
     }
 }
 
