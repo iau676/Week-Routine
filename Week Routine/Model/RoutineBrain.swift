@@ -78,12 +78,4 @@ struct RoutineBrain {
         }
         return tempArray
     }
-    
-    mutating func findRoutine(uuid: String, completion: (Routine)-> Void) {
-        loadRoutineArray()
-        if let routine = routineArray.first(where: {$0.uuid == uuid}) {
-            NotificationManager.shared.deleteNotification(routine: routine)
-            completion(routine)
-        }
-    }
 }
