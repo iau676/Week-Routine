@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 protocol DeleteViewDelegate {
     func cancel()

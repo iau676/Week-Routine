@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 private let reuseIdentifier = "ColorCell"
 
@@ -394,25 +393,6 @@ final class AddEditController: UIViewController {
     
     private func configureSoundPickerView() {
         soundPickerView.selectRow(soundInt, inComponent: 0, animated: true)
-    }
-    
-    private func showMessageWith(type: MessageType, title: String = "", message: String = "") {
-        let hostingController = UIHostingController(rootView: MessageView(title: title, message: message, messageType: type))
-      
-        guard let messageView = hostingController.view else { return }
-        
-        view.addSubview(messageView)
-        messageView.translatesAutoresizingMaskIntoConstraints = false
-        addChild(hostingController)
-        hostingController.didMove(toParent: self)
-        
-        messageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        messageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        messageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            messageView.removeFromSuperview()
-        }
     }
     
     private func configureDeleteView() {

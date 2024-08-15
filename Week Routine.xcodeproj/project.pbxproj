@@ -37,7 +37,6 @@
 		707168C928EE0C7E008B1D69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 707168C728EE0C7E008B1D69 /* LaunchScreen.storyboard */; };
 		707A5D1F293A6B0D00D7D19A /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */; };
 		707A5D21293A862500D7D19A /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5D20293A862500D7D19A /* PlaceholderView.swift */; };
-		70925E342C6E2E72007CB4E9 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70925E332C6E2E71007CB4E9 /* MessageView.swift */; };
 		70925E362C6E3727007CB4E9 /* DeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70925E352C6E3727007CB4E9 /* DeleteView.swift */; };
 		70A76A4E29FEACF4003D72D6 /* Log+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4A29FEACF4003D72D6 /* Log+CoreDataClass.swift */; };
 		70A76A4F29FEACF4003D72D6 /* Log+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A76A4B29FEACF4003D72D6 /* Log+CoreDataProperties.swift */; };
@@ -95,7 +94,6 @@
 		707168CA28EE0C7E008B1D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		707A5D1E293A6B0D00D7D19A /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		707A5D20293A862500D7D19A /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
-		70925E332C6E2E71007CB4E9 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		70925E352C6E3727007CB4E9 /* DeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteView.swift; sourceTree = "<group>"; };
 		70A76A4A29FEACF4003D72D6 /* Log+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Log+CoreDataClass.swift"; sourceTree = "<group>"; };
 		70A76A4B29FEACF4003D72D6 /* Log+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Log+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 				706D66D82A353270003BE508 /* CustomPickerView.swift */,
 				70B416662A3A734F009389F5 /* RoutineFooter.swift */,
 				70208F062B98DDCB00D6E8D0 /* CelebrationAnimationView.swift */,
-				70925E332C6E2E71007CB4E9 /* MessageView.swift */,
 				70925E352C6E3727007CB4E9 /* DeleteView.swift */,
 			);
 			path = View;
@@ -383,7 +380,6 @@
 				707168BC28EE0C7B008B1D69 /* SceneDelegate.swift in Sources */,
 				70ECB52128F03465002B2483 /* RoutineBrain.swift in Sources */,
 				70A92CCB28EEE50C004D5419 /* UITextField+Extensions.swift in Sources */,
-				70925E342C6E2E72007CB4E9 /* MessageView.swift in Sources */,
 				706D66E32A3882AB003BE508 /* LogHeader.swift in Sources */,
 				706D66D52A349440003BE508 /* FilterView.swift in Sources */,
 				70A76A5129FEACF4003D72D6 /* Routine+CoreDataProperties.swift in Sources */,
