@@ -26,6 +26,7 @@ final class AddEditController: UIViewController {
     private let clearColorButton = UIButton()
     private let colorCV = makeCollectionView()
     private let deleteButton = UIButton()
+    private let deleteView = DeleteView()
     private let historyButton = UIButton()
     
     private let datePickerView = CustomPickerView(type: .date)
@@ -135,33 +136,7 @@ final class AddEditController: UIViewController {
     }
     
     @objc private func deleteButtonPressed() {
-        let leftNumber = Int.random(in: 100..<199)
-        let rightNumber = 7
-        let answer = "\(leftNumber + rightNumber)"
-        let title = "Routine will be deleted"
-        let message = "\nThis action cannot be undone\n\nPlease answer the question to confirm"
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addTextField { tf in
-            tf.placeholder = " \(leftNumber) + \(rightNumber) = ?"
-            tf.keyboardType = .numberPad
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let select = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-            guard let text = alert.textFields?.first?.text else { return }
-            alert.dismiss(animated: true) {
-                if text == answer {
-                    guard let routine = self.routine else { return }
-                    brain.deleteRoutine(routine)
-                    self.delegate?.updateCV()
-                    self.dismissView()
-                } else {
-                    self.showMessageWith(type: .warning, title: "Wrong Answer")
-                }
-            }
-        }
-        alert.addAction(cancel)
-        alert.addAction(select)
-        present(alert, animated: true, completion: nil)
+        configureDeleteView()
     }
     
     //MARK: - Helpers
@@ -439,6 +414,25 @@ final class AddEditController: UIViewController {
             messageView.removeFromSuperview()
         }
     }
+    
+    private func configureDeleteView() {
+        deleteView.delegate = self
+        view.addSubview(deleteView)
+        deleteView.anchor(top: view.topAnchor, left: view.leftAnchor,
+                          right: view.rightAnchor, height: view.frame.height)
+        deleteView.alpha = 0
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.deleteView.alpha = 1
+        })
+    }
+    
+    private func dismissDeleteView(completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.deleteView.alpha = 0
+            self.deleteView.removeFromSuperview()
+        }, completion: completion)
+    }
 }
 
 //MARK: - UICollectionViewDelegate/DataSource
@@ -547,5 +541,20 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
 extension AddEditController: LogControllerDelegate {
     func updateCV() {
         delegate?.updateCV()
+    }
+}
+
+extension AddEditController: DeleteViewDelegate {
+    func cancel() {
+        dismissDeleteView()
+    }
+    
+    func delete() {
+        dismissDeleteView { _ in
+            guard let routine = self.routine else { return }
+            brain.deleteRoutine(routine)
+            self.delegate?.updateCV()
+            self.dismissView()
+        }
     }
 }
