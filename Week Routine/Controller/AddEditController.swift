@@ -134,12 +134,30 @@ final class AddEditController: UIViewController {
     }
     
     @objc private func deleteButtonPressed() {
-        showDeleteAlert(title: "Routine will be deleted", message: "This action cannot be undone") { _ in
-            guard let routine = self.routine else { return }
-            brain.deleteRoutine(routine)
-            self.delegate?.updateCV()
-            self.dismissView()
+        let leftNumber = Int.random(in: 100..<199)
+        let rightNumber = 7
+        let answer = "\(leftNumber + rightNumber)"
+        let title = "Routine will be deleted"
+        let message = "\nThis action cannot be undone\n\nPlease answer the question to confirm"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addTextField { tf in tf.placeholder = " \(leftNumber) + \(rightNumber) = ?" }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let select = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            guard let text = alert.textFields?.first?.text else { return }
+            alert.dismiss(animated: true) {
+                if text == answer {
+                    guard let routine = self.routine else { return }
+                    brain.deleteRoutine(routine)
+                    self.delegate?.updateCV()
+                    self.dismissView()
+                } else {
+                    print("DEBUG::FALSE")
+                }
+            }
         }
+        alert.addAction(cancel)
+        alert.addAction(select)
+        present(alert, animated: true, completion: nil)
     }
     
     //MARK: - Helpers
