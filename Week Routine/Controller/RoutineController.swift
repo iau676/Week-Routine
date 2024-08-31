@@ -17,12 +17,7 @@ final class RoutineController: UICollectionViewController {
     private var tempArray = [Int]() { didSet { collectionView.reloadData() } }
     private var currrentIndex: Int = 0
     
-    private lazy var celebrateAnimationView: CelebrationAnimationView = {
-        let v = CelebrationAnimationView(fileName: AnimationName.blueBalloon)
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.isHidden = true
-        return v
-    }()
+    private lazy var celebrateAnimationView = CelebrationAnimationView(fileName: AnimationName.blueBalloon)
         
     //MARK: - Life Cycle
     
@@ -109,6 +104,14 @@ final class RoutineController: UICollectionViewController {
         placeholderView.centerY(inView: collectionView)
     }
     
+    private func showCelebrateAnimationView(withColorName: String?) {
+        self.celebrateAnimationView.selectAnimation(withColorName: withColorName)
+        self.celebrateAnimationView.isHidden = false
+        self.celebrateAnimationView.play { finished in
+            self.celebrateAnimationView.isHidden = finished
+        }
+    }
+    
     private func updatePlaceholderViewVisibility(){
         placeholderView.isHidden = tempArray.count != 0
     }
@@ -178,11 +181,7 @@ extension RoutineController {
                 self.showActionSheet(title: "\(routine.title ?? "")", actionTitle: "Complete") {
                     brain.addLog(routine: routine)
                     self.collectionView.reloadData()
-                    self.celebrateAnimationView.selectAnimation(withColorName: routine.color)
-                    self.celebrateAnimationView.isHidden = false
-                    self.celebrateAnimationView.play { finished in
-                        self.celebrateAnimationView.isHidden = finished
-                    }
+                    self.showCelebrateAnimationView(withColorName: routine.color)
                 }
             }
         } else {

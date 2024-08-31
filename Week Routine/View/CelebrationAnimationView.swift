@@ -16,6 +16,7 @@ class CelebrationAnimationView: UIView {
         let animation = LottieAnimation.named(fileName)
         self.animationView = LottieAnimationView(animation: animation)
         super.init(frame: .zero)
+        self.isHidden = true
         setupView()
     }
     
