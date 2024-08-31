@@ -11,6 +11,8 @@ import CoreData
 struct RoutineBrain {
     
     static var shareInstance = RoutineBrain()
+    private init() {}
+    
     var routineArray = [Routine]()
     
     mutating func loadRoutineArray(with request: NSFetchRequest<Routine> = Routine.fetchRequest()){

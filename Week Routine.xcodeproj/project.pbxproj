@@ -214,11 +214,11 @@
 		7052219D29F55FD60010D327 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				70D5560328F1652600FE9C83 /* Constants.swift */,
-				705221A029F561930010D327 /* Factories.swift */,
 				70B416642A394355009389F5 /* Player.swift */,
-				706D66E02A386114003BE508 /* NotificationManager.swift */,
+				705221A029F561930010D327 /* Factories.swift */,
+				70D5560328F1652600FE9C83 /* Constants.swift */,
 				70EADD4F2C62821500D9CAED /* CoreDataManager.swift */,
+				706D66E02A386114003BE508 /* NotificationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -309,7 +309,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					707168B528EE0C7B008B1D69 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -456,6 +456,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -516,6 +517,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

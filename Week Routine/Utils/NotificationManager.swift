@@ -10,6 +10,8 @@ import UIKit
 struct NotificationManager {
         
     static var shared = NotificationManager()
+    private init() {}
+    
     private let notificationCenter = UNUserNotificationCenter.current()
         
     func askNotificationPermission(){

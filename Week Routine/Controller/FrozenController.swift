@@ -20,7 +20,7 @@ final class FrozenController: UIViewController {
     weak var delegate: FrozenControllerDelegate?
     
     private lazy var tempArray = [Int]() { didSet { collectionView.reloadData() } }
-    private let placeholderView = PlaceholderView(text: "No Routine")
+    private let placeholderView = PlaceholderView(text: "No Frozen Routine")
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
