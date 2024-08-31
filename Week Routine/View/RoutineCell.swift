@@ -54,7 +54,7 @@ final class RoutineCell: UICollectionViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
-        label.textColor = .darkGray
+        label.textColor = Colors.dateLabelTextColor
         return label
     }()
     

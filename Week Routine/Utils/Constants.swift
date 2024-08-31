@@ -29,6 +29,8 @@ enum Colors {
     static let labelColor                = UIColor(named: "labelColor")
     static let placeholderColor          = UIColor(named: "placeholderColor")
     static let flashColor                = UIColor(named: "flashColor")
+    static let dateLabelTextColor        = UIColor(named: "dateLabelTextColor")
+    
     static let blackColor                = UIColor(hex: "#1C1C1E")
     static let iceColor                  = UIColor(hex: "#66cdfe") ?? .systemBlue
     
