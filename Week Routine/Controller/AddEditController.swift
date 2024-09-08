@@ -20,6 +20,7 @@ final class AddEditController: UIViewController {
     weak var delegate: AddControllerDelegate?
     
     private let titleTextField = UITextField()
+    private let infoButton = UIButton()
     private let dateTextField = UITextField()
     private let colorButton = UIButton()
     private let clearColorButton = UIButton()
@@ -94,6 +95,10 @@ final class AddEditController: UIViewController {
     
     @objc private func dismissView() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func infoButtonPressed() {
+        showAlert(title: "You must clear the history to change the title." , errorMessage: "") { _ in }
     }
     
     @objc private func colorButtonPressed() {
@@ -177,6 +182,11 @@ final class AddEditController: UIViewController {
         clearColorButton.addTarget(self, action: #selector(clearColorButtonPressed), for: .touchUpInside)
         clearColorButton.setImageWithRenderingMode(image: Images.cross, width: 20, height: 20, color: .label)
         
+        infoButton.setDimensions(width: 50, height: 50)
+        infoButton.layer.cornerRadius = 8
+        infoButton.addTarget(self, action: #selector(infoButtonPressed), for: .touchUpInside)
+        infoButton.setImageWithRenderingMode(image: Images.info, width: 20, height: 20, color: .label.withAlphaComponent(0.5))
+        
         colorCV.delegate = self
         colorCV.dataSource = self
         colorCV.backgroundColor = .clear
@@ -251,6 +261,10 @@ final class AddEditController: UIViewController {
         secondStack.anchor(top: stack.bottomAnchor, left: view.leftAnchor,
                            right: view.rightAnchor, paddingTop: 16,
                            paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(infoButton)
+        infoButton.centerY(inView: titleTextField)
+        infoButton.anchor(right: titleTextField.rightAnchor)
         
         view.addSubview(clearColorButton)
         clearColorButton.centerY(inView: colorButton)
@@ -335,11 +349,12 @@ final class AddEditController: UIViewController {
                 colorButton.setTitleColor(Colors.labelColor, for: .normal)
                 clearColorButton.isHidden = true
             } else {
-                titleTextField.isEnabled = true
+                titleTextField.isEnabled = !(routine.logArray.count > 0)
+                infoButton.isHidden = !(routine.logArray.count > 0)
                 dateTextField.isEnabled = true
                 colorButton.isEnabled = true
                 dateTextField.backgroundColor = Colors.viewColor
-                titleTextField.backgroundColor = Colors.viewColor
+                titleTextField.backgroundColor = !(routine.logArray.count > 0) ? Colors.viewColor : UIColor.darkGray.withAlphaComponent(0.2)
                 notificationLabel.backgroundColor = Colors.viewColor
                 notificationSwitch.isEnabled = true
                 colorButton.setTitleColor(Colors.viewColor, for: .normal)
@@ -351,6 +366,7 @@ final class AddEditController: UIViewController {
             }
         } else {
             title = "New Routine"
+            infoButton.isHidden = true
             clearColorButton.isHidden = true
             historyButton.isHidden = true
             deleteButton.isHidden = true
@@ -521,8 +537,11 @@ extension AddEditController: UIPickerViewDataSource, UIPickerViewDelegate {
 extension AddEditController: LogControllerDelegate {
     func updateCV() {
         delegate?.updateCV()
+        updateScreenByMode()
     }
 }
+
+//MARK: - DeleteViewDelegate
 
 extension AddEditController: DeleteViewDelegate {
     func cancel() {

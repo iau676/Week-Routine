@@ -64,6 +64,8 @@ enum AnimationName {
 }
 
 enum Images {
+    static let info                      = UIImage(systemName: "info.circle")
+    
     static let cross                     = UIImage(named: "cross")
     static let bin                       = UIImage(named: "bin")
     static let edit                      = UIImage(named: "edit")
