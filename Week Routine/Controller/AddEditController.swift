@@ -185,7 +185,7 @@ final class AddEditController: UIViewController {
         infoButton.setDimensions(width: 50, height: 50)
         infoButton.layer.cornerRadius = 8
         infoButton.addTarget(self, action: #selector(infoButtonPressed), for: .touchUpInside)
-        infoButton.setImageWithRenderingMode(image: Images.info, width: 20, height: 20, color: .label.withAlphaComponent(0.5))
+        infoButton.setImageWithRenderingMode(image: Images.questionmark, width: 20, height: 20, color: .label.withAlphaComponent(0.5))
         
         colorCV.delegate = self
         colorCV.dataSource = self
