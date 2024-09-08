@@ -37,7 +37,7 @@ final class RoutineCell: UICollectionViewCell {
     
     private let notificationImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = Images.notificationClosed?.withTintColor(.darkGray)
+        iv.image = Images.notificationClosed?.withTintColor(Colors.dateLabelTextColor ?? .darkGray)
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
