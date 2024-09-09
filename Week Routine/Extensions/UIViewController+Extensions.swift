@@ -60,7 +60,14 @@ extension UIViewController {
     }
     
     func showActionSheet(title: String, message: String = "",  actionTitle: String, style: UIAlertAction.Style = .default, completion: @escaping()-> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        var alertStyle: UIAlertController.Style = UIAlertController.Style.actionSheet
+        
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            alertStyle = UIAlertController.Style.alert
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
         let actionOK = UIAlertAction(title: actionTitle, style: style) { (action) in
             alert.dismiss(animated: false, completion: nil)
             completion()
@@ -71,3 +78,4 @@ extension UIViewController {
         present(alert, animated: true)
     }
 }
+
